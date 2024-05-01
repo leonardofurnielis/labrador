@@ -1,0 +1,8 @@
+llama-index-core==0.10.30
+llama-index-readers-file==0.1.19
+langchain==0.1.16
+langchain-experimental==0.0.57
+pydantic==2.7.1
+pypdf==4.2.0
+torch==2.1.0
+elasticsearch==8.13.0
