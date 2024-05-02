@@ -1,8 +1,9 @@
 from typing import Literal, List
 
-from langchain_experimental.text_splitter import SemanticChunker
-from slate_index.embeddings import HuggingFaceEmbeddings
 from slate_index.core.document import Document
+from slate_index.embeddings import HuggingFaceEmbeddings
+
+from langchain_experimental.text_splitter import SemanticChunker
 
 class SemanticSplitter():
 

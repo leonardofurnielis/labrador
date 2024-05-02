@@ -1,8 +1,8 @@
 from typing import List
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-
 from slate_index.core.document import Document
+
+from langchain_text_splitters.character import RecursiveCharacterTextSplitter
 
 class SentenceSplitter():
 
