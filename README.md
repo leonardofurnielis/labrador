@@ -1,4 +1,4 @@
-# Slate Index
+# slate Index
 
 ## Table of Contents
 
