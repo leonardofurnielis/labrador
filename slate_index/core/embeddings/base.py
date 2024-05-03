@@ -17,7 +17,7 @@ class Embeddings(ABC):
         """Embed list of texts."""
 
     @abstractmethod
-    def get_documents_embedding(self, documents: List[str]) -> List[List[float]]:
+    def get_documents_embeddings(self, documents: List[str]) -> List[List[float]]:
         """Embed list of docs."""
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
