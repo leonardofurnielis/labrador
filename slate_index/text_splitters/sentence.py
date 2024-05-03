@@ -21,7 +21,15 @@ class SentenceSplitter():
 
 
     def from_text(self, text: str) -> List[str]: 
+        """
+        Split text into chunks.
         
+        Args:
+        - text (str): Input text to split.
+        
+        Returns:
+        - List[str]: List of chunks.
+        """
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=self.chunk_size,
             chunk_overlap=self.chunk_overlap,

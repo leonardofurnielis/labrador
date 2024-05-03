@@ -19,7 +19,15 @@ class SemanticSplitter():
 
 
     def from_text(self, text: str) -> List[str]: 
+        """
+        Split text into chunks.
         
+        Args:
+        - text (str): Input text to split.
+        
+        Returns:
+        - List[str]: List of chunks.
+        """
         text_splitter = SemanticChunker(
             embeddings=self._embed,
             buffer_size=self.buffer_size, 
@@ -27,7 +35,16 @@ class SemanticSplitter():
         
         return text_splitter.split_text(text)
     
-    def from_documents(self, documents: List[Document]) -> List[Document]:     
+    def from_documents(self, documents: List[Document]) -> List[Document]:    
+        """
+        Split text from a list of documents into chunks.
+        
+        Args:
+        - documents (List[Document]): List of Documents
+        
+        Returns:
+        - List[Document]: List of Document split into chunks.
+        """ 
         chunks = []
         
         for document in documents:

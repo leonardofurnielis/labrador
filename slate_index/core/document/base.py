@@ -19,18 +19,30 @@ class Document(BaseModel):
         return "Document"
 
     def set_content(self, text: str, metadata: dict = {}) -> None:
-        """Set the text content of the document."""
+        """Set the text content and metadata of the document."""
         self.text = text
         self.metadata = metadata
 
     def get_text(self) -> str:
+        """Get the text content of the document."""
         return self.text
     
     def get_metadata(self) -> dict:
+        """Get the metadata of the document."""
         return self.metadata
     
     @classmethod
-    def _parse_metadata(cls, metadata: dict, framework: Literal["llama_index", "langchain"]) -> dict:
+    def _convert_metadata(cls, metadata: dict, framework: Literal["llama_index", "langchain"]) -> dict:
+        """
+        Parse metadata based on the specified framework.
+
+        Args:
+            metadata (dict): Metadata to parse.
+            framework (Literal["llama_index", "langchain"]): Framework indicator.
+
+        Returns:
+            dict: Parsed metadata.
+        """
         _metadata: dict = {}
         today = datetime.now()
 
@@ -50,14 +62,30 @@ class Document(BaseModel):
     
     @classmethod
     def _from_langchain_format(cls, doc: "LangchainDocument") -> "Document":
-        """Convert struct from LangChain document format."""
+        """
+        Convert a document from LangChain format to slate_index Document format.
+
+        Args:
+            doc (LangchainDocument): Document in LangChain format.
+
+        Returns:
+            Document: Converted document.
+        """
         
-        parsed_metadata = cls._parse_metadata(doc.metadata, "langchain")
-        return cls(text=doc.page_content, metadata=parsed_metadata)
+        converted_metadata = cls._convert_metadata(doc.metadata, "langchain")
+        return cls(text=doc.page_content, metadata=converted_metadata)
     
     @classmethod
     def _from_llama_index_format(cls, doc: "LlamaIndexDocument") -> "Document":
-        """Convert struct from LangChain document format."""
+        """
+        Convert a document from LlamaIndex format to slate_index Document format.
 
-        parsed_metadata = cls._parse_metadata(doc.metadata, "llama_index")
-        return cls(text=doc.text, metadata=parsed_metadata)
+        Args:
+            doc (LlamaIndexDocument): Document in LlamaIndex format.
+
+        Returns:
+            Document: Converted document.
+        """
+
+        converted_metadata = cls._convert_metadata(doc.metadata, "llama_index")
+        return cls(text=doc.text, metadata=converted_metadata)
