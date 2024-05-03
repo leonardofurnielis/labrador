@@ -44,7 +44,7 @@ class HuggingFaceEmbeddings(Embeddings):
 
         return embedding_texts
     
-    def get_documents_embedding(self, documents: List[Document]) -> List[List[float]]:
+    def get_documents_embeddings(self, documents: List[Document]) -> List[List[float]]:
         """Compute embeddings for a list of documents.
 
         Args:

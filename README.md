@@ -1,4 +1,86 @@
+# Slate Index
+
+## Table of Contents
+
+- Embeddings
+  - [HuggingFace](#embeddings-huggingface)
+- Ingestion
+  - [Directory Files](#ingestion-directory-files)
+- Text Splitter
+  - [Semantic Splitter](#text-splitter-semantic-splitter)
+  - [Sentence Splitter](#text-splitter-sentence-splitter)
+- Vector Store
+  - [Elasticsearch](#vector-store-elasticsearch)
+
+## Embeddings: HuggingFace
+
+### Overview
+Class for computing text embeddings using HuggingFace models.
+
+### API Reference
+
+**`HuggingFaceEmbeddings(model_name: str= "sentence-transformers/all-MiniLM-L6-v2", device: Literal["cpu", "cuda"] = "cpu")`**
+
+Initialize a HuggingFaceEmbeddings object.
+
+- `model_name` (str, optional): Name of the HuggingFace model to be used. Defaults to "sentence-transformers/all-MiniLM-L6-v2".
+- `device` (Literal["cpu", "cuda"], optional): Device to run the model on. Defaults to "cpu".
+
+**`get_text_embedding(text: str) -> List[float]`**
+
+Compute embedding for a text.
+
+- `text` (str): Input text to compute embedding for.
+
+**`get_text_embeddings(texts: List[str]) -> List[List[float]]`**
+
+Compute embeddings for a list of texts.
+
+- `texts` (List[str])
+
+**`get_documents_embeddings(documents: List[str]) -> List[List[float]]`**
+
+Compute embeddings for a list of Documents.
+
+- `documents` (List[Documents])
+
 ## Ingestion: Directory Files
+
+### Overview
+This class provides functionality to load documents from a directory using various file loaders.
+
+### API Reference
+
+**`load_data(self, dir) -> List[Document]`**
+
+Loads data from the specified directory.
+
+- `dir` (str): The directory path from which to load the documents.
+
+## Text Splitter: Semantic Splitter
+
+### Overview
+Semantic Splitter is a Python class designed to split text into chunks using semantic understanding. It utilizes pre-trained embeddings to identify breakpoints in the text and divide it into meaningful segments.
+
+### API Reference
+
+**`SemanticSplitter(model_name: str = "sentence-transformers/all-MiniLM-L6-v2", buffer_size: int = 1, breakpoint_threshold_amount: int = 95, device: Literal["cpu", "cuda"] = "cpu") -> None`**
+
+Initialize the SemanticSplitter instance.
+- `model_name`: Name of the pre-trained embeddings model to use. Default is "sentence-transformers/all-MiniLM-L6-v2".
+- `buffer_size`: Size of the buffer for semantic chunking. Default is 1.
+- `breakpoint_threshold_amount`: Threshold percentage for detecting breakpoints. Default is 95.
+- `device`: Device to use for processing, either "cpu" or "cuda". Default is "cpu".
+
+**`from_text(self, text: str) -> List[str]`**
+
+Split text into chunks.
+- `text`: Input text to split.
+
+**`from_documents(self, documents: List[Document]) -> List[Document]`**
+
+Split text from a list of documents into chunks.
+- `documents`: List of Documents.
 
 ## Text Splitter: Sentence Splitter
 
@@ -7,7 +89,7 @@ This Python class `SentenceSplitter` is designed to split input text into smalle
 
 ### API Reference
 
-**`__init__(self, chunk_size: int = 512, chunk_overlap: int = 256, length_function = len, separators: List[str] = ["\n\n", "\n", " ", ""]) -> None`**
+**`SentenceSplitter(chunk_size: int = 512, chunk_overlap: int = 256, length_function = len, separators: List[str] = ["\n\n", "\n", " ", ""]) -> None`**
 
 Creates a new instance of the `SentenceSplitter` class.
 
@@ -29,39 +111,14 @@ Splits a list of documents into chunks.
 
 - `documents` (List[Document]): List of Document objects.
 
-## Text Splitter: Semantic Splitter
-
-### Overview
-Semantic Splitter is a Python class designed to split text into chunks using semantic understanding. It utilizes pre-trained embeddings to identify breakpoints in the text and divide it into meaningful segments.
-
-### API Reference
-
-**`__init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", buffer_size: int = 1, breakpoint_threshold_amount: int = 95, device: Literal["cpu", "cuda"] = "cpu") -> None`**
-
-Initialize the SemanticSplitter instance.
-- `model_name`: Name of the pre-trained embeddings model to use. Default is "sentence-transformers/all-MiniLM-L6-v2".
-- `buffer_size`: Size of the buffer for semantic chunking. Default is 1.
-- `breakpoint_threshold_amount`: Threshold percentage for detecting breakpoints. Default is 95.
-- `device`: Device to use for processing, either "cpu" or "cuda". Default is "cpu".
-
-**`from_text(self, text: str) -> List[str]`**
-
-Split text into chunks.
-- `text`: Input text to split.
-
-**`from_documents(self, documents: List[Document]) -> List[Document]`**
-
-Split text from a list of documents into chunks.
-- `documents`: List of Documents.
-
-## Vector Store: ElasticsearchVectorStore
+## Vector Store: Elasticsearch
 
 ### Overview
 The `ElasticsearchVectorStore` class provides functionality to interact with Elasticsearch for storing and querying document embeddings. It facilitates adding documents, performing similarity searches, and deleting documents from an Elasticsearch index.
 
 ### API Reference
 
-**`__init__(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size=200, ssl=False, distance_strategy="cosine", text_field="text", vector_field="embedding")`**
+**`ElasticsearchVectorStore(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size=200, ssl=False, distance_strategy="cosine", text_field="text", vector_field="embedding")`**
 
 Initializes the ElasticsearchVectorStore instance.
 
