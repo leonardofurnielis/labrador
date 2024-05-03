@@ -1,3 +1,34 @@
+## Ingestion: Directory Files
+
+## Text Splitter: Sentence Splitter
+
+### Overview
+This Python class `SentenceSplitter` is designed to split input text into smaller chunks, particularly useful for processing large documents or texts. It provides methods to split text into chunks and to split a list of documents into chunks.
+
+### API Reference
+
+**`__init__(self, chunk_size: int = 512, chunk_overlap: int = 256, length_function = len, separators: List[str] = ["\n\n", "\n", " ", ""]) -> None`**
+
+Creates a new instance of the `SentenceSplitter` class.
+
+- `chunk_size` (int, optional): Size of each chunk. Default is 512.
+- `chunk_overlap` (int, optional): Amount of overlap between chunks. Default is 256.
+- `length_function` (function, optional): Function to compute the length of the text. Default is `len`.
+- `separators` (List[str], optional): List of separators used to split the text into chunks. Default separators are `["\n\n", "\n", " ", ""]`.
+
+
+**`from_text(self, text: str) -> List[str]`**
+
+Splits the input text into chunks.
+
+- `text` (str): Input text to split.
+
+**`from_documents(self, documents: List[Document]) -> List[Document]`**
+
+Splits a list of documents into chunks.
+
+- `documents` (List[Document]): List of Document objects.
+
 ## Text Splitter: Semantic Splitter
 
 ### Overview
@@ -5,7 +36,7 @@ Semantic Splitter is a Python class designed to split text into chunks using sem
 
 ### API Reference
 
-#### `__init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", buffer_size: int = 1, breakpoint_threshold_amount: int = 95, device: Literal["cpu", "cuda"] = "cpu") -> None`
+**`__init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", buffer_size: int = 1, breakpoint_threshold_amount: int = 95, device: Literal["cpu", "cuda"] = "cpu") -> None`**
 
 Initialize the SemanticSplitter instance.
 - `model_name`: Name of the pre-trained embeddings model to use. Default is "sentence-transformers/all-MiniLM-L6-v2".
@@ -13,17 +44,15 @@ Initialize the SemanticSplitter instance.
 - `breakpoint_threshold_amount`: Threshold percentage for detecting breakpoints. Default is 95.
 - `device`: Device to use for processing, either "cpu" or "cuda". Default is "cpu".
 
-#### `from_text(self, text: str) -> List[str]`
+**`from_text(self, text: str) -> List[str]`**
 
 Split text into chunks.
 - `text`: Input text to split.
-- Returns: List of chunks.
 
-#### `from_documents(self, documents: List[Document]) -> List[Document]`
+**`from_documents(self, documents: List[Document]) -> List[Document]`**
 
 Split text from a list of documents into chunks.
 - `documents`: List of Documents.
-- Returns: List of Document split into chunks.
 
 ## Vector Store: ElasticsearchVectorStore
 
@@ -32,7 +61,7 @@ The `ElasticsearchVectorStore` class provides functionality to interact with Ela
 
 ### API Reference
 
-#### `__init__(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size=200, ssl=False, distance_strategy="cosine", text_field="text", vector_field="embedding")`
+**`__init__(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size=200, ssl=False, distance_strategy="cosine", text_field="text", vector_field="embedding")`**
 
 Initializes the ElasticsearchVectorStore instance.
 
@@ -48,21 +77,21 @@ Initializes the ElasticsearchVectorStore instance.
 - `text_field`: The name of the field containing text. Defaults to "text".
 - `vector_field`: The name of the field containing vector embeddings. Defaults to "embedding".
 
-#### `add_documents(documents, create_index_if_not_exists=True)`
+**`add_documents(documents, create_index_if_not_exists=True)`**
 
 Adds documents to the Elasticsearch index.
 
 - `documents`: A list of Document objects to add to the index.
 - `create_index_if_not_exists`: Whether to create the index if it doesn't exist. Defaults to True.
 
-#### `similarity_search(query, top_k=4)`
+**`similarity_search(query, top_k=4)`**
 
 Performs a similarity search based on the documents most similar to the query.
 
 - `query`: The query text.
 - `top_k`: The number of top results to return. Defaults to 4.
 
-#### `delete(ids=None)`
+**`delete(ids=None)`**
 
 Deletes documents from the Elasticsearch index.
 
