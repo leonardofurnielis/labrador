@@ -2,9 +2,9 @@ import uuid
 import logging
 from typing import List, Optional
 
-from slate_index.core.document import Document
-from slate_index.core.embeddings import Embeddings
-from slate_index.core.vector_stores import VectorStoreQueryResult
+from moonstone_index.core.document import Document
+from moonstone_index.core.embeddings import Embeddings
+from moonstone_index.core.vector_stores import VectorStoreQueryResult
 
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk

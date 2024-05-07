@@ -1,7 +1,7 @@
 from typing import Literal, List
 
-from slate_index.core.document import Document
-from slate_index.embeddings import HuggingFaceEmbeddings
+from moonstone_index.core.document import Document
+from moonstone_index.embeddings import HuggingFaceEmbeddings
 
 from langchain_experimental.text_splitter import SemanticChunker
 

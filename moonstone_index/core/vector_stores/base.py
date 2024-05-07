@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from slate_index.core.document import Document
+from moonstone_index.core.document import Document
 
 class VectorStoreQueryResult(BaseModel):
     document: Document

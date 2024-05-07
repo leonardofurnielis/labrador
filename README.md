@@ -1,4 +1,4 @@
-# Slate Index
+# Moonstone Index
 
 ## Table of Contents
 

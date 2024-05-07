@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 
-from slate_index.core.document import Document
+from moonstone_index.core.document import Document
 
 from llama_index.readers.file import PDFReader
 from llama_index.readers.file import DocxReader
