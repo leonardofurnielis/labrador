@@ -34,29 +34,28 @@ class Document(BaseModel):
     @classmethod
     def _convert_metadata(cls, metadata: dict, framework: Literal["llama_index", "langchain"]) -> dict:
         """
-        Parse metadata based on the specified framework.
+        Convert metadata based on the framework (supported llama_index, langchain).
 
         Args:
-            metadata (dict): Metadata to parse.
+            metadata (dict): Metadata to convert.
             framework (Literal["llama_index", "langchain"]): Framework indicator.
 
         Returns:
-            dict: Parsed metadata.
+            dict: converted metadata.
         """
-        _metadata: dict = {}
         today = datetime.now()
+        _metadata: dict = {}
+        _metadata["creation_date"] = "%s-%s-%s" % (today.year, today.month, today.day)
 
         if framework == "llama_index":
             _metadata["page"] = metadata["page_label"]
             _metadata["file_name"] = metadata["file_name"]
             _metadata["file_type"] = metadata["file_type"]
-            _metadata["creation_date"] = "%s-%s-%s" % (today.year, today.month, today.day)
 
         if framework == "langchain":
             _metadata["page"] = metadata["page"] + 1
             _metadata["file_name"] = os.path.basename(metadata["source"])
             _metadata["file_type"] = mimetypes.guess_type(_metadata["file_name"])[0]
-            _metadata["creation_date"] = "%s-%s-%s" % (today.year, today.month, today.day)
 
         return _metadata
     

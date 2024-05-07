@@ -18,24 +18,24 @@ class HuggingFaceEmbeddings(Embeddings):
 
         self._embed = LangchainHuggingFaceEmbeddings(model_name=model_name, model_kwargs=model_kwargs)
     
-    def get_text_embedding(self, text: str) -> List[float]:
+    def get_query_embedding(self, query: str) -> List[float]:
         """Compute embedding for a text.
 
         Args:
-            text (str): Input text to compute embedding for.
+            query (str): Input query to compute embedding.
 
         Returns:
             List[float]: Embedding vector for the input text.
         """ 
-        embedding_text = self._embed.embed_query(text) 
+        embedding_text = self._embed.embed_query(query) 
 
         return embedding_text
 
-    def get_text_embeddings(self, texts: List[str]) -> List[List[float]]:
+    def get_embedding_from_texts(self, texts: List[str]) -> List[List[float]]:
         """Compute embeddings for list of texts.
 
         Args:
-            texts (List[str]): List of input texts to compute embeddings for.
+            texts (List[str]): List of input texts to compute embedding.
 
         Returns:
             List[List[float]]: List of embedding vectors for the input texts.
@@ -44,16 +44,16 @@ class HuggingFaceEmbeddings(Embeddings):
 
         return embedding_texts
     
-    def get_documents_embeddings(self, documents: List[Document]) -> List[List[float]]:
+    def get_documents_embedding(self, documents: List[Document]) -> List[List[float]]:
         """Compute embeddings for a list of documents.
 
         Args:
-            documents (List[Document]): List of Document objects.
+            documents (List[Document]): List of Document.
 
         Returns:
             List[List[float]]: List of embedding vectors for the input documents.
         """
-        embedding_documents = [self.get_text_embedding(doc.get_text()) for doc in documents]
+        embedding_documents = [self.get_query_embedding(document.get_text()) for document in documents]
 
         return embedding_documents
 
