@@ -1,6 +1,6 @@
 from typing import List
 
-from moonstone_index.core.document import Document
+from spyder_index.core.document import Document
 
 from langchain_text_splitters.character import RecursiveCharacterTextSplitter
 

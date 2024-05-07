@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from moonstone_index.core.document import Document
+from spyder_index.core.document import Document
 
 class VectorStoreQueryResult(BaseModel):
     document: Document

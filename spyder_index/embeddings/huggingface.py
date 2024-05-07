@@ -1,7 +1,7 @@
 from typing import List, Literal
 
-from moonstone_index.core.document import Document
-from moonstone_index.core.embeddings import Embeddings
+from spyder_index.core.document import Document
+from spyder_index.core.embeddings import Embeddings
 
 from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings as LangchainHuggingFaceEmbeddings
 

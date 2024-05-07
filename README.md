@@ -1,4 +1,4 @@
-# Moonstone Index
+# Spyder Index
 
 ## Table of Contents
 

@@ -2,9 +2,9 @@ import uuid
 import logging
 from typing import List, Optional
 
-from moonstone_index.core.document import Document
-from moonstone_index.core.embeddings import Embeddings
-from moonstone_index.core.vector_stores import VectorStoreQueryResult
+from spyder_index.core.document import Document
+from spyder_index.core.embeddings import Embeddings
+from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk

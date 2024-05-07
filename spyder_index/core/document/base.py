@@ -63,7 +63,7 @@ class Document(BaseModel):
     @classmethod
     def _from_langchain_format(cls, doc: "LangchainDocument") -> "Document":
         """
-        Convert a document from LangChain format to moonstone_index Document format.
+        Convert a document from LangChain format to spyder_index Document format.
 
         Args:
             doc (LangchainDocument): Document in LangChain format.
@@ -78,7 +78,7 @@ class Document(BaseModel):
     @classmethod
     def _from_llama_index_format(cls, doc: "LlamaIndexDocument") -> "Document":
         """
-        Convert a document from LlamaIndex format to moonstone_index Document format.
+        Convert a document from LlamaIndex format to spyder_index Document format.
 
         Args:
             doc (LlamaIndexDocument): Document in LlamaIndex format.
