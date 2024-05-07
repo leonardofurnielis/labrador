@@ -5,9 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "spyder-index"
 version = "0.1.0"
-description = "A small example package"
+description = "Framework for your LLM applications"
 readme = "README.md"
+authors = [{ name = "Leonardo Furnielis" }]
 license = {text = "MIT License"}
+keywords = ["framework", "RAG", "index", "data"]
 dependencies = [
     "llama-index-core ~= 0.10.30",
     "llama-index-readers-file ~= 0.1.19",
