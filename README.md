@@ -26,19 +26,19 @@ Initialize a HuggingFaceEmbeddings object.
 - `model_name` (str, optional): Name of the HuggingFace model to be used. Defaults to "sentence-transformers/all-MiniLM-L6-v2".
 - `device` (Literal["cpu", "cuda"], optional): Device to run the model on. Defaults to "cpu".
 
-**`get_text_embedding(text: str) -> List[float]`**
+**`get_query_embedding(query: str) -> List[float]`**
 
-Compute embedding for a text.
+Compute embedding for a query.
 
-- `text` (str): Input text to compute embedding for.
+- `text` (str): Input query to compute embedding.
 
-**`get_text_embeddings(texts: List[str]) -> List[List[float]]`**
+**`get_embedding_from_texts(texts: List[str]) -> List[List[float]]`**
 
 Compute embeddings for a list of texts.
 
 - `texts` (List[str])
 
-**`get_documents_embeddings(documents: List[str]) -> List[List[float]]`**
+**`get_documents_embedding(documents: List[str]) -> List[List[float]]`**
 
 Compute embeddings for a list of Documents.
 
