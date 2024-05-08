@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from spyder_index.core.document import Document
 
@@ -22,11 +22,11 @@ class DirectoryLoader():
         # '.txt': download_loader('UnstructuredReader'),
         }
 
-    def load_data(self, dir) -> List[Document]:
+    def load_data(self, dir: str, metadata: Optional[dict]) -> List[Document]:
 
         llama_documents = SimpleDirectoryReader(
             input_dir=Path(dir).absolute(), 
             file_extractor=self.supported_file_loader, 
             required_exts= list(self.supported_file_loader.keys())).load_data()
-
-        return [Document()._from_llama_index_format(doc=doc) for doc in llama_documents]
+        
+        return [Document()._from_llama_index_format(doc=doc, metadata=metadata) for doc in llama_documents]

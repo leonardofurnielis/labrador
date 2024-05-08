@@ -1,7 +1,7 @@
 import os
 import uuid
 import mimetypes
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Literal, Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 
@@ -70,7 +70,7 @@ class Document(BaseModel):
         return cls(text=doc.page_content, metadata=converted_metadata)
     
     @classmethod
-    def _from_llama_index_format(cls, doc: "LlamaIndexDocument") -> "Document":
+    def _from_llama_index_format(cls, doc: "LlamaIndexDocument", metadata: Optional[dict]) -> "Document":
         """
         Convert a document from LlamaIndex format to spyder_index Document format.
 
@@ -80,6 +80,9 @@ class Document(BaseModel):
         Returns:
             Document: Converted document.
         """
-
         converted_metadata = cls._convert_metadata(doc.metadata, "llama_index")
+        
+        if metadata:
+            converted_metadata = metadata | converted_metadata
+
         return cls(text=doc.text, metadata=converted_metadata)
