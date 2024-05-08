@@ -176,5 +176,3 @@ Performs a similarity search based on the documents most similar to the query.
 Deletes documents from the Elasticsearch index.
 
 - `ids`: A list of document IDs to delete. Defaults to None.
-
-
