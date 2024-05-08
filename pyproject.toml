@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "spyder-index"
 version = "0.1.1"
-description = "Spyder Index is an open-source framework for building your LLM applications"
+description = "Spyder Index is an open-source framework for building LLM applications"
 readme = "README.md"
 authors = [{ name = "Leonardo Furnielis" }]
 license = {text = "MIT License"}
