@@ -18,11 +18,6 @@ class Document(BaseModel):
     def class_name(cls) -> str:
         return "Document"
 
-    def set_content(self, text: str, metadata: dict = {}) -> None:
-        """Set the text content and metadata of the document."""
-        self.text = text
-        self.metadata = metadata
-
     def get_text(self) -> str:
         """Get the text content of the document."""
         return self.text

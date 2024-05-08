@@ -22,7 +22,7 @@ class DirectoryLoader():
         # '.txt': download_loader('UnstructuredReader'),
         }
 
-    def load_data(self, dir) -> List[Document]: 
+    def load_data(self, dir) -> List[Document]:
 
         llama_documents = SimpleDirectoryReader(
             input_dir=Path(dir).absolute(), 
