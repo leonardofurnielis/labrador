@@ -6,6 +6,7 @@
   - [HuggingFace](#embeddings-huggingface)
 - Ingestion
   - [Directory Files](#ingestion-directory-files)
+  - [IBM COS](#ingestion-ibm-cloud-object-store-s3)
 - Text Splitter
   - [Semantic Splitter](#text-splitter-semantic-splitter)
   - [Sentence Splitter](#text-splitter-sentence-splitter)
