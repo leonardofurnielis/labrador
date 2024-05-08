@@ -22,6 +22,7 @@ dependencies = [
     "pypdf ~= 4.2.0",
     "torch == 2.1.0",
     "elasticsearch ~= 8.13.0",
+    "ibm-cos-sdk ~= 2.13.2"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
