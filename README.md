@@ -19,26 +19,26 @@ Class for computing text embeddings using HuggingFace models.
 
 ### API Reference
 
-**`HuggingFaceEmbeddings(model_name: str= "sentence-transformers/all-MiniLM-L6-v2", device: Literal["cpu", "cuda"] = "cpu")`**
+##### **`HuggingFaceEmbeddings(model_name: str= "sentence-transformers/all-MiniLM-L6-v2", device: Literal["cpu", "cuda"] = "cpu")`**
 
 Initialize a HuggingFaceEmbeddings object.
 
 - `model_name` (str, optional): Name of the HuggingFace model to be used. Defaults to "sentence-transformers/all-MiniLM-L6-v2".
 - `device` (Literal["cpu", "cuda"], optional): Device to run the model on. Defaults to "cpu".
 
-**`get_query_embedding(query: str) -> List[float]`**
+##### **`get_query_embedding(query: str) -> List[float]`**
 
 Compute embedding for a query.
 
 - `text` (str): Input query to compute embedding.
 
-**`get_embedding_from_texts(texts: List[str]) -> List[List[float]]`**
+##### **`get_embedding_from_texts(texts: List[str]) -> List[List[float]]`**
 
 Compute embeddings for a list of texts.
 
 - `texts` (List[str])
 
-**`get_documents_embedding(documents: List[str]) -> List[List[float]]`**
+##### **`get_documents_embedding(documents: List[str]) -> List[List[float]]`**
 
 Compute embeddings for a list of Documents.
 
