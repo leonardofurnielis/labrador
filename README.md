@@ -68,7 +68,7 @@ Loads data from IBM Cloud Object Storage (COS) using S3 interface.
 
 ##### **`IBMS3Loader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
 
-Initialize a IBMS3Loader object.
+Initialize an IBMS3Loader object.
 
 - `bucket` (str): The name of the IBM COS bucket.
 - `ibm_api_key_id` (str): The IBM Cloud API key ID for accessing the bucket.
