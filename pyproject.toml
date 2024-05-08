@@ -9,7 +9,7 @@ description = "Spyder Index is an open-source framework for building your LLM ap
 readme = "README.md"
 authors = [{ name = "Leonardo Furnielis" }]
 license = {text = "MIT License"}
-keywords = ["framework", "RAG", "index", "data" "LLM", "AI", "semantic search"]
+keywords = ["framework", "RAG", "index", "data", "LLM", "AI", "semantic search"]
 dependencies = [
     "llama-index-core ~= 0.10.30",
     "llama-index-readers-file ~= 0.1.19",
