@@ -76,6 +76,7 @@ class Document(BaseModel):
 
         Args:
             doc (LlamaIndexDocument): Document in LlamaIndex format.
+            metadata (Optional[dict]): Additional metadata to include in the converted document.
 
         Returns:
             Document: Converted document.
