@@ -51,11 +51,32 @@ This class provides functionality to load documents from a directory using vario
 
 ### API Reference
 
-##### **`load_data(self, dir) -> List[Document]`**
+##### **`load_data(dir: str) -> List[Document]`**
 
 Loads data from the specified directory.
 
 - `dir` (str): The directory path from which to load the documents.
+- `metadata` (Optional[dict]): Additional metadata to include in the document.
+
+## Ingestion: IBM Cloud Object Store (s3)
+
+### Overview
+Loads data from IBM Cloud Object Storage (COS) using S3 interface.
+
+### API Reference
+
+##### **`IBMS3Loader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
+
+Initialize a IBMS3Loader object.
+
+- `bucket` (str): The name of the IBM COS bucket.
+- `ibm_api_key_id` (str): The IBM Cloud API key ID for accessing the bucket.
+- `ibm_service_instance_id` (str): The service instance ID for the IBM COS.
+- `s3_endpoint_url` (str): The endpoint URL for the IBM COS S3 service.
+
+##### **`load_data() -> List[Document]`**
+
+Loads data from the specified directory.
 
 ## Text Splitter: Semantic Splitter
 
@@ -67,17 +88,18 @@ Semantic Splitter is a Python class designed to split text into chunks using sem
 ##### **`SemanticSplitter(model_name: str = "sentence-transformers/all-MiniLM-L6-v2", buffer_size: int = 1, breakpoint_threshold_amount: int = 95, device: Literal["cpu", "cuda"] = "cpu") -> None`**
 
 Initialize the SemanticSplitter instance.
+
 - `model_name`: Name of the pre-trained embeddings model to use. Default is "sentence-transformers/all-MiniLM-L6-v2".
 - `buffer_size`: Size of the buffer for semantic chunking. Default is 1.
 - `breakpoint_threshold_amount`: Threshold percentage for detecting breakpoints. Default is 95.
 - `device`: Device to use for processing, either "cpu" or "cuda". Default is "cpu".
 
-##### **`from_text(self, text: str) -> List[str]`**
+##### **`from_text(text: str) -> List[str]`**
 
 Split text into chunks.
 - `text`: Input text to split.
 
-##### **`from_documents(self, documents: List[Document]) -> List[Document]`**
+##### **`from_documents(documents: List[Document]) -> List[Document]`**
 
 Split text from a list of documents into chunks.
 - `documents`: List of Documents.
@@ -99,13 +121,13 @@ Creates a new instance of the `SentenceSplitter` class.
 - `separators` (List[str], optional): List of separators used to split the text into chunks. Default separators are `["\n\n", "\n", " ", ""]`.
 
 
-##### **`from_text(self, text: str) -> List[str]`**
+##### **`from_text(text: str) -> List[str]`**
 
 Splits the input text into chunks.
 
 - `text` (str): Input text to split.
 
-##### **`from_documents(self, documents: List[Document]) -> List[Document]`**
+##### **`from_documents(documents: List[Document]) -> List[Document]`**
 
 Splits a list of documents into chunks.
 
