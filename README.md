@@ -1,4 +1,4 @@
-# spyder Index
+# 🕸️ Spyder Index
 
 ![PyPI - Version](https://img.shields.io/pypi/v/spyder-index)
 ![PyPI - License](https://img.shields.io/pypi/l/spyder-index)
