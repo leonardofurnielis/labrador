@@ -3,15 +3,15 @@ from pydantic import BaseModel, Field
 
 from spyder_index.core.document import Document
 
-from langchain_community.document_loaders import JSONLoader as LangchainJSONLoader
+from langchain_community.document_loaders import JSONLoader
 
-class JSONLoader(BaseModel):
+class JSONReader(BaseModel):
     jq_schema: str = Field(default="")
     text_content: bool = Field(default=False)
 
     def load_data(self, file: str, extra_info: Optional[dict] = None) -> List[Document]: 
 
-        loader = LangchainJSONLoader(file_path=file,
+        loader = JSONLoader(file_path=file,
                             jq_schema=self.jq_schema,
                             text_content=self.text_content)
         

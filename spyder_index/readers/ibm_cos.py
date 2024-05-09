@@ -8,9 +8,9 @@ from pydantic import BaseModel, Field
 from ibm_botocore.client import Config
 
 from spyder_index.core.document import Document
-from spyder_index.ingestion.directory_file import DirectoryLoader
+from spyder_index.readers.directory import DirectoryReader
 
-class IBMS3Loader(BaseModel):
+class IBMS3Reader(BaseModel):
     bucket: str = Field(default="")
     ibm_api_key_id: str = Field(default="")
     ibm_service_instance_id: str = Field(default="")
@@ -34,6 +34,7 @@ class IBMS3Loader(BaseModel):
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 ibm_s3.meta.client.download_file(self.bucket, obj.key, file_path)
                     
-            dir_loader = DirectoryLoader()
             s3_source = re.sub(r"^(https?)://", "", self.s3_endpoint_url)
-            return dir_loader.load_data(temp_dir, metadata={"source": f"{s3_source}/{self.bucket}"})
+            
+            return DirectoryReader(input_dir=temp_dir, extra_info={"source": f"{s3_source}/{self.bucket}"}).load_data()
+
