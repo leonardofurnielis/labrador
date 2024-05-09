@@ -43,14 +43,17 @@ class Document(BaseModel):
         _metadata["creation_date"] = "%s-%s-%s" % (today.year, today.month, today.day)
 
         if framework == "llama_index":
-            _metadata["page"] = metadata["page_label"]
-            _metadata["file_name"] = metadata["file_name"]
-            _metadata["file_type"] = metadata["file_type"]
+            _metadata["page"] = metadata.get("page_label")
+            _metadata["file_name"] = metadata.get("file_name")
+            _metadata["file_type"] = metadata.get("file_type")
 
         if framework == "langchain":
-            _metadata["page"] = metadata["page"] + 1
-            _metadata["file_name"] = os.path.basename(metadata["source"])
+            _metadata["page"] = metadata.get("page")
+            _metadata["file_name"] = os.path.basename(metadata.get("source"))
             _metadata["file_type"] = mimetypes.guess_type(_metadata["file_name"])[0]
+
+            if type(_metadata.get("page")) == int:
+                _metadata.get("page") + 1
 
         return _metadata
     
@@ -70,7 +73,7 @@ class Document(BaseModel):
         return cls(text=doc.page_content, metadata=converted_metadata)
     
     @classmethod
-    def _from_llama_index_format(cls, doc: "LlamaIndexDocument", metadata: Optional[dict]) -> "Document":
+    def _from_llama_index_format(cls, doc: "LlamaIndexDocument", metadata: Optional[dict] = None) -> "Document":
         """
         Convert a document from LlamaIndex format to spyder_index Document format.
 

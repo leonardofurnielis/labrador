@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from spyder_index.core.document import Document
+from spyder_index.ingestion.json import JSONLoader
 
 from llama_index.readers.file import PDFReader
 from llama_index.readers.file import DocxReader
@@ -22,11 +23,11 @@ class DirectoryLoader():
         # '.txt': download_loader('UnstructuredReader'),
         }
 
-    def load_data(self, dir: str, metadata: Optional[dict]) -> List[Document]:
+    def load_data(self, dir: str, metadata: Optional[dict] = None) -> List[Document]:
 
         llama_documents = SimpleDirectoryReader(
             input_dir=Path(dir).absolute(), 
             file_extractor=self.supported_file_loader, 
-            required_exts= list(self.supported_file_loader.keys())).load_data()
+            required_exts=list(self.supported_file_loader.keys())).load_data()
         
         return [Document()._from_llama_index_format(doc=doc, metadata=metadata) for doc in llama_documents]
