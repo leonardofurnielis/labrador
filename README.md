@@ -7,6 +7,7 @@
 - Ingestion
   - [Directory Files](#ingestion-directory-files)
   - [IBM Cloud Object Storage (s3)](#ingestion-ibm-cloud-object-store-s3)
+  - [JSON](#ingestion-json)
 - Text Splitter
   - [Semantic Splitter](#text-splitter-semantic-splitter)
   - [Sentence Splitter](#text-splitter-sentence-splitter)
@@ -19,6 +20,8 @@
 Class for computing text embeddings using HuggingFace models.
 
 ### API Reference
+
+`from spyder_index.embeddings import HuggingFaceEmbeddings`
 
 ##### **`HuggingFaceEmbeddings(model_name: str= "sentence-transformers/all-MiniLM-L6-v2", device: Literal["cpu", "cuda"] = "cpu")`**
 
@@ -52,6 +55,8 @@ This class provides functionality to load documents from a directory using vario
 
 ### API Reference
 
+`from spyder_index.ingestion import DirectoryLoader`
+
 ##### **`load_data(dir: str) -> List[Document]`**
 
 Loads data from the specified directory.
@@ -66,6 +71,8 @@ Loads data from IBM Cloud Object Storage (COS) using S3 interface.
 
 ### API Reference
 
+`from spyder_index.ingestion import IBMS3Loader`
+
 ##### **`IBMS3Loader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
 
 Initialize an IBMS3Loader object.
@@ -79,12 +86,36 @@ Initialize an IBMS3Loader object.
 
 Loads data from the specified directory.
 
+## Ingestion: JSON
+
+### Overview
+Loads data from JSON.
+
+### API Reference
+
+`from spyder_index.ingestion import JSONLoader`
+
+##### **`JSONLoader(jq_schema: str, text_content: bool)`**
+
+Initialize an JSONLoader object.
+
+- `jq_schema` (str): The jq schema to use to extract the data from the JSON.
+- `text_content` (bool): Flag to indicate whether the content is in string format. Default is `False`
+
+##### **`load_data() -> List[Document]`**
+
+Loads data from the specified directory.
+
+- `file` (str): The file path of JSON.
+
 ## Text Splitter: Semantic Splitter
 
 ### Overview
 Semantic Splitter is a Python class designed to split text into chunks using semantic understanding. It utilizes pre-trained embeddings to identify breakpoints in the text and divide it into meaningful segments.
 
 ### API Reference
+
+`from spyder_index.text_splitters import SemanticSplitter`
 
 ##### **`SemanticSplitter(model_name: str = "sentence-transformers/all-MiniLM-L6-v2", buffer_size: int = 1, breakpoint_threshold_amount: int = 95, device: Literal["cpu", "cuda"] = "cpu") -> None`**
 
@@ -111,6 +142,8 @@ Split text from a list of documents into chunks.
 This Python class `SentenceSplitter` is designed to split input text into smaller chunks, particularly useful for processing large documents or texts. It provides methods to split text into chunks and to split a list of documents into chunks.
 
 ### API Reference
+
+`from spyder_index.text_splitters import SentenceSplitter`
 
 ##### **`SentenceSplitter(chunk_size: int = 512, chunk_overlap: int = 256, length_function = len, separators: List[str] = ["\n\n", "\n", " ", ""]) -> None`**
 
@@ -140,6 +173,8 @@ Splits a list of documents into chunks.
 The `ElasticsearchVectorStore` class provides functionality to interact with Elasticsearch for storing and querying document embeddings. It facilitates adding documents, performing similarity searches, and deleting documents from an Elasticsearch index.
 
 ### API Reference
+
+`from spyder_index.vector_stores import ElasticsearchVectorStore`
 
 ##### **`ElasticsearchVectorStore(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size=200, ssl=False, distance_strategy="cosine", text_field="text", vector_field="embedding")`**
 
