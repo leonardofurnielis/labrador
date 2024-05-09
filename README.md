@@ -15,7 +15,7 @@ pip install spyder-index
 - Embeddings
   - [HuggingFace](#embeddings-huggingface)
 - Readers
-  - [Directory](#readers-directory-files)
+  - [Directory](#readers-directory)
   - [IBM Cloud Object Storage (s3)](#readers-ibm-cloud-object-store-s3)
   - [JSON](#readers-json)
 - Text Splitter
