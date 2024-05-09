@@ -4,6 +4,12 @@
 ![PyPI - License](https://img.shields.io/pypi/l/spyder-index)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/spyder-index)
 
+## Installation 
+
+```bash
+pip install spyder-index
+```
+
 ## Table of Contents
 
 - Embeddings
@@ -25,7 +31,9 @@ Class for computing text embeddings using HuggingFace models.
 
 ### API Reference
 
-`from spyder_index.embeddings import HuggingFaceEmbeddings`
+```py 
+from spyder_index.embeddings import HuggingFaceEmbeddings
+```
 
 ##### **`HuggingFaceEmbeddings(model_name: str= "sentence-transformers/all-MiniLM-L6-v2", device: Literal["cpu", "cuda"] = "cpu")`**
 
@@ -59,7 +67,9 @@ This class provides functionality to load documents from a directory using vario
 
 ### API Reference
 
-`from spyder_index.ingestion import DirectoryLoader`
+```py 
+from spyder_index.ingestion import DirectoryLoader
+```
 
 ##### **`load_data(dir: str) -> List[Document]`**
 
@@ -75,7 +85,9 @@ Loads data from IBM Cloud Object Storage (COS) using S3 interface.
 
 ### API Reference
 
-`from spyder_index.ingestion import IBMS3Loader`
+```py 
+from spyder_index.ingestion import IBMS3Loader
+```
 
 ##### **`IBMS3Loader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
 
@@ -97,7 +109,9 @@ Loads data from JSON.
 
 ### API Reference
 
-`from spyder_index.ingestion import JSONLoader`
+```py 
+from spyder_index.ingestion import JSONLoader
+```
 
 ##### **`JSONLoader(jq_schema: str, text_content: bool)`**
 
@@ -119,7 +133,9 @@ Semantic Splitter is a Python class designed to split text into chunks using sem
 
 ### API Reference
 
-`from spyder_index.text_splitters import SemanticSplitter`
+```py 
+from spyder_index.text_splitters import SemanticSplitter
+```
 
 ##### **`SemanticSplitter(model_name: str = "sentence-transformers/all-MiniLM-L6-v2", buffer_size: int = 1, breakpoint_threshold_amount: int = 95, device: Literal["cpu", "cuda"] = "cpu") -> None`**
 
@@ -147,7 +163,9 @@ This Python class `SentenceSplitter` is designed to split input text into smalle
 
 ### API Reference
 
-`from spyder_index.text_splitters import SentenceSplitter`
+```py 
+from spyder_index.text_splitters import SentenceSplitter
+```
 
 ##### **`SentenceSplitter(chunk_size: int = 512, chunk_overlap: int = 256, length_function = len, separators: List[str] = ["\n\n", "\n", " ", ""]) -> None`**
 
@@ -178,7 +196,9 @@ The `ElasticsearchVectorStore` class provides functionality to interact with Ela
 
 ### API Reference
 
-`from spyder_index.vector_stores import ElasticsearchVectorStore`
+```py 
+from spyder_index.vector_stores import ElasticsearchVectorStore
+```
 
 ##### **`ElasticsearchVectorStore(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size=200, ssl=False, distance_strategy="cosine", text_field="text", vector_field="embedding")`**
 
