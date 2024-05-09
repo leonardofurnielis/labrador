@@ -14,10 +14,10 @@ pip install spyder-index
 
 - Embeddings
   - [HuggingFace](#embeddings-huggingface)
-- Ingestion
-  - [Directory Files](#ingestion-directory-files)
-  - [IBM Cloud Object Storage (s3)](#ingestion-ibm-cloud-object-store-s3)
-  - [JSON](#ingestion-json)
+- Readers
+  - [Directory](#readers-directory-files)
+  - [IBM Cloud Object Storage (s3)](#readers-ibm-cloud-object-store-s3)
+  - [JSON](#readers-json)
 - Text Splitter
   - [Semantic Splitter](#text-splitter-semantic-splitter)
   - [Sentence Splitter](#text-splitter-sentence-splitter)
@@ -60,25 +60,29 @@ Compute embeddings for a list of Documents.
 
 - `documents` (List[Documents])
 
-## Ingestion: Directory Files
+## Readers: Directory
 
 ### Overview
-This class provides functionality to load documents from a directory using various file loaders.
+This class provides functionality to load documents from a directory.
 
 ### API Reference
 
 ```py 
-from spyder_index.ingestion import DirectoryLoader
+from spyder_index.readers import DirectoryReader
 ```
 
-##### **`load_data(dir: str) -> List[Document]`**
+##### **`DirectoryReader(input_dir: str, extra_info: Optional[dict])`**
+
+Initialize a DirectoryReader object.
+
+- `input_dir` (str): The directory path from which to load the documents.
+- `extra_info` (Optional[dict]): Additional metadata to include in the document.
+
+##### **`load_data() -> List[Document]`**
 
 Loads data from the specified directory.
 
-- `dir` (str): The directory path from which to load the documents.
-- `metadata` (Optional[dict]): Additional metadata to include in the document.
-
-## Ingestion: IBM Cloud Object Store (s3)
+## Readers: IBM Cloud Object Store (s3)
 
 ### Overview
 Loads data from IBM Cloud Object Storage (COS) using S3 interface.
@@ -86,12 +90,12 @@ Loads data from IBM Cloud Object Storage (COS) using S3 interface.
 ### API Reference
 
 ```py 
-from spyder_index.ingestion import IBMS3Loader
+from spyder_index.readers import IBMS3Reader
 ```
 
-##### **`IBMS3Loader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
+##### **`IBMS3Reader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
 
-Initialize an IBMS3Loader object.
+Initialize an IBMS3Reader object.
 
 - `bucket` (str): The name of the IBM COS bucket.
 - `ibm_api_key_id` (str): The IBM Cloud API key ID for accessing the bucket.
@@ -102,29 +106,30 @@ Initialize an IBMS3Loader object.
 
 Loads data from the specified directory.
 
-## Ingestion: JSON
+## Readers: JSON
 
 ### Overview
+
 Loads data from JSON.
 
 ### API Reference
 
 ```py 
-from spyder_index.ingestion import JSONLoader
+from spyder_index.readers import JSONReader
 ```
 
-##### **`JSONLoader(jq_schema: str, text_content: bool)`**
+##### **`JSONReader(jq_schema: str, text_content: bool)`**
 
-Initialize an JSONLoader object.
+Initialize an JSONReader object.
 
 - `jq_schema` (str): The jq schema to use to extract the data from the JSON.
 - `text_content` (bool): Flag to indicate whether the content is in string format. Default is `False`
 
-##### **`load_data() -> List[Document]`**
+##### **`load_data(input_file: Path) -> List[Document]`**
 
 Loads data from the specified directory.
 
-- `file` (str): The file path of JSON.
+- `input_file` (Path): File path to read.
 
 ## Text Splitter: Semantic Splitter
 
