@@ -1,5 +1,9 @@
 # Spyder Index
 
+![PyPI - Version](https://img.shields.io/pypi/v/spyder-index)
+![PyPI - License](https://img.shields.io/pypi/l/spyder-index)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/spyder-index)
+
 ## Table of Contents
 
 - Embeddings
