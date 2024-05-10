@@ -16,8 +16,9 @@ pip install spyder-index
   - [HuggingFace](#embeddings-huggingface)
 - Readers
   - [Directory](#readers-directory)
-  - [IBM Cloud Object Storage (s3)](#readers-ibm-cloud-object-store-s3)
   - [JSON](#readers-json)
+  - [PDF File](#readers-pdf)
+  - [S3](#readers-s3)
 - Text Splitter
   - [Semantic Splitter](#text-splitter-semantic-splitter)
   - [Sentence Splitter](#text-splitter-sentence-splitter)
@@ -71,36 +72,13 @@ This class provides functionality to load documents from a directory.
 from spyder_index.readers import DirectoryReader
 ```
 
-##### **`DirectoryReader(input_dir: str, extra_info: Optional[dict])`**
+##### **`DirectoryReader(input_dir: str, extra_info: Optional[dict], recursive: bool)`**
 
 Initialize a DirectoryReader object.
 
 - `input_dir` (str): The directory path from which to load the documents.
 - `extra_info` (Optional[dict]): Additional metadata to include in the document.
-
-##### **`load_data() -> List[Document]`**
-
-Loads data from the specified directory.
-
-## Readers: IBM Cloud Object Store (s3)
-
-### Overview
-Loads data from IBM Cloud Object Storage (COS) using S3 interface.
-
-### API Reference
-
-```py 
-from spyder_index.readers import IBMS3Reader
-```
-
-##### **`IBMS3Reader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
-
-Initialize an IBMS3Reader object.
-
-- `bucket` (str): The name of the IBM COS bucket.
-- `ibm_api_key_id` (str): The IBM Cloud API key ID for accessing the bucket.
-- `ibm_service_instance_id` (str): The service instance ID for the IBM COS.
-- `s3_endpoint_url` (str): The endpoint URL for the IBM COS S3 service.
+- `recursive` (Optional[bool]): Whether to recursively search for files. Defaults to False.
 
 ##### **`load_data() -> List[Document]`**
 
@@ -118,18 +96,62 @@ Loads data from JSON.
 from spyder_index.readers import JSONReader
 ```
 
-##### **`JSONReader(jq_schema: str, text_content: bool)`**
+##### **`JSONReader(input_file: str, jq_schema: str, text_content: bool)`**
 
 Initialize an JSONReader object.
-
+- `input_file` (str): File path to read.
 - `jq_schema` (str): The jq schema to use to extract the data from the JSON.
 - `text_content` (bool): Flag to indicate whether the content is in string format. Default is `False`
 
-##### **`load_data(input_file: Path) -> List[Document]`**
+##### **`load_data() -> List[Document]`**
 
 Loads data from the specified directory.
 
-- `input_file` (Path): File path to read.
+## Readers: PDF
+
+### Overview
+
+Loads data from PDF.
+
+### API Reference
+
+```py 
+from spyder_index.readers.file import PDFReader
+```
+
+##### **`PDFReader(input_file: str)`**
+
+Initialize an PDFReader object.
+
+- `input_file` (str)
+
+##### **`load_data() -> List[Document]`**
+
+Loads data from the specified directory.
+
+## Readers: S3
+
+### Overview
+Loads data from S3 bucket.
+
+### API Reference
+
+```py 
+from spyder_index.readers import S3Reader
+```
+
+##### **`S3Reader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)`**
+
+Initialize an S3Reader object.
+
+- `bucket` (str): The name of the IBM COS bucket.
+- `ibm_api_key_id` (str): The IBM Cloud API key ID for accessing the bucket.
+- `ibm_service_instance_id` (str): The service instance ID for the IBM COS.
+- `s3_endpoint_url` (str): The endpoint URL for the IBM COS S3 service.
+
+##### **`load_data() -> List[Document]`**
+
+Loads data from the specified directory.
 
 ## Text Splitter: Semantic Splitter
 
