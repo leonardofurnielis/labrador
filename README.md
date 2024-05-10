@@ -16,7 +16,7 @@ pip install spyder-index
   - [HuggingFace](#embeddings-huggingface)
 - Readers
   - [Directory](#readers-directory)
-  - [JSON](#readers-json)
+  - [JSON File](#readers-json)
   - [PDF File](#readers-pdf)
   - [S3](#readers-s3)
 - Text Splitter
@@ -93,7 +93,7 @@ Loads data from JSON.
 ### API Reference
 
 ```py 
-from spyder_index.readers import JSONReader
+from spyder_index.readers.file import JSONReader
 ```
 
 ##### **`JSONReader(input_file: str, jq_schema: str, text_content: bool)`**
