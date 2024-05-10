@@ -4,15 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spyder-index"
-version = "0.1.2"
+version = "0.2.0"
 description = "Spyder Index is an open-source framework for building LLM applications"
 readme = "README.md"
 authors = [{ name = "Leonardo Furnielis" }]
 license = {text = "MIT License"}
 keywords = ["framework", "RAG", "index", "data", "LLM", "AI", "semantic search"]
 dependencies = [
-    "llama-index-core ~= 0.10.30",
-    "llama-index-readers-file ~= 0.1.19",
     "langchain-core ~= 0.1.48",
     "langchain-community ~= 0.0.36",
     "langchain-text-splitters ~= 0.0.1",
@@ -22,7 +20,8 @@ dependencies = [
     "pypdf ~= 4.2.0",
     "torch == 2.1.0",
     "elasticsearch ~= 8.13.0",
-    "ibm-cos-sdk ~= 2.13.2"
+    "ibm-cos-sdk ~= 2.13.2",
+    "jq ~= 1.7.0"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

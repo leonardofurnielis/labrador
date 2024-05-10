@@ -6,7 +6,6 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 
 if TYPE_CHECKING:
-    from llama_index.core.schema import Document as LlamaIndexDocument
     from langchain_core.documents import Document as LangchainDocument
 
 class Document(BaseModel):
@@ -27,7 +26,7 @@ class Document(BaseModel):
         return self.metadata
     
     @classmethod
-    def _convert_metadata(cls, metadata: dict, framework: Literal["llama_index", "langchain"]) -> dict:
+    def _convert_metadata(cls, metadata: dict, framework: Literal["langchain"]) -> dict:
         """
         Convert metadata based on the framework (supported llama_index, langchain).
 
@@ -41,11 +40,6 @@ class Document(BaseModel):
         today = datetime.now()
         _metadata: dict = {}
         _metadata["creation_date"] = "%s-%s-%s" % (today.year, today.month, today.day)
-
-        if framework == "llama_index":
-            _metadata["page"] = metadata.get("page_label")
-            _metadata["file_name"] = metadata.get("file_name")
-            _metadata["file_type"] = metadata.get("file_type")
 
         if framework == "langchain":
             _metadata["page"] = metadata.get("page")
@@ -71,22 +65,3 @@ class Document(BaseModel):
         
         converted_metadata = cls._convert_metadata(doc.metadata, "langchain")
         return cls(text=doc.page_content, metadata=converted_metadata)
-    
-    @classmethod
-    def _from_llama_index_format(cls, doc: "LlamaIndexDocument", metadata: Optional[dict] = None) -> "Document":
-        """
-        Convert a document from LlamaIndex format to spyder_index Document format.
-
-        Args:
-            doc (LlamaIndexDocument): Document in LlamaIndex format.
-            metadata (Optional[dict]): Additional metadata to include in the converted document.
-
-        Returns:
-            Document: Converted document.
-        """
-        converted_metadata = cls._convert_metadata(doc.metadata, "llama_index")
-        
-        if metadata:
-            converted_metadata = metadata | converted_metadata
-
-        return cls(text=doc.text, metadata=converted_metadata)

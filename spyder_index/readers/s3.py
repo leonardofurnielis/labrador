@@ -4,17 +4,24 @@ import tempfile
 import ibm_boto3
 
 from typing import List
-from pydantic import BaseModel, Field
 from ibm_botocore.client import Config
 
+from spyder_index.core.readers import BaseReader
 from spyder_index.core.document import Document
-from spyder_index.ingestion.directory_file import DirectoryLoader
+from spyder_index.readers import DirectoryReader
 
-class IBMS3Loader(BaseModel):
-    bucket: str = Field(default="")
-    ibm_api_key_id: str = Field(default="")
-    ibm_service_instance_id: str = Field(default="")
-    s3_endpoint_url: str = Field(default="")
+class S3Reader(BaseReader):
+
+    def __init__(self, bucket: str,
+                 ibm_api_key_id: str= None,
+                 ibm_service_instance_id: str = None,
+                 s3_endpoint_url: str = None
+                 ):
+        self.bucket = bucket
+        self.ibm_api_key_id = ibm_api_key_id
+        self.ibm_service_instance_id = ibm_service_instance_id
+        self.s3_endpoint_url = s3_endpoint_url
+
 
     def load_data(self) -> List[Document]: 
 
@@ -34,6 +41,7 @@ class IBMS3Loader(BaseModel):
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 ibm_s3.meta.client.download_file(self.bucket, obj.key, file_path)
                     
-            dir_loader = DirectoryLoader()
             s3_source = re.sub(r"^(https?)://", "", self.s3_endpoint_url)
-            return dir_loader.load_data(temp_dir, metadata={"source": f"{s3_source}/{self.bucket}"})
+            
+            return DirectoryReader(input_dir=temp_dir).load_data(extra_info={"source": f"{s3_source}/{self.bucket}"})
+
