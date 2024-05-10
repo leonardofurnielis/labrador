@@ -1,9 +1,9 @@
-from slate_index.spyder_index.readers.directory import DirectoryReader
-from spyder_index.readers.ibm_cos import IBMS3Reader
+from spyder_index.readers.directory import DirectoryReader
 from spyder_index.readers.json import JSONReader
+from spyder_index.readers.s3 import S3Reader
 
 __all__ = [
     "DirectoryReader",
-    "IBMS3Reader",
-    "JSONReader"
+    "JSONReader",
+    "S3Reader",
 ]

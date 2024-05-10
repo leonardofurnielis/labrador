@@ -1,33 +1,57 @@
-from pathlib import Path
-from typing import List, Optional
-from pydantic import BaseModel, Field
+import os
 
+from pathlib import Path
+from typing import List, Optional, Type, Callable
+
+from spyder_index.core.readers import BaseReader
 from spyder_index.core.document import Document
 
-from llama_index.readers.file import PDFReader
-from llama_index.readers.file import DocxReader
-# from llama_index.readers.file import PptxReader
-from llama_index.readers.file import HTMLTagReader
+from langchain_community.document_loaders import DirectoryLoader
 
-from llama_index.core import SimpleDirectoryReader
+def _loading_default_file_readers():
+    from spyder_index.readers.file import PDFReader
+
+    default_file_reader_cls: dict[str, Type[BaseReader]] = {
+        ".pdf": PDFReader,
+    }
+    
+    return default_file_reader_cls
 
 
-class DirectoryReader(BaseModel):
-    input_dir: str = Field(default="")
-    extra_info: Optional[dict] = Field(default=None)
-    supported_file_reader: dict = {
-        '.pdf': PDFReader(),
-        '.docx': DocxReader(), 
-        # '.pptx': PptxReader(), #download_loader('PptxReader'),
-        '.html': HTMLTagReader(), 
-        # '.txt': download_loader('UnstructuredReader'),
-        }
+class DirectoryReader(BaseReader):
+    default_file_reader_fn: Callable = _loading_default_file_readers
 
-    def load_data(self) -> List[Document]:
-
-        llama_documents = SimpleDirectoryReader(
-            input_dir=Path(self.input_dir).absolute(), 
-            file_extractor=self.supported_file_loader, 
-            required_exts=list(self.supported_file_loader.keys())).load_data()
+    def __init__(self, input_dir: str = None, 
+                 file_reader: Optional[dict[str, Type[BaseReader]]] = None, 
+                 recursive: Optional[bool] = False):
         
-        return [Document()._from_llama_index_format(doc=doc, metadata=self.extra_info) for doc in llama_documents]
+        if not input_dir:
+            raise ValueError("Must provide `input_dir`.")
+
+        if not os.path.isdir(input_dir):
+            raise ValueError(f"Directory {input_dir} does not exist.")
+        
+        if file_reader is not None:
+            self.file_reader = file_reader
+        else:
+            self.file_reader = {}
+        
+        self.input_dir = Path(input_dir)
+        self.recursive = recursive
+
+
+    def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
+        documents = []
+        default_file_reader_cls = DirectoryReader.default_file_reader_fn()
+
+        file_reader = self.file_reader | default_file_reader_cls
+        file_reader_suffix = list(file_reader.keys())
+
+        for file_suffix in file_reader_suffix:
+            print(file_suffix)
+            #TO-DO add `file_reader_kwargs`
+            docs = DirectoryLoader(self.input_dir, glob=f"**/*{file_suffix}", loader_cls=file_reader[file_suffix]).load()
+            
+            documents.extend(docs)
+            #TO-DO extend `doc.metadata` with `extra_info`
+        return documents
