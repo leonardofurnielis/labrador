@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spyder-index"
-version = "0.2.0"
+version = "0.2.1"
 description = "Spyder Index is an open-source framework for building LLM applications"
 readme = "README.md"
 authors = [{ name = "Leonardo Furnielis" }]
@@ -21,7 +21,8 @@ dependencies = [
     "torch == 2.1.0",
     "elasticsearch ~= 8.13.0",
     "ibm-cos-sdk ~= 2.13.2",
-    "jq ~= 1.7.0"
+    "jq ~= 1.7.0",
+    "docx2txt ~= 0.8"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
