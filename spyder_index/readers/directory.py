@@ -9,9 +9,11 @@ from spyder_index.core.document import Document
 from langchain_community.document_loaders import DirectoryLoader
 
 def _loading_default_file_readers():
+    from spyder_index.readers.file import DocxReader
     from spyder_index.readers.file import PDFReader
 
     default_file_reader_cls: dict[str, Type[BaseReader]] = {
+        ".docx": PDFReader,
         ".pdf": PDFReader,
     }
     
