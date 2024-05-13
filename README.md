@@ -16,6 +16,8 @@ pip install spyder-index
   - [HuggingFace](#embeddings-huggingface)
 - Readers
   - [Directory](#readers-directory)
+  - [Docx File](#readers-docx)
+  - [HTML File](#readers-html)
   - [JSON File](#readers-json)
   - [PDF File](#readers-pdf)
   - [S3](#readers-s3)
@@ -102,6 +104,48 @@ Initialize an JSONReader object.
 - `input_file` (str): File path to read.
 - `jq_schema` (str): The jq schema to use to extract the data from the JSON.
 - `text_content` (bool): Flag to indicate whether the content is in string format. Default is `False`
+
+##### **`load_data() -> List[Document]`**
+
+Loads data from the specified directory.
+
+## Readers: Docx
+
+### Overview
+
+Loads data from Microsoft Word (Docx) format.
+
+### API Reference
+
+```py 
+from spyder_index.readers.file import DocxReader
+```
+
+##### **`DocxReader(input_file: str)`**
+
+Initialize an DocxReader object.
+- `input_file` (str): File path to read.
+
+##### **`load_data() -> List[Document]`**
+
+Loads data from the specified directory.
+
+## Readers: HTML
+
+### Overview
+
+Loads data from HTML format.
+
+### API Reference
+
+```py 
+from spyder_index.readers.file import HTMLReader
+```
+
+##### **`HTMLReader(input_file: str)`**
+
+Initialize an JSONReader object.
+- `input_file` (str): File path to read.
 
 ##### **`load_data() -> List[Document]`**
 
