@@ -17,10 +17,10 @@ _____
 
 Initialize a S3Reader.
 
-- ``bucket`` (str): The name of the IBM COS bucket.
+- ``bucket`` (str): The name of the S3 bucket.
 - ``ibm_api_key_id`` (str): The IBM Cloud API key ID for accessing the bucket.
 - ``ibm_service_instance_id`` (str): The service instance ID for the IBM COS.
-- ``s3_endpoint_url`` (str): The endpoint URL for the IBM COS S3 service.
+- ``s3_endpoint_url`` (str): The endpoint URL for the S3 service.
 
 _____
 
