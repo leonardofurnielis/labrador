@@ -1,0 +1,6 @@
+Embeddings
+============================================
+
+.. toctree::
+    
+    HuggingFace <huggingface>

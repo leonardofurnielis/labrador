@@ -1,0 +1,6 @@
+Elasticsearch
+============================================
+
+.. toctree::
+    
+    Elasticsearch <elasticsearch>
