@@ -1,20 +1,17 @@
-.. spyder-index documentation master file, created by
-   sphinx-quickstart on Tue May 14 19:15:19 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to spyder-index's documentation!
+Welcome to 🕸️ Spyder Index  documentation!
 ========================================
+
+Spyder Index is a framework for your LLM (Large Language Model) application.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+Top Features
+------------
 
+✅ **Data connectors**: gather data from various sources like Docx, PDFs, Buckets, and more, maintaining their original format.
 
-Indices and tables
-==================
+✅ **Data indexes**: organize this data into structured representations optimized for efficient consumption by language models.
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+✅ **Models**: enable natural language interaction with your data
