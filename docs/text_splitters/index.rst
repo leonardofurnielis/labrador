@@ -1,5 +1,7 @@
-Readers
+Text Splitters
 ============================================
 
 .. toctree::
-    :hidden:
+    
+    Semantic <semantic>
+    Sentence <sentence>
