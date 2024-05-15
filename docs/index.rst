@@ -1,5 +1,5 @@
 Welcome to 🕸️ Spyder Index  documentation!
-========================================
+============================================
 
 Spyder Index is a framework for your LLM (Large Language Model) application.
 
