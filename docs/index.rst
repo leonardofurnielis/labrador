@@ -14,7 +14,7 @@ Spyder Index is a framework for your LLM (Large Language Model) application.
     Vector Stores <vector_stores/index>
 
 Top Features
-------------
+---------------
 
 ✅ **Data connectors**: gather data from various sources like Docx, PDFs, Buckets, and more, maintaining their original format.
 
