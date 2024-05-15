@@ -1,6 +1,6 @@
-Vector Stores
+Elasticsearch
 ============================================
 
 .. toctree::
-    :hidden:
     
+    Elasticsearch <elasticsearch>
