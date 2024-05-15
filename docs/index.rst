@@ -1,7 +1,7 @@
 Welcome to 🕸️ Spyder Index  documentation!
 ============================================
 
-Spyder Index is a framework for your LLM (Large Language Model) application.
+Spyder Index is an open-source framework for building LLM (Large Language Model) applications
 
 .. toctree::
     :hidden:
@@ -13,7 +13,7 @@ Spyder Index is a framework for your LLM (Large Language Model) application.
     Text Splitters <text_splitters/index>
     Vector Stores <vector_stores/index>
 
-Top Features
+Features
 ---------------
 
 ✅ **Data connectors**: gather data from various sources like Docx, PDFs, Buckets, and more, maintaining their original format.

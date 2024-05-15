@@ -14,7 +14,7 @@ _____
 
 _____
 
-| **SentenceSplitter(chunk_size: int, chunk_overlap: int, separators: List[str]) -> None**
+| **SentenceSplitter(chunk_size, chunk_overlap, separators)**
 
 Initialize a SemanticSplitter.
 
@@ -24,7 +24,7 @@ Initialize a SemanticSplitter.
 
 _____
 
-| **from_text(text: str) -> List[str]**
+| **from_text(text)**
 
 Split text into chunks.
 
@@ -32,7 +32,7 @@ Split text into chunks.
 
 _____
 
-| **from_documents(documents: List[Document]) -> List[Document]**
+| **from_documents(documents)**
 
 Split text from a list of documents into chunks.
 

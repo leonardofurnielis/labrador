@@ -13,7 +13,7 @@ _____
 
 _____
 
-| **PDFReader(input_file: str)**
+| **PDFReader(input_file)**
 
 Initialize a PDFReader.
 
@@ -21,6 +21,6 @@ Initialize a PDFReader.
 
 _____
 
-| **load_data() -> List[Document]**
+| **load_data()**
 
 Loads data from the specified directory.

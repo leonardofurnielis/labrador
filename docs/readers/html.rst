@@ -13,7 +13,7 @@ _____
 
 _____
 
-| **HTMLReader(input_file: str)**
+| **HTMLReader(input_file)**
 
 Initialize a HTMLReader.
 
@@ -21,6 +21,6 @@ Initialize a HTMLReader.
 
 _____
 
-| **load_data() -> List[Document]**
+| **load_data()**
 
 Loads data from the specified directory.

@@ -13,7 +13,7 @@ _____
 
 _____
 
-| **S3Reader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)**
+| **S3Reader(bucket, ibm_api_key_id, ibm_service_instance_id, s3_endpoint_url)**
 
 Initialize a S3Reader.
 
@@ -24,6 +24,6 @@ Initialize a S3Reader.
 
 _____
 
-| **load_data() -> List[Document]**
+| **load_data()**
 
 Loads data from the specified directory.

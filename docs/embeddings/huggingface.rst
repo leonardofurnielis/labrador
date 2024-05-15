@@ -13,7 +13,7 @@ _____
 
 _____
 
-| **HuggingFaceEmbeddings(model_name: str, device: Literal["cpu", "cuda"])**
+| **HuggingFaceEmbeddings(model_name, device)**
 
 Initialize a HuggingFaceEmbeddings.
 
@@ -22,7 +22,7 @@ Initialize a HuggingFaceEmbeddings.
 
 _____
 
-| **get_query_embedding(query: str) -> List[float]**
+| **get_query_embedding(query)**
 
 Compute embedding for a query.
 
@@ -30,7 +30,7 @@ Compute embedding for a query.
 
 _____
 
-| **get_embedding_from_texts(texts: List[str]) -> List[List[float]]**
+| **get_embedding_from_texts(texts)**
 
 Compute embeddings for a list of texts.
 
@@ -38,7 +38,7 @@ Compute embeddings for a list of texts.
 
 _____
 
-| **get_documents_embedding(documents: List[str]) -> List[List[float]]**
+| **get_documents_embedding(documents)**
 
 Compute embeddings for a list of Documents.
 

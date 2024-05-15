@@ -13,7 +13,7 @@ _____
 
 _____
 
-| **JSONReader(input_file: str, jq_schema: str, text_content: bool)**
+| **JSONReader(input_file, jq_schema, text_content)**
 
 Initialize a JSONReader.
 
@@ -23,6 +23,6 @@ Initialize a JSONReader.
 
 _____
 
-| **load_data() -> List[Document]**
+| **load_data()**
 
 Loads data from the specified directory.

@@ -14,7 +14,7 @@ _____
 
 _____
 
-| **SemanticSplitter(model_name: str, buffer_size: int, breakpoint_threshold_amount: int, device: Literal["cpu", "cuda"]) -> None**
+| **SemanticSplitter(model_name, buffer_size, breakpoint_threshold_amount, device)**
 
 Initialize a SemanticSplitter.
 
@@ -25,7 +25,7 @@ Initialize a SemanticSplitter.
 
 _____
 
-| **from_text(text: str) -> List[str]**
+| **from_text(text)**
 
 Split text into chunks.
 
@@ -33,7 +33,7 @@ Split text into chunks.
 
 _____
 
-| **from_documents(documents: List[Document]) -> List[Document]**
+| **from_documents(documents)**
 
 Split text from a list of documents into chunks.
 

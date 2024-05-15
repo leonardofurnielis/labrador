@@ -13,7 +13,7 @@ _____
 
 _____
 
-| **DocxReader(input_file: str)**
+| **DocxReader(input_file)**
 
 Initialize a DocxReader.
 
@@ -21,6 +21,6 @@ Initialize a DocxReader.
 
 _____
 
-| **load_data() -> List[Document]**
+| **load_data()**
 
 Loads data from the specified directory.

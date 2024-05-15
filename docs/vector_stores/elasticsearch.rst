@@ -1,7 +1,7 @@
 Elasticsearch
 ============================================
 
-The `ElasticsearchVectorStore` class provides functionality to interact with Elasticsearch for storing and querying document embeddings. 
+Provides functionality to interact with Elasticsearch for storing and querying document embeddings. 
 It facilitates adding documents, performing similarity searches, and deleting documents from an Elasticsearch index.
 
 _____

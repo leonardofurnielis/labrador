@@ -13,7 +13,7 @@ _____
 
 _____
 
-| **DirectoryReader(input_dir: str, extra_info: Optional[dict], recursive: bool)**
+| **DirectoryReader(input_dir, extra_info, recursive)**
 
 Initialize a DirectoryReader.
 
@@ -23,6 +23,6 @@ Initialize a DirectoryReader.
 
 _____
 
-| **load_data() -> List[Document]**
+| **load_data()**
 
 Loads data from the specified directory.
