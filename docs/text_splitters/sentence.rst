@@ -1,4 +1,4 @@
-Semantic Splitter
+Sentence Splitter
 ============================================
 
 This Python class `SentenceSplitter` is designed to split input text into smaller chunks, particularly useful for processing large documents or texts. 

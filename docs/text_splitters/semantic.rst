@@ -1,4 +1,4 @@
-Sentence Splitter
+Semantic Splitter
 ============================================
 
 Semantic Splitter is a Python class designed to split text into chunks using semantic understanding. 
