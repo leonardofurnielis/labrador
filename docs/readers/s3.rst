@@ -1,0 +1,29 @@
+S3
+============================================
+
+Loads data from S3 bucket.
+
+_____
+
+| **API Reference**
+
+.. code-block:: python
+
+    from spyder_index.readers import S3Reader
+
+_____
+
+| **S3Reader(bucket: str, ibm_api_key_id: str, ibm_service_instance_id: str, s3_endpoint_url: str)**
+
+Initialize a S3Reader.
+
+- ``bucket`` (str): The name of the IBM COS bucket.
+- ``ibm_api_key_id`` (str): The IBM Cloud API key ID for accessing the bucket.
+- ``ibm_service_instance_id`` (str): The service instance ID for the IBM COS.
+- ``s3_endpoint_url`` (str): The endpoint URL for the IBM COS S3 service.
+
+_____
+
+| **load_data() -> List[Document]**
+
+Loads data from the specified directory.
