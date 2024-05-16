@@ -12,6 +12,6 @@ pip install spyder-index
 
 ## 📄 Documentation
 
-The documentation can be found <a href="https://leonardofurnielis.github.io/spyder_index" target="_blank">here</a>!
+The documentation can be found Click [here](https://leonardofurnielis.github.io/spyder_index){:target="_blank"}!
 
 Please check it out for overview of the interfaces, components, integrations and other resources!
