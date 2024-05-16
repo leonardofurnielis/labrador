@@ -1,8 +1,6 @@
 name: Build and deploy Sphinx documentation
 
 on: [push, pull_request, workflow_dispatch]
-  push:
-    branches: [ "main" ]
 
 permissions:
   contents: read
