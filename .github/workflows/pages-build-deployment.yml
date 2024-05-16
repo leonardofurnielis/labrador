@@ -1,28 +1,47 @@
-name: Build and deploy Sphinx documentation
+# name: Build and deploy Sphinx documentation
 
-on: [push, pull_request, workflow_dispatch]
+# on: [push, pull_request, workflow_dispatch]
 
-permissions:
-  contents: write
+# permissions:
+#   contents: write
+
+# jobs:
+#   build_deploy:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 10
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-python@v5
+#       - name: Install dependencies
+#         run: |
+#           pip install sphinx furo
+#       - name: Sphinx build
+#         run: |
+#           sphinx-build docs _build
+#       - name: Deploy to GitHub Pages
+#         uses: peaceiris/actions-gh-pages@v4
+#         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+#         with:
+#           publish_branch: docs
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: _build/
+#           force_orphan: true
+
+name: Deploy Sphinx documentation to Pages
+
+on:
+  push:
+    branches: [main] # branch to trigger deployment
 
 jobs:
-  build_deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+  pages:
+    runs-on: ubuntu-20.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - name: Install dependencies
-        run: |
-          pip install sphinx furo
-      - name: Sphinx build
-        run: |
-          sphinx-build docs _build
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        with:
-          publish_branch: docs
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
-          force_orphan: true
+    - id: deployment
+      uses: sphinx-notes/pages@v3
