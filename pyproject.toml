@@ -39,4 +39,5 @@ docs = ["furo ~= 2024.5.6"]
 
 [project.urls]
 Homepage = "https://github.com/leonardofurnielis/spyder_index"
+Documentation = "https://leonardofurnielis.github.io/spyder_index/"
 Issues = "https://github.com/leonardofurnielis/spyder_index/issues"
