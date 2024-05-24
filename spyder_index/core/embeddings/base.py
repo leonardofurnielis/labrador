@@ -1,4 +1,6 @@
-from typing import List
+import numpy as np
+
+from typing import List, Literal
 from abc import ABC, abstractmethod
 
 class Embeddings(ABC):
@@ -22,3 +24,17 @@ class Embeddings(ABC):
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         return self.get_embedding_from_texts(texts=texts)
+    
+    
+def embedding_similarity(embedding1: List[float], embedding2: List[float], 
+                             mode: Literal["cosine", "dot_product", "euclidean"] = "cosine") -> float:
+    if mode == "euclidean":
+        return -float(np.linalg.norm(np.array(embedding1) - np.array(embedding2)))
+        
+    elif mode == "dot_product":
+        return np.dot(embedding1, embedding2)
+        
+    else:
+        product = np.dot(embedding1, embedding2)
+        norm = np.linalg.norm(embedding1) * np.linalg.norm(embedding2)
+        return product / norm

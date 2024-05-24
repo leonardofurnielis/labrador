@@ -22,7 +22,8 @@ dependencies = [
     "elasticsearch ~= 8.13.0",
     "ibm-cos-sdk ~= 2.13.2",
     "jq ~= 1.7.0",
-    "docx2txt ~= 0.8"
+    "docx2txt ~= 0.8",
+    "numpy ~= 1.26.4"
 ]
 
 classifiers = [
