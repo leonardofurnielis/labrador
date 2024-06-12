@@ -30,10 +30,10 @@ class DirectoryReader(BaseReader):
                  recursive: Optional[bool] = False):
         
         if not input_dir:
-            raise ValueError("Must provide `input_dir`.")
+            raise ValueError("You must provide a `input_dir` parameter")
 
         if not os.path.isdir(input_dir):
-            raise ValueError(f"Directory {input_dir} does not exist.")
+            raise ValueError(f"Directory `{input_dir}` does not exist")
         
         if file_reader is not None:
             self.file_reader = file_reader

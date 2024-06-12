@@ -56,4 +56,3 @@ class HuggingFaceEmbeddings(Embeddings):
         embedding_documents = [self.get_query_embedding(document.get_text()) for document in documents]
 
         return embedding_documents
-

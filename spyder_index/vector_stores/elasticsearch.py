@@ -6,9 +6,6 @@ from spyder_index.core.document import Document
 from spyder_index.core.embeddings import Embeddings
 from spyder_index.core.vector_stores import VectorStoreQueryResult
 
-from elasticsearch import Elasticsearch
-from elasticsearch.helpers import bulk
-
 class ElasticsearchVectorStore():
 
     def __init__(self, 
@@ -40,6 +37,15 @@ class ElasticsearchVectorStore():
             text_field (str, optional): The name of the field containing text. Defaults to "text".
             vector_field (str, optional): The name of the field containing vector embeddings. Defaults to "embedding".
         """
+
+        try:
+            from elasticsearch import Elasticsearch
+            from elasticsearch.helpers import bulk
+
+            self._es_bulk = bulk
+        except ImportError:
+            raise ImportError("elasticsearch package not found, please install it with `pip install elasticsearch`")
+        
         #  TO-DO: Add connections types e.g: cloud
         self._embed = embedding
         self.index_name = index_name
@@ -133,7 +139,7 @@ class ElasticsearchVectorStore():
                 "metadata.page": _metadata["page"] if _metadata["page"] else None,
             })
 
-        bulk(self._client, vector_store_data, chunk_size=self.batch_size, refresh=True)
+        self._es_bulk(self._client, vector_store_data, chunk_size=self.batch_size, refresh=True)
         print(f"Added {len(vector_store_data)} documents to `{self.index_name}`")
 
     def similarity_search(self, query: str, top_k: int = 4) -> List[VectorStoreQueryResult]:

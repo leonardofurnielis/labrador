@@ -1,10 +1,9 @@
 import os
 import re
 import tempfile
-import ibm_boto3
+
 
 from typing import List
-from ibm_botocore.client import Config
 
 from spyder_index.core.readers import BaseReader
 from spyder_index.core.document import Document
@@ -17,6 +16,16 @@ class S3Reader(BaseReader):
                  ibm_service_instance_id: str = None,
                  s3_endpoint_url: str = None
                  ):
+        
+        try:
+            import ibm_boto3
+            from ibm_botocore.client import Config
+
+            self._ibm_boto3 = ibm_boto3
+            self._boto_config = Config
+        except ImportError:
+            raise ImportError("ibm-cos-sdk package not found, please install it with `pip install ibm-cos-sdk`")
+        
         self.bucket = bucket
         self.ibm_api_key_id = ibm_api_key_id
         self.ibm_service_instance_id = ibm_service_instance_id
@@ -25,11 +34,11 @@ class S3Reader(BaseReader):
 
     def load_data(self) -> List[Document]: 
 
-        ibm_s3 = ibm_boto3.resource(
+        ibm_s3 = self._ibm_boto3.resource(
             "s3",
             ibm_api_key_id=self.ibm_api_key_id,
             ibm_service_instance_id=self.ibm_service_instance_id,
-            config=Config(signature_version='oauth'),
+            config=self._boto_config(signature_version='oauth'),
             endpoint_url=self.s3_endpoint_url,
         )
 

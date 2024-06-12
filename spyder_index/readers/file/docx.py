@@ -12,11 +12,16 @@ class DocxReader(BaseReader):
 
     def __init__(self, input_file: str = None):
 
+        try:
+            import docx2txt
+        except ImportError:
+            raise ImportError("docx2txt package not found, please install it with `pip install docx2txt`")
+        
         if not input_file:
-            raise ValueError("Must provide `input_dir`.")
+            raise ValueError("You must provide a `input_dir` parameter")
         
         if not os.path.isfile(input_file):
-                    raise ValueError(f"File {input_file} does not exist.")
+                    raise ValueError(f"File `{input_file}` does not exist")
         
         self.input_file = Path(input_file)
 
