@@ -7,6 +7,10 @@ _____
 
 | **API Reference**
 
+.. code-block:: bash
+
+    pip install jq
+
 .. code-block:: python
 
     from spyder_index.readers.file import JSONReader

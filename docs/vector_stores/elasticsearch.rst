@@ -8,6 +8,10 @@ _____
 
 | **API Reference**
 
+.. code-block:: bash
+
+    pip install elasticsearch
+
 .. code-block:: python
 
     from spyder_index.vector_stores import ElasticsearchVectorStore
