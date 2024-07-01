@@ -9,6 +9,7 @@ Spyder Index is an open-source framework for building LLM (Large Language Model)
 
     Installation <install>
     Embeddings <embeddings/index>
+    Evaluation <evaluation/index>
     Readers <readers/index>
     Text Splitters <text_splitters/index>
     Vector Stores <vector_stores/index>
