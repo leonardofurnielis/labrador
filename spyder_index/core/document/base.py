@@ -28,11 +28,11 @@ class Document(BaseModel):
     @classmethod
     def _convert_metadata(cls, metadata: dict, framework: Literal["langchain"]) -> dict:
         """
-        Convert metadata based on the framework (supported llama_index, langchain).
+        Convert metadata based on the framework (supported langchain).
 
         Args:
             metadata (dict): Metadata to convert.
-            framework (Literal["llama_index", "langchain"]): Framework indicator.
+            framework (Literal["langchain"]): Framework indicator.
 
         Returns:
             dict: converted metadata.

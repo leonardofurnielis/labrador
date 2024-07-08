@@ -131,7 +131,7 @@ class ElasticsearchVectorStore():
                 "_index": self.index_name,
                 "_id": _id,
                 self.text_field: doc.get_text(),
-                self.vector_field: self._embed.get_text_embedding(doc.get_text()),
+                self.vector_field: self._embed.get_query_embedding(doc.get_text()),
                 "metadata": _metadata,
                 "metadata.creation_date": _metadata["creation_date"] if _metadata["creation_date"] else None,
                 "metadata.file_name": _metadata["file_name"] if _metadata["file_name"] else None,
@@ -153,7 +153,7 @@ class ElasticsearchVectorStore():
         Returns:
             List[VectorStoreQueryResult]: A list of VectorStoreQueryResult.
         """
-        query_embedding = self._embed.get_text_embedding(query)
+        query_embedding = self._embed.get_query_embedding(query)
         es_query = {}
 
         #  TO-DO: Add elasticsearch `filter` option

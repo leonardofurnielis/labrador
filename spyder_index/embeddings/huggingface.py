@@ -3,8 +3,6 @@ from typing import List, Literal
 from spyder_index.core.document import Document
 from spyder_index.core.embeddings import Embeddings
 
-from langchain_community.embeddings.huggingface import HuggingFaceEmbeddings as LangchainHuggingFaceEmbeddings
-
 class HuggingFaceEmbeddings(Embeddings):
     """Class for computing text embeddings using HuggingFace models."""
 
@@ -12,11 +10,9 @@ class HuggingFaceEmbeddings(Embeddings):
                  model_name: str= "sentence-transformers/all-MiniLM-L6-v2", 
                  device: Literal["cpu", "cuda"] = "cpu") -> None:
         
-        model_kwargs = {
-            "device": device
-        }
+        from sentence_transformers import SentenceTransformer
 
-        self._embed = LangchainHuggingFaceEmbeddings(model_name=model_name, model_kwargs=model_kwargs)
+        self.sbert_client = SentenceTransformer(model_name, device=device)
     
     def get_query_embedding(self, query: str) -> List[float]:
         """Compute embedding for a text.
@@ -27,11 +23,11 @@ class HuggingFaceEmbeddings(Embeddings):
         Returns:
             List[float]: Embedding vector for the input text.
         """ 
-        embedding_text = self._embed.embed_query(query) 
+        embedding_text = self.get_texts_embedding([query])[0]
 
         return embedding_text
 
-    def get_embedding_from_texts(self, texts: List[str]) -> List[List[float]]:
+    def get_texts_embedding(self, texts: List[str]) -> List[List[float]]:
         """Compute embeddings for list of texts.
 
         Args:
@@ -40,7 +36,7 @@ class HuggingFaceEmbeddings(Embeddings):
         Returns:
             List[List[float]]: List of embedding vectors for the input texts.
         """
-        embedding_texts = self._embed.embed_documents(texts=texts)
+        embedding_texts = self.sbert_client.encode(texts)
 
         return embedding_texts
     

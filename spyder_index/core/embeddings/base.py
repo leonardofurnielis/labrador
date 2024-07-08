@@ -15,7 +15,7 @@ class Embeddings(ABC):
         """Embed the input query."""
 
     @abstractmethod
-    def get_embedding_from_texts(self, texts: List[str]) -> List[List[float]]:
+    def get_texts_embedding(self, texts: List[str]) -> List[List[float]]:
         """Embed list of texts."""
 
     @abstractmethod
@@ -23,7 +23,7 @@ class Embeddings(ABC):
         """Embed list of docs."""
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
-        return self.get_embedding_from_texts(texts=texts)
+        return self.get_texts_embedding(texts=texts)
     
     
 def embedding_similarity(embedding1: List[float], embedding2: List[float], 
