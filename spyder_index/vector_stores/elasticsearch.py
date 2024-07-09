@@ -130,8 +130,8 @@ class ElasticsearchVectorStore():
             vector_store_data.append({
                 "_index": self.index_name,
                 "_id": _id,
-                self.text_field: doc.get_text(),
-                self.vector_field: self._embed.get_query_embedding(doc.get_text()),
+                self.text_field: doc.get_content(),
+                self.vector_field: self._embed.get_query_embedding(doc.get_content()),
                 "metadata": _metadata,
                 "metadata.creation_date": _metadata["creation_date"] if _metadata["creation_date"] else None,
                 "metadata.file_name": _metadata["file_name"] if _metadata["file_name"] else None,

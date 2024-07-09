@@ -48,7 +48,7 @@ class SemanticSplitter():
         chunks = []
         
         for document in documents:
-            texts = self.from_text(document.get_text())
+            texts = self.from_text(document.get_content())
 
             for text in texts:
                 chunks.append(Document(text=text, metadata=document.get_metadata()))

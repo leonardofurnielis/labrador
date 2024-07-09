@@ -49,6 +49,6 @@ class HuggingFaceEmbeddings(Embeddings):
         Returns:
             List[List[float]]: List of embedding vectors for the input documents.
         """
-        embedding_documents = [self.get_query_embedding(document.get_text()) for document in documents]
+        embedding_documents = [self.get_query_embedding(document.get_content()) for document in documents]
 
         return embedding_documents
