@@ -1,23 +1,42 @@
-import os
 import uuid
-import mimetypes
-from typing import TYPE_CHECKING, Literal, Optional
-from datetime import datetime
+
+from abc import abstractmethod
+from typing import TYPE_CHECKING, Any, Dict
 from pydantic import BaseModel, Field
 
 if TYPE_CHECKING:
-    from langchain_core.documents import Document as LangchainDocument
+    from langchain_core.documents import Document as LangChainDocument
 
-class Document(BaseModel):
-    doc_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+
+class BaseDocument(BaseModel):
+    """Base Document Object.
+
+    Generic abstract interface for retrievable documents.
+
+    """
+    doc_id: str = Field(
+        default_factory=lambda: str(uuid.uuid4()), 
+        description="Unique ID of the document.")
+    metadata: Dict[str, Any] = Field(
+        default_factory=dict,
+        description="A flat dictionary of metadata fields.")
+    
+    @abstractmethod
+    def get_content(self) -> str:
+        """Get document content."""
+
+    @abstractmethod
+    def get_metadata(self) -> str:
+        """Get metadata."""
+
+class Document(BaseDocument):
     text: str = Field(default="")
-    metadata: dict = Field(default={})
 
     @classmethod
     def class_name(cls) -> str:
         return "Document"
 
-    def get_text(self) -> str:
+    def get_content(self) -> str:
         """Get the text content of the document."""
         return self.text
     
@@ -26,42 +45,11 @@ class Document(BaseModel):
         return self.metadata
     
     @classmethod
-    def _convert_metadata(cls, metadata: dict, framework: Literal["langchain"]) -> dict:
+    def from_langchain_format(cls, doc: "LangChainDocument") -> "Document":
         """
-        Convert metadata based on the framework (supported langchain).
+        Convert a document from LangChain format.
 
         Args:
-            metadata (dict): Metadata to convert.
-            framework (Literal["langchain"]): Framework indicator.
-
-        Returns:
-            dict: converted metadata.
+            doc (LangChainDocument): Document in LangChain format.
         """
-        today = datetime.now()
-        _metadata: dict = {}
-        _metadata["creation_date"] = "%s-%s-%s" % (today.year, today.month, today.day)
-
-        if framework == "langchain":
-            _metadata["page"] = metadata.get("page")
-            _metadata["file_name"] = os.path.basename(metadata.get("source"))
-            _metadata["file_type"] = mimetypes.guess_type(_metadata["file_name"])[0]
-
-            if type(_metadata.get("page")) == int:
-                _metadata.get("page") + 1
-
-        return _metadata
-    
-    @classmethod
-    def _from_langchain_format(cls, doc: "LangchainDocument") -> "Document":
-        """
-        Convert a document from LangChain format to spyder_index Document format.
-
-        Args:
-            doc (LangchainDocument): Document in LangChain format.
-
-        Returns:
-            Document: Converted document.
-        """
-        
-        converted_metadata = cls._convert_metadata(doc.metadata, "langchain")
-        return cls(text=doc.page_content, metadata=converted_metadata)
+        return cls(text=doc.page_content, metadata=doc.metadata)
