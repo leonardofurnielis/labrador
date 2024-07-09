@@ -2,7 +2,7 @@ import uuid
 
 from abc import abstractmethod
 from typing import TYPE_CHECKING, Any, Dict
-from pydantic import BaseModel, Field
+from pydantic.v1 import BaseModel, Field
 
 if TYPE_CHECKING:
     from langchain_core.documents import Document as LangChainDocument
