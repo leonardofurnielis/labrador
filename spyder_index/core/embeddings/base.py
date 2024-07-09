@@ -20,7 +20,7 @@ class Embeddings(ABC):
 
     @abstractmethod
     def get_documents_embedding(self, documents: List[str]) -> List[List[float]]:
-        """Embed list of docs."""
+        """Embed list of documents."""
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         return self.get_texts_embedding(texts=texts)
