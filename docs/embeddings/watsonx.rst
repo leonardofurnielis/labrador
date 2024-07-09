@@ -17,12 +17,14 @@ _____
 
 Initialize a WatsonxEmbeddings.
 
+PARAMETERS:
+
 - **model_name** *(str, optional)* – Name of the IBM watsonx.ai model to be used. Defaults to ``ibm/slate-30m-english-rtrvr``.
 - **api_key** *(str)* – Your API Key for accessing IBM watsonx.ai.
 - **url** *(str)* – Your service instance url.
 - **truncate_input_tokens** *(int)* – Represents the maximum number of input tokens accepted.
-- **project_id** *(str, optional)* – The ID of the watsonx project.
-- **space_id** *(str, optional)* – The ID of the watsonx space.
+- **project_id** *(str, optional)* – The ID of the watsonx.ai project.
+- **space_id** *(str, optional)* – The ID of the watsonx.ai space.
 
 .. note::
    One of these parameters is required: [project_id, space_id].
@@ -36,7 +38,8 @@ _____
 
 Compute embedding for a query.
 
-- ``text`` (str): Input query to compute embedding.
+PARAMETERS:
+- **text** *(str)* – Input query to compute embedding.
 
 _____
 
@@ -44,7 +47,8 @@ _____
 
 Compute embeddings for a list of texts.
 
-- ``texts`` (List[str])
+PARAMETERS:
+- **texts** *(list[str])*
 
 _____
 
@@ -52,5 +56,6 @@ _____
 
 Compute embeddings for a list of Documents.
 
-- ``documents`` (List[Documents])
+PARAMETERS:
+- **documents** *(list[Documents])*
 
