@@ -21,9 +21,11 @@ _____
 
 Initialize a JSONReader.
 
-- ``input_file`` (str): File path to read.
-- ``jq_schema`` (str): The jq schema to use to extract the data from the JSON.
-- ``text_content`` (bool): Flag to indicate whether the content is in string format. Default is ``False``
+| Parameters:
+
+    - **input_file** *(str)* – File path to read.
+    - **jq_schema** *(str)* – The jq schema to use to extract the data from the JSON.
+    - **text_content** *(bool, optional)* – Flag to indicate whether the content is in string format. Default is ``False``
 
 _____
 

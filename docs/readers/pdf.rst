@@ -21,7 +21,9 @@ _____
 
 Initialize a PDFReader.
 
-- ``input_file`` (str): File path to read.
+| Parameters:
+
+    - **input_file** *(str)* – File path to read.
 
 _____
 

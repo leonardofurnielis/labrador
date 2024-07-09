@@ -21,9 +21,11 @@ _____
 
 Initialize a DirectoryReader.
 
-- ``input_dir`` (str): The directory path from which to load the documents.
-- ``extra_info`` (Optional[dict]): Additional metadata to include in the document.
-- ``recursive`` (Optional[bool]): Whether to recursively search for files. Defaults to ``False``.
+| Parameters:
+
+    - **input_dir** *(str)* – The directory path from which to load the documents.
+    - **extra_info** *(dict, optional)* – Additional metadata to include in the document.
+    - **recursive** *(bool, optional)* – Whether to recursively search for files. Defaults to ``False``.
 
 _____
 

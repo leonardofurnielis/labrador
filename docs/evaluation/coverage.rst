@@ -19,9 +19,9 @@ Initialize a KnowledgeBaseCoverage.
 
 | Parameters:
 
-- **embed_model_name** *(str)* – Name of the HuggingFace model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
-- **similarity_mode** *(dict, optional)* – The similarity strategy. Defaults to ``cosine``.
-- **similarity_threshold** *(bool, optional)* – Embedding similarity threshold for "passing". Defaults to ``0.8``.
+    - **embed_model_name** *(str)* – Name of the HuggingFace model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
+    - **similarity_mode** *(dict, optional)* – The similarity strategy. Defaults to ``cosine``.
+    - **similarity_threshold** *(bool, optional)* – Embedding similarity threshold for "passing". Defaults to ``0.8``.
 
 _____
 
@@ -29,5 +29,5 @@ _____
 
 | Parameters:
 
-- **contexts** *(list[str])* – List of Strings used as LLM context.
-- **response** *(str)* – The LLM response based on given context.
+    - **contexts** *(list[str])* – List of Strings used as LLM context.
+    - **response** *(str)* – The LLM response based on given context.

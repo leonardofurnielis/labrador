@@ -17,7 +17,9 @@ _____
 
 Initialize a HTMLReader.
 
-- ``input_file`` (str): File path to read.
+| Parameters:
+
+    - **input_file** *(str)* – File path to read.
 
 _____
 

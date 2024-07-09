@@ -19,8 +19,8 @@ Initialize a HuggingFaceEmbeddings.
 
 | Parameters:
 
-- **model_name** *(str, optional)* – Name of the HuggingFace model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
-- **device** *(str["cpu", "cuda"], optional)* – Device to run the model on. Defaults to ``cpu``. 
+    - **model_name** *(str, optional)* – Name of the HuggingFace model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
+    - **device** *(str["cpu", "cuda"], optional)* – Device to run the model on. Defaults to ``cpu``. 
 
 _____
 
@@ -30,7 +30,7 @@ Compute embedding for a query.
 
 | Parameters:
 
-- **text** *(str)* – Input query to compute embedding.
+    - **text** *(str)* – Input query to compute embedding.
 
 _____
 
@@ -40,7 +40,7 @@ Compute embeddings for a list of texts.
 
 | Parameters:
 
-- **texts** *(List[str])*
+    - **texts** *(List[str])*
 
 _____
 
@@ -50,5 +50,5 @@ Compute embeddings for a list of Documents.
 
 | Parameters:
 
-- **documents** *(List[Documents])*
+    - **documents** *(List[Documents])*
 

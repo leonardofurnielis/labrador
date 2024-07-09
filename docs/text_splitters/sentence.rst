@@ -18,9 +18,11 @@ _____
 
 Initialize a SemanticSplitter.
 
-- ``chunk_size`` (int, optional): Size of each chunk. Default is ``512``.
-- ``chunk_overlap`` (int, optional): Amount of overlap between chunks. Default is ``256``.
-- ``separators`` (List[str], optional): List of separators used to split the text into chunks. Default separators are ``["\n\n", "\n", " ", ""]``.
+| Parameters:
+
+    - **chunk_size** *(int, optional)* – Size of each chunk. Default is ``512``.
+    - **chunk_overlap** *(int, optional)* – Amount of overlap between chunks. Default is ``256``.
+    - **separators** *(list[str], optional)* – List of separators used to split the text into chunks. Default separators are ``["\n\n", "\n", " ", ""]``.
 
 _____
 
@@ -28,7 +30,9 @@ _____
 
 Split text into chunks.
 
-- ``text``: Input text to split.
+| Parameters:
+
+    - **text** *(str)* – Input text to split.
 
 _____
 
@@ -36,4 +40,6 @@ _____
 
 Split text from a list of documents into chunks.
 
-- ``documents``: List of Documents.
+| Parameters:
+
+    - **documents** *(list[Document])* – List of Documents.
