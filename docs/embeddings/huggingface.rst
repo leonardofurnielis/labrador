@@ -30,7 +30,7 @@ Compute embedding for a query.
 
 _____
 
-| **get_embedding_from_texts(texts)**
+| **get_texts_embedding(texts)**
 
 Compute embeddings for a list of texts.
 
