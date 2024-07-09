@@ -17,8 +17,8 @@ class KnowledgeBaseCoverage():
 
     def evaluate(self, contexts: List[str], response: str):
                             
-        if response is None or contexts is None:
-            raise ValueError("Must specify both `contexts` and `response`")
+        if not contexts or not response:
+            raise ValueError("Must provide these parameters [`contexts`, `response`]")
             
         coverage = { "contexts_score": [], "score": 0 }
         output_embedding = self._embed.get_query_embedding(response)
