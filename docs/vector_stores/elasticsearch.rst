@@ -21,7 +21,7 @@ _____
 | **ElasticsearchVectorStore(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size, ssl, distance_strategy, text_field, vector_field)**
 
 Initialize a ElasticsearchVectorStore.
-
+|
 | Parameters:
 
 - **index_name** *(str)* – The name of the Elasticsearch index.
@@ -41,7 +41,7 @@ _____
 | **add_documents(documents, create_index_if_not_exists)**
 
 Adds documents to the Elasticsearch index.
-
+|
 | Parameters:
 
 - **documents** *(Document)* – A list of Document objects to add to the index.
@@ -52,7 +52,7 @@ _____
 | **similarity_search(query, top_k)**
 
 Performs a similarity search based on the documents most similar to the query.
-
+|
 | Parameters:
 
 - **query** *(str)* – The query text.
@@ -63,7 +63,7 @@ _____
 | **delete(ids)**
 
 Deletes documents from the Elasticsearch index.
-
+|
 | Parameters:
 
 - **ids** *(list[str])* – A list of document IDs to delete. Defaults to ``None``.
