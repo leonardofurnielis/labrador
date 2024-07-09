@@ -18,10 +18,10 @@ _____
 
 Initialize a SemanticSplitter.
 
-- ``model_name``: Name of the pre-trained embeddings model to use. Default is ``sentence-transformers/all-MiniLM-L6-v2``.
-- ``buffer_size``: Size of the buffer for semantic chunking. Default is ``1``.
-- ``breakpoint_threshold_amount``: Threshold percentage for detecting breakpoints. Default is ``95``.
-- ``device``: Device to use for processing, either "cpu" or "cuda". Default is ``cpu``.
+- **model_name** *(str, optional)* – Name of the pre-trained embeddings model to use. Default is ``sentence-transformers/all-MiniLM-L6-v2``.
+- **buffer_size** *(int, optional)* – Size of the buffer for semantic chunking. Default is ``1``.
+- **breakpoint_threshold_amount** *(int, optional)* – Threshold percentage for detecting breakpoints. Default is ``95``.
+- **device** *(str["cpu", "cuda"], optional)* – Device to use for processing, either "cpu" or "cuda". Default is ``cpu``.
 
 _____
 
@@ -29,7 +29,7 @@ _____
 
 Split text into chunks.
 
-- ``text``: Input text to split.
+- **text** *(str)* – Input text to split.
 
 _____
 
@@ -37,4 +37,4 @@ _____
 
 Split text from a list of documents into chunks.
 
-- ``documents``: List of Documents.
+- **documents** *(list[Document])* – List of Documents.
