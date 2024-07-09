@@ -1,6 +1,6 @@
 import uuid
 import logging
-from typing import List, Optional
+from typing import List
 
 from spyder_index.core.document import Document
 from spyder_index.core.embeddings import Embeddings
@@ -184,14 +184,14 @@ class ElasticsearchVectorStore():
 
         return docs_and_scores
 
-    def delete(self, ids: Optional[List[str]] = None) -> None:
+    def delete(self, ids: List[str] = None) -> None:
         """
         Deletes documents from the Elasticsearch index.
 
         Args:
-            ids (Optional[List[str]], optional): A list of document IDs to delete. Defaults to None.
+            ids (List[str]): A list of document IDs to delete. Defaults to None.
         """
-        if ids is None:
+        if not ids:
             raise ValueError("No ids provided to delete.")
 
         for id in ids:
