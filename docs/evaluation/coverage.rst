@@ -13,21 +13,21 @@ _____
 
 _____
 
-| **KnowledgeBaseCoverage(embed_model_name, similarity_mode, similarity_threshold)**
+| **KnowledgeBaseCoverage(embed_model, similarity_mode, similarity_threshold)**
 
 Initialize a KnowledgeBaseCoverage.
 
 | Parameters:
 
-    - **embed_model_name** *(str)* – Name of the HuggingFace model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
-    - **similarity_mode** *(dict, optional)* – The similarity strategy. Defaults to ``cosine``.
-    - **similarity_threshold** *(bool, optional)* – Embedding similarity threshold for "passing". Defaults to ``0.8``.
+    - **embed_model** *(Embeddings)* – Embedding engine to be used.
+    - **similarity_mode** *(str["cosine", "dot_product", "euclidean"], optional)* – The similarity strategy. Defaults to ``cosine``.
+    - **similarity_threshold** *(int, optional)* – Embedding similarity threshold for "passing". Defaults to ``0.8``.
 
 _____
 
-| **evaluate(contexts, response)**
+| **evaluate(contexts, output)**
 
 | Parameters:
 
     - **contexts** *(list[str])* – List of Strings used as LLM context.
-    - **response** *(str)* – The LLM response based on given context.
+    - **output** *(str)* – The LLM response based on given context.

@@ -1,6 +1,5 @@
-from spyder_index.core.embeddings.base import Embeddings, embedding_similarity
+from spyder_index.core.embeddings.base import Embeddings
 
 __all__ = [
     "Embeddings",
-    "embedding_similarity"
 ]

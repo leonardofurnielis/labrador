@@ -1,22 +1,20 @@
 from typing import Literal, List
 
 from spyder_index.core.document import Document
-from spyder_index.embeddings import HuggingFaceEmbeddings
+from spyder_index.core.embeddings import Embeddings
+from pydantic.v1 import BaseModel
 
 from langchain_experimental.text_splitter import SemanticChunker
 
-class SemanticSplitter():
+class SemanticSplitter(BaseModel):
 
-    def __init__(self, 
-                 model_name = "sentence-transformers/all-MiniLM-L6-v2", 
-                 buffer_size: int = 1,
-                 breakpoint_threshold_amount: int = 95,
-                 device: Literal["cpu", "cuda"] = "cpu") -> None:
-        
-        self.buffer_size = buffer_size
-        self.breakpoint_threshold_amount = breakpoint_threshold_amount
-        self._embed = HuggingFaceEmbeddings(model_name=model_name, device=device)
+    embed_model: Embeddings
+    buffer_size: int = 1
+    breakpoint_threshold_amount: int = 95
+    device: Literal["cpu", "cuda"] = "cpu"
 
+    class Config:
+        arbitrary_types_allowed = True
 
     def from_text(self, text: str) -> List[str]: 
         """
@@ -29,7 +27,7 @@ class SemanticSplitter():
         - List[str]: List of chunks.
         """
         text_splitter = SemanticChunker(
-            embeddings=self._embed,
+            embeddings=self.embed_model,
             buffer_size=self.buffer_size, 
             breakpoint_threshold_amount=self.breakpoint_threshold_amount)
         
@@ -37,7 +35,7 @@ class SemanticSplitter():
     
     def from_documents(self, documents: List[Document]) -> List[Document]:    
         """
-        Split text from a list of documents into chunks.
+        Split documents into chunks.
         
         Args:
         - documents (List[Document]): List of Documents

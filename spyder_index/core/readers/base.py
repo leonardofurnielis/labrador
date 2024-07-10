@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from spyder_index.core.document import Document
 
 class BaseReader(ABC):
-    """Interface for readers."""
+    """An interface for readers."""
 
     @classmethod
     def class_name(cls) -> str:
@@ -19,3 +19,4 @@ class BaseReader(ABC):
     
     def lazy_load(self) -> List[Document]:
         return self.load_data()
+    

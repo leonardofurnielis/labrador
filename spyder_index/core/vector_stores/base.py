@@ -1,11 +1,8 @@
-from pydantic.v1 import BaseModel
-
+from typing import Optional
 from spyder_index.core.document import Document
 
-class VectorStoreQueryResult(BaseModel):
-    document: Document
-    confidence: float
+class VectorStoreQueryResult:
+    """Vector store query result."""
 
-    @classmethod
-    def class_name(cls) -> str:
-        return "VectorStoreQueryResult"
+    document: Optional[Document] = None
+    confidence: Optional[float] = None

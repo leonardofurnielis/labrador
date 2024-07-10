@@ -9,7 +9,7 @@ _____
 
 .. code-block:: bash
 
-    pip install ibm-cos-sdk
+    pip install ibm-cos-sdk docx2txt pypdf
 
 .. code-block:: python
 

@@ -30,7 +30,7 @@ class BaseDocument(BaseModel):
         """Get metadata."""
 
 class Document(BaseDocument):
-    text: str = Field(default="")
+    text: str = Field(default="", description="Text content of the document.")
 
     @classmethod
     def class_name(cls) -> str:

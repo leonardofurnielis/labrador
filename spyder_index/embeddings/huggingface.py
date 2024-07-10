@@ -1,19 +1,24 @@
-from typing import List, Literal
+from typing import Any, List, Literal
 
 from spyder_index.core.document import Document
 from spyder_index.core.embeddings import Embeddings
 
-class HuggingFaceEmbeddings(Embeddings):
-    """Class for computing text embeddings using HuggingFace models."""
+from pydantic.v1 import BaseModel, PrivateAttr
 
-    def __init__(self, 
-                 model_name: str= "sentence-transformers/all-MiniLM-L6-v2", 
-                 device: Literal["cpu", "cuda"] = "cpu") -> None:
-        
+class HuggingFaceEmbeddings(BaseModel, Embeddings):
+    """HuggingFace sentence_transformers embedding models."""
+
+    model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
+    device: Literal["cpu", "cuda"] = "cpu"
+
+    _client: Any = PrivateAttr()
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
         from sentence_transformers import SentenceTransformer
 
-        self.sbert_client = SentenceTransformer(model_name, device=device)
-    
+        self._client = SentenceTransformer(self.model_name, device=self.device)
+
     def get_query_embedding(self, query: str) -> List[float]:
         """Compute embedding for a text.
 
@@ -36,7 +41,7 @@ class HuggingFaceEmbeddings(Embeddings):
         Returns:
             List[List[float]]: List of embedding vectors for the input texts.
         """
-        embedding_texts = self.sbert_client.encode(texts)
+        embedding_texts = self._client.encode(texts)
 
         return embedding_texts
     

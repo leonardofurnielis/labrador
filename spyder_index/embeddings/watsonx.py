@@ -5,7 +5,7 @@ from spyder_index.core.embeddings import Embeddings
 from pydantic.v1 import BaseModel, PrivateAttr
 
 class WatsonxEmbeddings(BaseModel, Embeddings):
-    """IBM watsonx embedding models"""
+    """IBM watsonx embedding models."""
 
     model_name: str = "ibm/slate-30m-english-rtrvr"
     api_key: str

@@ -20,7 +20,7 @@ Initialize a SemanticSplitter.
 
 | Parameters:
 
-    - **model_name** *(str, optional)* – Name of the pre-trained embeddings model to use. Default is ``sentence-transformers/all-MiniLM-L6-v2``.
+    - **embed_model** *(Embeddings)* – Embedding engine to be used.
     - **buffer_size** *(int, optional)* – Size of the buffer for semantic chunking. Default is ``1``.
     - **breakpoint_threshold_amount** *(int, optional)* – Threshold percentage for detecting breakpoints. Default is ``95``.
     - **device** *(str["cpu", "cuda"], optional)* – Device to use for processing, either "cpu" or "cuda". Default is ``cpu``.
@@ -39,7 +39,7 @@ _____
 
 | **from_documents(documents)**
 
-Split text from a list of documents into chunks.
+Split documents into chunks.
 
 | Parameters:
 

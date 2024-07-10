@@ -38,7 +38,7 @@ _____
 
 | **from_documents(documents)**
 
-Split text from a list of documents into chunks.
+Split documents into chunks.
 
 | Parameters:
 
