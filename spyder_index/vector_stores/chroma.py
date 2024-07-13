@@ -39,13 +39,13 @@ class ChromaVectorStore:
 
         for doc in documents:
             embeddings.append(self._embed_model.get_query_embedding(doc.get_content()))
-            metadatas.append(doc.get_metadata())
+            metadatas.append(doc.get_metadata() if doc.get_metadata() else None)
             ids.append(doc.doc_id if doc.doc_id else str(uuid.uuid4()))
             chroma_documents.append(doc.get_content())
 
         self._collection.add(embeddings=embeddings,
                              ids=ids,
-                             metadatas=None,
+                             metadatas=metadatas,
                              documents=chroma_documents)
 
         return ids
