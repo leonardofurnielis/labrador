@@ -1,7 +1,7 @@
 import uuid
 import logging
-from typing import List
 
+from typing import List
 from spyder_index.core.document import Document
 from spyder_index.core.embeddings import BaseEmbedding
 from spyder_index.core.vector_stores import VectorStoreQueryResult
@@ -164,12 +164,12 @@ class ElasticsearchVectorStore():
             "num_candidates": top_k * 10,
         }}
 
-        response = self._client.search(index=self.index_name,
+        results = self._client.search(index=self.index_name,
                                        **es_query,
                                        size=top_k,
                                        _source={"excludes": [self.vector_field]})
 
-        hits = response["hits"]["hits"]
+        hits = results["hits"]["hits"]
 
         docs_and_scores = [VectorStoreQueryResult(
             document=Document(

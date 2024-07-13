@@ -42,7 +42,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
         Returns:
             List[Embedding]: List of embedding vectors for the input texts.
         """
-        embedding_texts = self._client.encode(texts)
+        embedding_texts = self._client.encode(texts).tolist()
 
         return embedding_texts
 

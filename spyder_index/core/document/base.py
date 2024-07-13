@@ -2,7 +2,7 @@ import uuid
 
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Dict
-from pydantic.v1 import BaseModel, Field
+from pydantic.v1 import BaseModel, Field, validator
 
 if TYPE_CHECKING:
     from langchain_core.documents import Document as LangChainDocument
@@ -17,6 +17,12 @@ class BaseDocument(ABC, BaseModel):
     metadata: Dict[str, Any] = Field(
         default_factory=dict,
         description="A flat dictionary of metadata fields.")
+
+    @validator("metadata", pre=True)
+    def _validate_metadata(cls, v) -> Dict:
+        if v is None:
+            return {}
+        return v
 
     @abstractmethod
     def get_content(self) -> str:
