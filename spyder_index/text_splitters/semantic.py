@@ -6,8 +6,8 @@ from pydantic.v1 import BaseModel
 
 from langchain_experimental.text_splitter import SemanticChunker
 
-class SemanticSplitter(BaseModel):
 
+class SemanticSplitter(BaseModel):
     embed_model: BaseEmbedding
     buffer_size: int = 1
     breakpoint_threshold_amount: int = 95
@@ -16,7 +16,7 @@ class SemanticSplitter(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def from_text(self, text: str) -> List[str]: 
+    def from_text(self, text: str) -> List[str]:
         """
         Split text into chunks.
         
@@ -28,12 +28,12 @@ class SemanticSplitter(BaseModel):
         """
         text_splitter = SemanticChunker(
             embeddings=self.embed_model,
-            buffer_size=self.buffer_size, 
+            buffer_size=self.buffer_size,
             breakpoint_threshold_amount=self.breakpoint_threshold_amount)
-        
+
         return text_splitter.split_text(text)
-    
-    def from_documents(self, documents: List[Document]) -> List[Document]:    
+
+    def from_documents(self, documents: List[Document]) -> List[Document]:
         """
         Split documents into chunks.
         
@@ -42,9 +42,9 @@ class SemanticSplitter(BaseModel):
         
         Returns:
         - List[Document]: List of Document split into chunks.
-        """ 
+        """
         chunks = []
-        
+
         for document in documents:
             texts = self.from_text(document.get_content())
 
@@ -52,4 +52,3 @@ class SemanticSplitter(BaseModel):
                 chunks.append(Document(text=text, metadata=document.get_metadata()))
 
         return chunks
-    
