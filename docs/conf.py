@@ -9,7 +9,7 @@
 project = 'spyder-index'
 copyright = '2024, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-release = '0.2.1'
+release = '0.2.6'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -30,4 +30,4 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'furo'
 html_static_path = ['_static']
-html_title = "🕸️ Spyder Index Framework"
+html_title = "🕸️ spyder-index Framework"

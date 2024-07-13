@@ -1,10 +1,10 @@
 Installation
 ============================================
 
-The ibm-watsonx-ai Python library is publicly available on PyPI: https://pypi.org/project/spyder-index/
+The spyder-index Python library is publicly available on PyPI: https://pypi.org/project/spyder-index/
 
 The package can be installed with pip:
 
 .. code-block:: bash
 
-    pip install spyder-index
+    pip install --upgrade spyder-index

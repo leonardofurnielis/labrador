@@ -1,7 +1,7 @@
-Welcome to 🕸️ Spyder Index  documentation!
+Welcome to 🕷️ spyder-index documentation!
 ============================================
 
-Spyder Index is an open-source framework for building LLM (Large Language Model) applications
+spyder-index is an open-source data framework for building LLMs (Large Language Model) applications
 
 .. toctree::
     :hidden:
