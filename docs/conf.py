@@ -9,7 +9,7 @@
 project = 'spyder-index'
 copyright = '2024, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-release = '0.2.6'
+release = '0.2.7'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
