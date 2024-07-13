@@ -20,7 +20,7 @@ Initialize a SemanticSplitter.
 
 | Parameters:
 
-    - **embed_model** *(Embeddings)* – Embedding engine to be used.
+    - **embed_model** *(BaseEmbedding)* – Embedding model to use.
     - **buffer_size** *(int, optional)* – Size of the buffer for semantic chunking. Default is ``1``.
     - **breakpoint_threshold_amount** *(int, optional)* – Threshold percentage for detecting breakpoints. Default is ``95``.
     - **device** *(str["cpu", "cuda"], optional)* – Device to use for processing, either "cpu" or "cuda". Default is ``cpu``.

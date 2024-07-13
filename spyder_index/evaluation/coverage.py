@@ -1,14 +1,14 @@
 import numpy as np
 from typing import Literal, List
 
-from spyder_index.core.embeddings import Embeddings
+from spyder_index.core.embeddings import BaseEmbedding
 
 from pydantic.v1 import BaseModel
 
 class KnowledgeBaseCoverage(BaseModel):
     """Indicates how much the KnowledgeBase has contributed to the answer's coverage."""
 
-    embed_model: Embeddings
+    embed_model: BaseEmbedding
     similarity_mode: Literal["cosine", "dot_product", "euclidean"] = "cosine"
     similarity_threshold: float = 0.8
 

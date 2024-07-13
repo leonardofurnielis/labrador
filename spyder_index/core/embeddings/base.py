@@ -3,30 +3,32 @@ import numpy as np
 from typing import List, Literal
 from abc import ABC, abstractmethod
 
-class Embeddings(ABC):
+Embedding = List[float]
+
+class BaseEmbedding(ABC):
     """An interface for embedding models."""
 
     @classmethod
     def class_name(cls) -> str:
-        return "Embeddings"
+        return "BaseEmbedding"
     
     @abstractmethod
-    def get_query_embedding(self, query: str) -> List[float]:
+    def get_query_embedding(self, query: str) -> Embedding:
         """Get query embedding."""
 
     @abstractmethod
-    def get_texts_embedding(self, texts: List[str]) -> List[List[float]]:
+    def get_texts_embedding(self, texts: List[str]) -> List[Embedding]:
         """Get text embeddings."""
 
     @abstractmethod
-    def get_documents_embedding(self, documents: List[str]) -> List[List[float]]:
+    def get_documents_embedding(self, documents: List[str]) -> List[Embedding]:
         """Get documents embeddings."""
 
-    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+    def embed_documents(self, texts: List[str]) -> Embedding:
         return self.get_texts_embedding(texts=texts)
     
     @staticmethod
-    def similarity(embedding1: List[float], embedding2: List[float], 
+    def similarity(embedding1: Embedding, embedding2: Embedding, 
                              mode: Literal["cosine", "dot_product", "euclidean"] = "cosine"):
         """Get embedding similarity."""
         if mode == "euclidean":

@@ -1,7 +1,7 @@
-from spyder_index.embeddings.huggingface import HuggingFaceEmbeddings
-from spyder_index.embeddings.watsonx import WatsonxEmbeddings
+from spyder_index.embeddings.huggingface import HuggingFaceEmbedding
+from spyder_index.embeddings.watsonx import WatsonxEmbedding
 
 __all__ = [
-    "HuggingFaceEmbeddings",
-    "WatsonxEmbeddings"
+    "HuggingFaceEmbedding",
+    "WatsonxEmbedding"
 ]

@@ -29,7 +29,7 @@ Initialize a ElasticsearchVectorStore.
     - **es_user** *(str)* – The username for authentication.
     - **es_password** *(str)* – The password for authentication.
     - **dims_length** *(int)* – The length of the embedding dimensions.
-    - **embedding** *(Embeddings)* – An instance of embeddings.
+    - **embedding** *(BaseEmbedding)* – Embedding model to use.
     - **batch_size** *(int, optional)* – The batch size for bulk operations. Defaults to ``200``.
     - **ssl** *(bool, optional)* – Whether to use SSL. Defaults to ``False``.
     - **distance_strategy** *(str, optional)* – The distance strategy for similarity search. Defaults to ``cosine``.

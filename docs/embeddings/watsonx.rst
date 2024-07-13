@@ -13,13 +13,13 @@ _____
 
 .. code-block:: python
 
-    from spyder_index.embeddings import WatsonxEmbeddings
+    from spyder_index.embeddings import WatsonxEmbedding
 
 _____
 
-| **WatsonxEmbeddings(model_name, api_key, url, truncate_input_tokens, project_id, space_id)**
+| **WatsonxEmbedding(model_name, api_key, url, truncate_input_tokens, project_id, space_id)**
 
-Initialize a WatsonxEmbeddings.
+Initialize a WatsonxEmbedding.
 
 | Parameters:
 

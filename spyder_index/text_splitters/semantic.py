@@ -1,14 +1,14 @@
 from typing import Literal, List
 
 from spyder_index.core.document import Document
-from spyder_index.core.embeddings import Embeddings
+from spyder_index.core.embeddings import BaseEmbedding
 from pydantic.v1 import BaseModel
 
 from langchain_experimental.text_splitter import SemanticChunker
 
 class SemanticSplitter(BaseModel):
 
-    embed_model: Embeddings
+    embed_model: BaseEmbedding
     buffer_size: int = 1
     breakpoint_threshold_amount: int = 95
     device: Literal["cpu", "cuda"] = "cpu"

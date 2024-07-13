@@ -1,6 +1,6 @@
 import uuid
 
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, Dict
 from pydantic.v1 import BaseModel, Field
 
@@ -8,12 +8,9 @@ if TYPE_CHECKING:
     from langchain_core.documents import Document as LangChainDocument
 
 
-class BaseDocument(BaseModel):
-    """Base Document Object.
+class BaseDocument(ABC, BaseModel):
+    """A generic interface for documents."""
 
-    Generic abstract interface for retrievable documents.
-
-    """
     doc_id: str = Field(
         default_factory=lambda: str(uuid.uuid4()), 
         description="Unique ID of the document.")
@@ -47,7 +44,7 @@ class Document(BaseDocument):
     @classmethod
     def from_langchain_format(cls, doc: "LangChainDocument") -> "Document":
         """
-        Convert a document from LangChain format.
+        Convert a document from LangChain  format.
 
         Args:
             doc (LangChainDocument): Document in LangChain format.

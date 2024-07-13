@@ -9,13 +9,13 @@ _____
 
 .. code-block:: python
 
-    from spyder_index.embeddings import HuggingFaceEmbeddings
+    from spyder_index.embeddings import HuggingFaceEmbedding
 
 _____
 
-| **HuggingFaceEmbeddings(model_name, device)**
+| **HuggingFaceEmbedding(model_name, device)**
 
-Initialize a HuggingFaceEmbeddings.
+Initialize a HuggingFaceEmbedding.
 
 | Parameters:
 
