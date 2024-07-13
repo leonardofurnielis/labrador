@@ -5,6 +5,7 @@ from spyder_index.core.embeddings import BaseEmbedding, Embedding
 
 from pydantic.v1 import BaseModel, PrivateAttr
 
+
 class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
     """HuggingFace sentence_transformers embedding models."""
 
@@ -27,7 +28,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         Returns:
             Embedding: Embedding vector for the input text.
-        """ 
+        """
         embedding_text = self.get_texts_embedding([query])[0]
 
         return embedding_text
@@ -44,7 +45,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
         embedding_texts = self._client.encode(texts)
 
         return embedding_texts
-    
+
     def get_documents_embedding(self, documents: List[Document]) -> List[Embedding]:
         """Compute embeddings for a list of documents.
 

@@ -4,6 +4,7 @@ from spyder_index.core.embeddings import BaseEmbedding, Embedding
 
 from pydantic.v1 import BaseModel, PrivateAttr
 
+
 class WatsonxEmbedding(BaseModel, BaseEmbedding):
     """IBM watsonx embedding models."""
 
@@ -24,23 +25,23 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
         except ImportError:
             raise ImportError("ibm-watsonx-ai package not found, please install it with `pip install ibm-watsonx-ai`")
-        
+
         if not self.project_id and not self.space_id:
             raise ValueError("Must provide one of these parameters [`project_id`, `space_id`]")
-        
+
         kwargs_params = {
             "model_id": self.model_name,
-            "params": {"truncate_input_tokens": self.truncate_input_tokens, "return_options": { "input_text": False }},
-            "credentials": Credentials(api_key=self.api_key,url=self.url) 
+            "params": {"truncate_input_tokens": self.truncate_input_tokens, "return_options": {"input_text": False}},
+            "credentials": Credentials(api_key=self.api_key, url=self.url)
         }
 
         if self.project_id:
             kwargs_params["project_id"] = self.project_id
-        else: 
+        else:
             kwargs_params["space_id"] = self.space_id
-        
+
         self._client = WatsonxEmbeddings(**kwargs_params)
-        
+
     def get_query_embedding(self, query: str) -> Embedding:
         """Compute embedding for a text.
 
@@ -49,7 +50,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
         Returns:
             Embedding: Embedding vector for the input text.
-        """ 
+        """
         embedding_text = self.get_texts_embedding([query])[0]
 
         return embedding_text
@@ -66,7 +67,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         embedding_texts = self._client.embed_documents(texts)
 
         return embedding_texts
-    
+
     def get_documents_embedding(self, documents: List[Document]) -> List[Embedding]:
         """Compute embeddings for a list of documents.
 
