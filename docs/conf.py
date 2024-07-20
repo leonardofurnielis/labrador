@@ -17,12 +17,9 @@ release = '0.2.7'
 extensions = [
     "sphinx_copybutton",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosectionlabel"
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
 ]
-
-autosectionlabel_prefix_document = True
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '.idea']
