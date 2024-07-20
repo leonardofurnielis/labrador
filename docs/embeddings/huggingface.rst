@@ -4,7 +4,7 @@ Hugging Face
 Computing text embeddings using Hugging Face models.
 
 | **API Reference**
-______________________
+---------------------
 
 .. code-block:: python
 
@@ -12,7 +12,7 @@ ______________________
 
 
 | **HuggingFaceEmbedding(model_name, device)**
-------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Initialize a HuggingFaceEmbedding.
 
@@ -22,7 +22,7 @@ Initialize a HuggingFaceEmbedding.
     - **device** *(str["cpu", "cuda"], optional)* – Device to run the model on. Defaults to ``cpu``. 
 
 | **get_query_embedding(query)**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embedding for a query.
 
@@ -31,7 +31,7 @@ Compute embedding for a query.
     - **text** *(str)* – Input query to compute embedding.
 
 | **get_texts_embedding(texts)**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embeddings for a list of texts.
 
@@ -40,7 +40,7 @@ Compute embeddings for a list of texts.
     - **texts** *(List[str])*
 
 | **get_documents_embedding(documents)**
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embeddings for a list of Documents.
 
