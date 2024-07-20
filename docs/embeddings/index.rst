@@ -3,5 +3,5 @@ Embeddings
 
 .. toctree::
     
-    HuggingFace <huggingface>
+    Hugging Face <huggingface>
     IBM watsonx.ai <watsonx>
