@@ -17,7 +17,7 @@ API Reference
 
 
 WatsonxEmbedding(model_name, api_key, url, truncate_input_tokens, project_id, space_id)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_________________________________________________________________________________________
 
 Initialize a WatsonxEmbedding.
 
@@ -62,4 +62,3 @@ Compute embeddings for a list of Documents.
 | Parameters:
 
    - **documents** *(list[Documents])*
-

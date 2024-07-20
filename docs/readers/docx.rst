@@ -4,7 +4,7 @@ Docx
 
 Loads data from Microsoft Word (Docx) format.
 
-| **API Reference**
+API Reference
 ---------------------
 
 .. code-block:: bash
@@ -15,9 +15,8 @@ Loads data from Microsoft Word (Docx) format.
 
     from spyder_index.readers.file import DocxReader
 
-_____
-
-| **DocxReader(input_file)**
+DocxReader(input_file)
+________________________
 
 Initialize a DocxReader.
 
@@ -25,8 +24,7 @@ Initialize a DocxReader.
 
     - **input_file** *(str)* – File path to read.
 
-_____
+load_data()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| **load_data()**
-
-Loads data from the specified directory.
+Loads the document from specified directory.

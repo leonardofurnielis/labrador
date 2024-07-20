@@ -4,7 +4,7 @@ Hugging Face
 
 Computing text embeddings using Hugging Face models.
 
-| API Reference
+API Reference
 ---------------------
 
 .. code-block:: python
@@ -13,7 +13,7 @@ Computing text embeddings using Hugging Face models.
 
 
 HuggingFaceEmbedding(model_name, device)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+___________________________________________
 
 Initialize a HuggingFaceEmbedding.
 
@@ -48,4 +48,3 @@ Compute embeddings for a list of Documents.
 | Parameters:
 
     - **documents** *(List[Documents])*
-

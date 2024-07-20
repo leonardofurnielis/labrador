@@ -4,16 +4,15 @@ HTML
 
 Loads data from HTML format.
 
-| **API Reference**
+API Reference
 ---------------------
 
 .. code-block:: python
 
     from spyder_index.readers.file import HTMLReader
 
-_____
-
-| **HTMLReader(input_file)**
+HTMLReader(input_file)
+________________________
 
 Initialize a HTMLReader.
 
@@ -21,8 +20,7 @@ Initialize a HTMLReader.
 
     - **input_file** *(str)* – File path to read.
 
-_____
+load_data()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| **load_data()**
-
-Loads data from the specified directory.
+Loads the document from specified directory.
