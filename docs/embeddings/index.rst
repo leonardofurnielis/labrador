@@ -1,7 +1,9 @@
+============================================
 Embeddings
 ============================================
 
 .. toctree::
+    :maxdepth: 2
     
-    HuggingFace <huggingface>
+    Hugging Face <huggingface>
     IBM watsonx.ai <watsonx>

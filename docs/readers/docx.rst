@@ -1,32 +1,27 @@
+============================================
 Docx
 ============================================
 
 Loads data from Microsoft Word (Docx) format.
 
-_____
-
-| **API Reference**
-
 .. code-block:: bash
 
     pip install docx2txt
+
+``DocxReader(input_file)``
+________________________
+
+Initialize a DocxReader.
 
 .. code-block:: python
 
     from spyder_index.readers.file import DocxReader
 
-_____
-
-| **DocxReader(input_file)**
-
-Initialize a DocxReader.
-
 | Parameters:
 
     - **input_file** *(str)* – File path to read.
 
-_____
+``load_data()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| **load_data()**
-
-Loads data from the specified directory.
+Loads the document from specified directory.

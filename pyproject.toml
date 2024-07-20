@@ -31,7 +31,11 @@ classifiers = [
 ]
 
 [project.optional-dependencies] 
-docs = ["furo ~= 2024.5.6"]
+docs = [
+    "furo ~= 2024.5.6",
+    "sphinx ~= 7.4.6",
+    "sphinx-copybutton ~= 0.5.2"
+]
 
 [project.urls]
 Homepage = "https://github.com/leonardofurnielis/spyder_index"
