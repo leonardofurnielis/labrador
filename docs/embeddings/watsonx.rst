@@ -4,22 +4,18 @@ IBM watsonx.ai
 
 Computing text embeddings using IBM watsonx.ai models.
 
-API Reference
----------------------
-
 .. code-block:: bash
 
     pip install ibm-watsonx-ai
 
-.. code-block:: python
-
-    from spyder_index.embeddings import WatsonxEmbedding
-
-
-WatsonxEmbedding(model_name, api_key, url, truncate_input_tokens, project_id, space_id)
+``WatsonxEmbedding(model_name, api_key, url, truncate_input_tokens, project_id, space_id)``
 _________________________________________________________________________________________
 
 Initialize a WatsonxEmbedding.
+
+.. code-block:: python
+
+    from spyder_index.embeddings import WatsonxEmbedding
 
 | Parameters:
 

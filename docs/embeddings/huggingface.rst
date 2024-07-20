@@ -4,18 +4,14 @@ Hugging Face
 
 Computing text embeddings using Hugging Face models.
 
-API Reference
----------------------
+``HuggingFaceEmbedding(model_name, device)``
+___________________________________________
+
+Initialize a HuggingFaceEmbedding.
 
 .. code-block:: python
 
     from spyder_index.embeddings import HuggingFaceEmbedding
-
-
-HuggingFaceEmbedding(model_name, device)
-___________________________________________
-
-Initialize a HuggingFaceEmbedding.
 
 | Parameters:
 
