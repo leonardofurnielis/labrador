@@ -1,11 +1,11 @@
+============================================
 Chroma
 ============================================
 
 Chroma is the AI-native open-source vector database. In this vector store, embeddings are stored within a ChromaDB collection.
 
-_____
-
 | **API Reference**
+---------------------
 
 .. code-block:: bash
 

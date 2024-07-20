@@ -1,11 +1,11 @@
+============================================
 Directory
 ============================================
 
 Provides functionality to load documents from a directory.
 
-_____
-
 | **API Reference**
+---------------------
 
 .. code-block:: bash
 
