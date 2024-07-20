@@ -4,7 +4,7 @@ Coverage %
 
 Indicates how much the KnowledgeBase has contributed to the answer's coverage. If the LLM response contains information from the KnowledgeBase, this percentage is going to be very high.
 
-KnowledgeBaseCoverage(embed_model, similarity_mode, similarity_threshold)
+``KnowledgeBaseCoverage(embed_model, similarity_mode, similarity_threshold)``
 ____________________________________________________________________________
 
 Initialize a KnowledgeBaseCoverage.
@@ -19,7 +19,7 @@ Initialize a KnowledgeBaseCoverage.
     - **similarity_mode** *(str["cosine", "dot_product", "euclidean"], optional)* – The similarity strategy. Defaults to ``cosine``.
     - **similarity_threshold** *(int, optional)* – Embedding similarity threshold for "passing". Defaults to ``0.8``.
 
-evaluate(contexts, output)
+``evaluate(contexts, output)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | Parameters:

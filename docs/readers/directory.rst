@@ -8,7 +8,7 @@ Provides functionality to load documents from a directory.
 
     pip install docx2txt pypdf
 
-DirectoryReader(input_dir, extra_info, recursive)
+``DirectoryReader(input_dir, extra_info, recursive)``
 __________________________________________________
 
 Initialize a DirectoryReader.
@@ -23,7 +23,7 @@ Initialize a DirectoryReader.
     - **extra_info** *(dict, optional)* – Additional metadata to include in the document.
     - **recursive** *(bool, optional)* – Whether to recursively search for files. Defaults to ``False``.
 
-load_data()
+``load_data()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Loads data from the specified directory.

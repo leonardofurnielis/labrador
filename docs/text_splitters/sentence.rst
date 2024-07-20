@@ -5,7 +5,7 @@ Sentence Splitter
 This Python class `SentenceSplitter` is designed to split input text into smaller chunks, particularly useful for processing large documents or texts. 
 It provides methods to split text into chunks and to split a list of documents into chunks.
 
-SentenceSplitter(chunk_size, chunk_overlap, separators)
+``SentenceSplitter(chunk_size, chunk_overlap, separators)``
 ________________________________________________________
 
 Initialize a SemanticSplitter.
@@ -20,7 +20,7 @@ Initialize a SemanticSplitter.
     - **chunk_overlap** *(int, optional)* – Amount of overlap between chunks. Default is ``256``.
     - **separators** *(list[str], optional)* – List of separators used to split the text into chunks. Default separators are ``["\n\n", "\n", " ", ""]``.
 
-from_text(text)
+``from_text(text)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Split text into chunks.
@@ -29,7 +29,7 @@ Split text into chunks.
 
     - **text** *(str)* – Input text to split.
 
-from_documents(documents)
+``from_documents(documents)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Split documents into chunks.

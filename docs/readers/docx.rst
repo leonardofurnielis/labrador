@@ -8,7 +8,7 @@ Loads data from Microsoft Word (Docx) format.
 
     pip install docx2txt
 
-DocxReader(input_file)
+``DocxReader(input_file)``
 ________________________
 
 Initialize a DocxReader.
@@ -21,7 +21,7 @@ Initialize a DocxReader.
 
     - **input_file** *(str)* – File path to read.
 
-load_data()
+``load_data()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Loads the document from specified directory.

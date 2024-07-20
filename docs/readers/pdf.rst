@@ -8,7 +8,7 @@ Loads data from PDF.
 
     pip install pypdf
 
-PDFReader(input_file)
+``PDFReader(input_file)``
 ________________________
 
 Initialize a PDFReader.
@@ -21,7 +21,7 @@ Initialize a PDFReader.
 
     - **input_file** *(str)* – File path to read.
 
-load_data()
+``load_data()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Loads the document from specified directory.

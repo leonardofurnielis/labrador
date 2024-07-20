@@ -4,7 +4,7 @@ HTML
 
 Loads data from HTML format.
 
-HTMLReader(input_file)
+``HTMLReader(input_file)``
 ________________________
 
 Initialize a HTMLReader.
@@ -17,7 +17,7 @@ Initialize a HTMLReader.
 
     - **input_file** *(str)* – File path to read.
 
-load_data()
+``load_data()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Loads the document from specified directory.

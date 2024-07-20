@@ -8,7 +8,7 @@ Loads data from JSON.
 
     pip install jq
 
-JSONReader(input_file, jq_schema, text_content)
+``JSONReader(input_file, jq_schema, text_content)``
 ________________________________________________
 
 Initialize a JSONReader.
@@ -23,7 +23,7 @@ Initialize a JSONReader.
     - **jq_schema** *(str)* – The jq schema to use to extract the data from the JSON.
     - **text_content** *(bool, optional)* – Flag to indicate whether the content is in string format. Default is ``False``
 
-load_data()
+``load_data()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Loads the document from specified directory.
