@@ -4,21 +4,18 @@ Directory
 
 Provides functionality to load documents from a directory.
 
-API Reference
----------------------
-
 .. code-block:: bash
 
     pip install docx2txt pypdf
-
-.. code-block:: python
-
-    from spyder_index.readers import DirectoryReader
 
 DirectoryReader(input_dir, extra_info, recursive)
 __________________________________________________
 
 Initialize a DirectoryReader.
+
+.. code-block:: python
+
+    from spyder_index.readers import DirectoryReader
 
 | Parameters:
 

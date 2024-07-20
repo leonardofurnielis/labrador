@@ -4,21 +4,18 @@ JSON
 
 Loads data from PDF.
 
-API Reference
----------------------
-
 .. code-block:: bash
 
     pip install pypdf
-
-.. code-block:: python
-
-    from spyder_index.readers.file import PDFReader
 
 PDFReader(input_file)
 ________________________
 
 Initialize a PDFReader.
+
+.. code-block:: python
+
+    from spyder_index.readers.file import PDFReader
 
 | Parameters:
 

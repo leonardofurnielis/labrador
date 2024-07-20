@@ -5,21 +5,18 @@ Elasticsearch
 Provides functionality to interact with Elasticsearch for storing and querying document embeddings. 
 It facilitates adding documents, performing similarity searches, and deleting documents from an Elasticsearch index.
 
-API Reference
----------------------
-
 .. code-block:: bash
 
     pip install elasticsearch
-
-.. code-block:: python
-
-    from spyder_index.vector_stores import ElasticsearchVectorStore
 
 ElasticsearchVectorStore(index_name, es_hostname, es_user, es_password, dims_length, embedding, batch_size, ssl, distance_strategy, text_field, vector_field)
 ________________________________________________________________________________________________________________________________________________________________
 
 Initialize a ElasticsearchVectorStore.
+
+.. code-block:: python
+
+    from spyder_index.vector_stores import ElasticsearchVectorStore
 
 | Parameters:
 

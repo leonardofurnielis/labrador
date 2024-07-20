@@ -4,21 +4,18 @@ S3
 
 Loads data from S3 bucket.
 
-API Reference
----------------------
-
 .. code-block:: bash
 
     pip install ibm-cos-sdk docx2txt pypdf
-
-.. code-block:: python
-
-    from spyder_index.readers import S3Reader
 
 S3Reader(bucket, ibm_api_key_id, ibm_service_instance_id, s3_endpoint_url)
 ____________________________________________________________________________
 
 Initialize a S3Reader.
+
+.. code-block:: python
+
+    from spyder_index.readers import S3Reader
 
 | Parameters:
 

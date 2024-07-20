@@ -4,21 +4,18 @@ Docx
 
 Loads data from Microsoft Word (Docx) format.
 
-API Reference
----------------------
-
 .. code-block:: bash
 
     pip install docx2txt
-
-.. code-block:: python
-
-    from spyder_index.readers.file import DocxReader
 
 DocxReader(input_file)
 ________________________
 
 Initialize a DocxReader.
+
+.. code-block:: python
+
+    from spyder_index.readers.file import DocxReader
 
 | Parameters:
 

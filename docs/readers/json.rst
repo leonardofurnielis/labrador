@@ -4,21 +4,18 @@ JSON
 
 Loads data from JSON.
 
-API Reference
----------------------
-
 .. code-block:: bash
 
     pip install jq
-
-.. code-block:: python
-
-    from spyder_index.readers.file import JSONReader
 
 JSONReader(input_file, jq_schema, text_content)
 ________________________________________________
 
 Initialize a JSONReader.
+
+.. code-block:: python
+
+    from spyder_index.readers.file import JSONReader
 
 | Parameters:
 

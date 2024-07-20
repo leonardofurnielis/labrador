@@ -4,17 +4,14 @@ Coverage %
 
 Indicates how much the KnowledgeBase has contributed to the answer's coverage. If the LLM response contains information from the KnowledgeBase, this percentage is going to be very high.
 
-API Reference
----------------------
-
-.. code-block:: python
-
-    from spyder_index.evaluation import KnowledgeBaseCoverage
-
 KnowledgeBaseCoverage(embed_model, similarity_mode, similarity_threshold)
 ____________________________________________________________________________
 
 Initialize a KnowledgeBaseCoverage.
+
+.. code-block:: python
+
+    from spyder_index.evaluation import KnowledgeBaseCoverage
 
 | Parameters:
 

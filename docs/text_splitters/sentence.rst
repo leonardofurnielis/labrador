@@ -5,17 +5,14 @@ Sentence Splitter
 This Python class `SentenceSplitter` is designed to split input text into smaller chunks, particularly useful for processing large documents or texts. 
 It provides methods to split text into chunks and to split a list of documents into chunks.
 
-API Reference
----------------------
-
-.. code-block:: python
-
-    from spyder_index.text_splitters import SentenceSplitter
-
 SentenceSplitter(chunk_size, chunk_overlap, separators)
 ________________________________________________________
 
 Initialize a SemanticSplitter.
+
+.. code-block:: python
+
+    from spyder_index.text_splitters import SentenceSplitter
 
 | Parameters:
 
