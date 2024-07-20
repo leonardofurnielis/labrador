@@ -5,17 +5,14 @@ Semantic Splitter
 Semantic Splitter is a Python class designed to split text into chunks using semantic understanding. 
 It utilizes pre-trained embeddings to identify breakpoints in the text and divide it into meaningful segments.
 
-API Reference
----------------------
+``SemanticSplitter(model_name, buffer_size, breakpoint_threshold_amount, device)``
+________________________________________________________________________________
+
+Initialize a SemanticSplitter.
 
 .. code-block:: python
 
     from spyder_index.text_splitters import SemanticSplitter
-
-SemanticSplitter(model_name, buffer_size, breakpoint_threshold_amount, device)
-________________________________________________________________________________
-
-Initialize a SemanticSplitter.
 
 | Parameters:
 
@@ -24,7 +21,7 @@ Initialize a SemanticSplitter.
     - **breakpoint_threshold_amount** *(int, optional)* – Threshold percentage for detecting breakpoints. Default is ``95``.
     - **device** *(str["cpu", "cuda"], optional)* – Device to use for processing, either "cpu" or "cuda". Default is ``cpu``.
 
-from_text(text)
+``from_text(text)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Split text into chunks.
@@ -33,7 +30,7 @@ Split text into chunks.
 
     - **text** *(str)* – Input text to split.
 
-from_documents(documents)
+``from_documents(documents)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Split documents into chunks.
