@@ -4,7 +4,7 @@ IBM watsonx.ai
 
 Computing text embeddings using IBM watsonx.ai models.
 
-| **API Reference**
+API Reference
 ---------------------
 
 .. code-block:: bash
@@ -16,7 +16,7 @@ Computing text embeddings using IBM watsonx.ai models.
     from spyder_index.embeddings import WatsonxEmbedding
 
 
-| WatsonxEmbedding(model_name, api_key, url, truncate_input_tokens, project_id, space_id)
+WatsonxEmbedding(model_name, api_key, url, truncate_input_tokens, project_id, space_id)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Initialize a WatsonxEmbedding.
@@ -36,7 +36,7 @@ Initialize a WatsonxEmbedding.
 .. note::
    For the watsonx.ai API endpoints: https://cloud.ibm.com/apidocs/watsonx-ai#endpoint-url
 
-| get_query_embedding(query)
+get_query_embedding(query)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embedding for a query.
@@ -45,7 +45,7 @@ Compute embedding for a query.
 
    - **text** *(str)* – Input query to compute embedding.
 
-| get_texts_embedding(texts)
+get_texts_embedding(texts)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embeddings for a list of texts.
@@ -54,7 +54,7 @@ Compute embeddings for a list of texts.
 
    - **texts** *(list[str])*
 
-| get_documents_embedding(documents)
+get_documents_embedding(documents)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embeddings for a list of Documents.
