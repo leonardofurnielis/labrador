@@ -1,11 +1,11 @@
+============================================
 Docx
 ============================================
 
 Loads data from Microsoft Word (Docx) format.
 
-_____
-
 | **API Reference**
+---------------------
 
 .. code-block:: bash
 
