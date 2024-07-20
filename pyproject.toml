@@ -18,7 +18,9 @@ dependencies = [
     "sentence-transformers ~= 2.7.0",
     "pydantic ~= 2.7.1",
     "torch == 2.1.0",
-    "numpy ~= 1.26.4"
+    "numpy ~= 1.26.4",
+    "nltk ~= 3.8.1",
+    "tiktoken ~= 0.7.0",
 ]
 
 classifiers = [
