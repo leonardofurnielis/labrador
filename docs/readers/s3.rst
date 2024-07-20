@@ -4,7 +4,7 @@ S3
 
 Loads data from S3 bucket.
 
-| **API Reference**
+API Reference
 ---------------------
 
 .. code-block:: bash
@@ -15,9 +15,8 @@ Loads data from S3 bucket.
 
     from spyder_index.readers import S3Reader
 
-_____
-
-| **S3Reader(bucket, ibm_api_key_id, ibm_service_instance_id, s3_endpoint_url)**
+S3Reader(bucket, ibm_api_key_id, ibm_service_instance_id, s3_endpoint_url)
+____________________________________________________________________________
 
 Initialize a S3Reader.
 
@@ -28,8 +27,7 @@ Initialize a S3Reader.
     - **ibm_service_instance_id** *(str)* – The service instance ID for the IBM COS.
     - **s3_endpoint_url** *(str)* – The endpoint URL for the S3 service.
 
-_____
+load_data()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| **load_data()**
-
-Loads data from the specified directory.
+Loads data from the specified s3 bucket.

@@ -4,7 +4,7 @@ JSON
 
 Loads data from PDF.
 
-| **API Reference**
+API Reference
 ---------------------
 
 .. code-block:: bash
@@ -15,9 +15,8 @@ Loads data from PDF.
 
     from spyder_index.readers.file import PDFReader
 
-_____
-
-| **PDFReader(input_file)**
+PDFReader(input_file)
+________________________
 
 Initialize a PDFReader.
 
@@ -25,8 +24,7 @@ Initialize a PDFReader.
 
     - **input_file** *(str)* – File path to read.
 
-_____
+load_data()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-| **load_data()**
-
-Loads data from the specified directory.
+Loads the document from specified directory.

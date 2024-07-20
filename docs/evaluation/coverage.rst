@@ -12,7 +12,7 @@ API Reference
     from spyder_index.evaluation import KnowledgeBaseCoverage
 
 KnowledgeBaseCoverage(embed_model, similarity_mode, similarity_threshold)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+____________________________________________________________________________
 
 Initialize a KnowledgeBaseCoverage.
 
