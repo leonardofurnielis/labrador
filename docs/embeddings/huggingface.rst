@@ -4,7 +4,7 @@ Hugging Face
 
 Computing text embeddings using Hugging Face models.
 
-``HuggingFaceEmbedding(model_name, device)``
+``HuggingFaceEmbedding``
 ___________________________________________
 
 Initialize a HuggingFaceEmbedding.
@@ -13,34 +13,46 @@ Initialize a HuggingFaceEmbedding.
 
     from spyder_index.embeddings import HuggingFaceEmbedding
 
-| Parameters:
+| **Parameters**:
 
     - **model_name** *(str, optional)* – Name of the Hugging Face model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
-    - **device** *(str["cpu", "cuda"], optional)* – Device to run the model on. Defaults to ``cpu``. 
+    - **device** *(str["cpu", "cuda"], optional)* – Device to run the model on. Defaults to ``cpu``.
 
-``get_query_embedding(query)``
+``get_query_embedding``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embedding for a query.
 
-| Parameters:
+| **Parameters**:
 
     - **text** *(str)* – Input query to compute embedding.
 
-``get_texts_embedding(texts)``
+| **Returns**:
+
+    - ``List[float]``
+
+``get_texts_embedding``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embeddings for a list of texts.
 
-| Parameters:
+| **Parameters**:
 
     - **texts** *(List[str])*
 
-``get_documents_embedding(documents)``
+| **Returns**:
+
+    - ``List[List[float]]``
+
+``get_documents_embedding``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Compute embeddings for a list of Documents.
 
-| Parameters:
+| **Parameters**:
 
     - **documents** *(List[Documents])*
+
+| **Returns**:
+
+    - ``List[List[float]]``
