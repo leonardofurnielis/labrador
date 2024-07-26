@@ -9,7 +9,6 @@ from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 class ElasticsearchVectorStore:
     """Provides functionality to interact with Elasticsearch for storing and querying document embeddings.
-    It facilitates adding documents, performing similarity searches, and deleting documents from an Elasticsearch index.
 
     Args:
         index_name (str): The name of the Elasticsearch index.
@@ -119,6 +118,7 @@ class ElasticsearchVectorStore:
             documents (List[Document]): A list of Document objects to add to the index.
             create_index_if_not_exists (bool, optional): Whether to create the index if it doesn't exist. Defaults to True.
         """
+
         if create_index_if_not_exists:
             self._create_index_if_not_exists()
 
@@ -147,9 +147,6 @@ class ElasticsearchVectorStore:
         Args:
             query (str): The query text.
             top_k (int, optional): The number of top results to return. Defaults to 4.
-
-        Returns:
-            List[VectorStoreQueryResult]: A list of VectorStoreQueryResult.
         """
         query_embedding = self._embed_model.get_query_embedding(query)
         #  TO-DO: Add elasticsearch `filter` option

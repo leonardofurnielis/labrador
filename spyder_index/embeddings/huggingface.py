@@ -30,9 +30,6 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         Args:
             query (str): Input query to compute embedding.
-
-        Returns:
-            Embedding: Embedding vector for the input text.
         """
 
         embedding_text = self.get_texts_embedding([query])[0]
@@ -44,9 +41,6 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         Args:
             texts (List[str]): List of input texts to compute embedding.
-
-        Returns:
-            List[Embedding]: List of embedding vectors for the input texts.
         """
         embedding_texts = self._client.encode(texts).tolist()
 
@@ -57,9 +51,6 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         Args:
             documents (List[Document]): List of Document.
-
-        Returns:
-            List[Embedding]: List of embedding vectors for the input documents.
         """
 
         texts = [document.get_content() for document in documents]

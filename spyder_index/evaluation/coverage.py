@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Literal, List
+from typing import Literal, List, Dict
 
 from spyder_index.core.embeddings import BaseEmbedding
 
@@ -23,12 +23,11 @@ class KnowledgeBaseCoverage(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def evaluate(self, contexts: List[str], output: str):
+    def evaluate(self, contexts: List[str], output: str) -> Dict:
         """
         Args:
             contexts (str): List of Strings used as LLM context.
             output (str): The LLM response based on given context.
-
         """
 
         if not contexts or not output:

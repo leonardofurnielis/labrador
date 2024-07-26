@@ -39,14 +39,11 @@ class ChromaVectorStore:
             metadata={"hnsw:space": distance_strategy}
         )
 
-    def add_documents(self, documents: List[Document]):
+    def add_documents(self, documents: List[Document]) -> List:
         """Adds documents to the ChromaDB collection.
 
         Args:
             documents (List[Document]): A list of Document objects to add to the collection.
-
-        Returns:
-            List: List of added documents ids.
         """
 
         embeddings = []
@@ -67,15 +64,12 @@ class ChromaVectorStore:
 
         return ids
 
-    def query(self, query: str, top_k: int = 4):
+    def query(self, query: str, top_k: int = 4) -> List[VectorStoreQueryResult]:
         """Performs a similarity search for top-k most similar documents.
 
         Args:
             query (str): The query text.
             top_k (int, optional): The number of top results to return. Defaults to ``4``.
-
-        Returns:
-            List[VectorStoreQueryResult]: List of VectorStoreQueryResult.
         """
 
         query_embedding = self._embed_model.get_query_embedding(query)
