@@ -7,6 +7,12 @@ from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 
 class ChromaVectorStore:
+    """
+    Args:
+        collection_name (str): The name of the ChromaDB collection.
+        embed_model (BaseEmbedding): Embedding model to use.
+        distance_strategy (str, optional): The distance strategy for similarity search. Defaults to ``cosine``.
+    """
 
     def __init__(self, collection_name: str = "spyder-index",
                  embed_model: BaseEmbedding = None,
@@ -32,6 +38,15 @@ class ChromaVectorStore:
         )
 
     def add_documents(self, documents: List[Document]):
+        """Adds documents to the ChromaDB collection.
+
+        Args:
+            documents (List[Document]): A list of Document objects to add to the collection.
+
+        Returns:
+            List: List of added documents ids.
+        """
+
         embeddings = []
         metadatas = []
         ids = []
@@ -51,6 +66,16 @@ class ChromaVectorStore:
         return ids
 
     def query(self, query: str, top_k: int = 4):
+        """Performs a similarity search for top-k most similar documents.
+
+        Args:
+            query (str): The query text.
+            top_k (int, optional): The number of top results to return. Defaults to ``4``.
+
+        Returns:
+            List[VectorStoreQueryResult]: List of VectorStoreQueryResult.
+        """
+
         query_embedding = self._embed_model.get_query_embedding(query)
 
         results = self._collection.query(
@@ -75,6 +100,12 @@ class ChromaVectorStore:
         return docs_and_scores
 
     def delete(self, ids: List[str] = None) -> None:
+        """Deletes documents from the ChromaDB collection.
+
+        Args:
+            ids (List[str]): A list of document IDs to delete. Defaults to ``None``.
+        """
+
         if not ids:
             raise ValueError("No ids provided to delete.")
 

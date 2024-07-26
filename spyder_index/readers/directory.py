@@ -24,7 +24,13 @@ def _loading_default_file_readers():
 
 
 class DirectoryReader(BaseReader):
-    default_file_reader_fn: Callable = _loading_default_file_readers
+    """
+    Args:
+        input_dir (str): Directory path from which to load the documents.
+        recursive (str): Whether to recursively search for files. Defaults to ``False``.
+    """
+
+    input_dir: Callable = _loading_default_file_readers
 
     def __init__(self, input_dir: str = None,
                  file_reader: Optional[dict[str, Type[BaseReader]]] = None,
@@ -45,6 +51,8 @@ class DirectoryReader(BaseReader):
         self.recursive = recursive
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
+        """Loads data from the specified directory."""
+
         documents = []
         default_file_reader_cls = DirectoryReader.default_file_reader_fn()
 

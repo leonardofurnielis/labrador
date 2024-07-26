@@ -10,6 +10,10 @@ from langchain_community.document_loaders import Docx2txtLoader
 
 
 class DocxReader(BaseReader):
+    """
+    Args:
+        input_file (str): File path to read.
+    """
 
     def __init__(self, input_file: str = None):
 
@@ -27,6 +31,7 @@ class DocxReader(BaseReader):
         self.input_file = Path(input_file)
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
+        """Loads the document from specified directory."""
 
         lc_documents = Docx2txtLoader(file_path=self.input_file).load()
 

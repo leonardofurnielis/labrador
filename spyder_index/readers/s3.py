@@ -10,6 +10,13 @@ from spyder_index.readers import DirectoryReader
 
 
 class S3Reader(BaseReader):
+    """
+    Args:
+        bucket (str): Name of the S3 bucket.
+        ibm_api_key_id (str): IBM Cloud API key ID for accessing the bucket.
+        ibm_service_instance_id (str): The service instance ID for the IBM COS.
+        s3_endpoint_url (str): Endpoint URL for the S3 service.
+    """
 
     def __init__(self, bucket: str,
                  ibm_api_key_id: str = None,
@@ -32,6 +39,7 @@ class S3Reader(BaseReader):
         self.s3_endpoint_url = s3_endpoint_url
 
     def load_data(self) -> List[Document]:
+        """Loads data from the specified s3 bucket."""
 
         ibm_s3 = self._ibm_boto3.resource(
             "s3",

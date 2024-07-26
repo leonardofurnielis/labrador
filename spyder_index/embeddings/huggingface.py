@@ -7,7 +7,12 @@ from pydantic.v1 import BaseModel, PrivateAttr
 
 
 class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
-    """HuggingFace sentence_transformers embedding models."""
+    """HuggingFace sentence_transformers embedding models.
+
+    Args:
+        model_name (str): Hugging Face model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
+        device (str): Device to run the model on. Defaults to ``cpu``.
+    """
 
     model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
     device: Literal["cpu", "cuda"] = "cpu"

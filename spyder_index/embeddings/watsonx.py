@@ -6,7 +6,21 @@ from pydantic.v1 import BaseModel, PrivateAttr
 
 
 class WatsonxEmbedding(BaseModel, BaseEmbedding):
-    """IBM watsonx embedding models."""
+    """IBM watsonx embedding models.
+
+    Note:
+            One of these parameters is required: [project_id, space_id].
+    Note:
+            For the watsonx.ai API endpoints: https://cloud.ibm.com/apidocs/watsonx-ai#endpoint-url
+
+    Args:
+        model_name (str): IBM watsonx.ai model to be used. Defaults to ``ibm/slate-30m-english-rtrvr``.
+        api_key (str): API Key for accessing IBM watsonx.ai.
+        url (str): Service instance url.
+        truncate_input_tokens (str): Maximum number of input tokens accepted.
+        project_id (str, optional): ID of the watsonx.ai project.
+        space_id (str, optional): ID of the watsonx.ai space.
+    """
 
     model_name: str = "ibm/slate-30m-english-rtrvr"
     api_key: str

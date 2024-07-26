@@ -10,6 +10,12 @@ from langchain_community.document_loaders import JSONLoader
 
 
 class JSONReader(BaseReader):
+    """
+    Args:
+        input_file (str): File path to read.
+        jq_schema (str, optional): The jq schema to use to extract the data from the JSON.
+        text_content (bool, optional): Flag to indicate whether the content is in string format. Default is ``False``
+    """
 
     def __init__(self, input_file: str = None,
                  jq_schema: Optional[str] = None,
@@ -30,6 +36,7 @@ class JSONReader(BaseReader):
         self.text_content = text_content
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
+        """Loads the document from specified directory."""
 
         lc_documents = JSONLoader(file_path=self.input_file,
                                   jq_schema=self.jq_schema,

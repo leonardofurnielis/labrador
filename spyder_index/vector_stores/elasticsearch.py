@@ -8,6 +8,20 @@ from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 
 class ElasticsearchVectorStore():
+    """
+    Args:
+        index_name (str): The name of the Elasticsearch index.
+        es_hostname (str): The hostname of the Elasticsearch instance.
+        es_user (str): The username for authentication.
+        es_password (str): The password for authentication.
+        dims_length (int): The length of the embedding dimensions.
+        embed_model (BaseEmbedding): Embedding model to use.
+        batch_size (int, optional): The batch size for bulk operations. Defaults to 200.
+        ssl (bool, optional): Whether to use SSL. Defaults to False.
+        distance_strategy (str, optional): The distance strategy for similarity search. Defaults to "cosine".
+        text_field (str, optional): The name of the field containing text. Defaults to "text".
+        vector_field (str, optional): The name of the field containing vector embeddings. Defaults to "embedding".
+    """
 
     def __init__(self,
                  index_name: str,
@@ -22,23 +36,6 @@ class ElasticsearchVectorStore():
                  text_field: str = "text",
                  vector_field: str = "embedding",
                  ) -> None:
-        """
-        Elasticsearch vector store.
-
-        Args:
-            index_name (str): The name of the Elasticsearch index.
-            es_hostname (str): The hostname of the Elasticsearch instance.
-            es_user (str): The username for authentication.
-            es_password (str): The password for authentication.
-            dims_length (int): The length of the embedding dimensions.
-            embed_model (BaseEmbedding): Embedding model to use.
-            batch_size (int, optional): The batch size for bulk operations. Defaults to 200.
-            ssl (bool, optional): Whether to use SSL. Defaults to False.
-            distance_strategy (str, optional): The distance strategy for similarity search. Defaults to "cosine".
-            text_field (str, optional): The name of the field containing text. Defaults to "text".
-            vector_field (str, optional): The name of the field containing vector embeddings. Defaults to "embedding".
-        """
-
         try:
             from elasticsearch import Elasticsearch
             from elasticsearch.helpers import bulk
@@ -114,8 +111,7 @@ class ElasticsearchVectorStore():
             self._client.indices.create(index=self.index_name, mappings=index_mappings)
 
     def add_documents(self, documents: List[Document], create_index_if_not_exists: bool = True) -> None:
-        """
-        Adds documents to the Elasticsearch index.
+        """Adds documents to the Elasticsearch index.
 
         Args:
             documents (List[Document]): A list of Document objects to add to the index.
@@ -144,8 +140,7 @@ class ElasticsearchVectorStore():
         print(f"Added {len(vector_store_data)} documents to `{self.index_name}`")
 
     def query(self, query: str, top_k: int = 4) -> List[VectorStoreQueryResult]:
-        """
-        Performs a similarity search for top-k most similar documents.
+        """Performs a similarity search for top-k most similar documents.
 
         Args:
             query (str): The query text.
@@ -184,11 +179,10 @@ class ElasticsearchVectorStore():
         return docs_and_scores
 
     def delete(self, ids: List[str] = None) -> None:
-        """
-        Deletes documents from the Elasticsearch index.
+        """Deletes documents from the Elasticsearch index.
 
         Args:
-            ids (List[str]): A list of document IDs to delete. Defaults to None.
+            ids (List[str]): A list of document IDs to delete.
         """
         if not ids:
             raise ValueError("No ids provided to delete.")

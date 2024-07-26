@@ -7,7 +7,13 @@ from pydantic.v1 import BaseModel
 
 
 class KnowledgeBaseCoverage(BaseModel):
-    """Indicates how much the KnowledgeBase has contributed to the answer's coverage."""
+    """Indicates how much the KnowledgeBase has contributed to the answer's coverage.
+
+    Args:
+        embed_model (BaseEmbedding): Embedding model to use.
+        similarity_mode (str, optional): The similarity strategy. Defaults to ``cosine``.
+        similarity_threshold (float, optional): Embedding similarity threshold for "passing". Defaults to ``0.8``.
+    """
 
     embed_model: BaseEmbedding
     similarity_mode: Literal["cosine", "dot_product", "euclidean"] = "cosine"
@@ -17,6 +23,12 @@ class KnowledgeBaseCoverage(BaseModel):
         arbitrary_types_allowed = True
 
     def evaluate(self, contexts: List[str], output: str):
+        """
+        Args:
+            contexts (str): List of Strings used as LLM context.
+            output (str): The LLM response based on given context.
+
+        """
 
         if not contexts or not output:
             raise ValueError("Must provide these parameters [`contexts`, `output`]")
