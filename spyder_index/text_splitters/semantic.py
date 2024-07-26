@@ -8,7 +8,8 @@ from langchain_experimental.text_splitter import SemanticChunker
 
 
 class SemanticSplitter(BaseModel):
-    """
+    """Semantic Splitter is a Python class designed to split text into chunks using semantic understanding.
+
     Args:
         embed_model (BaseEmbedding): Embedding model to use.
         buffer_size (int, optional): Size of the buffer for semantic chunking. Default is ``1``.

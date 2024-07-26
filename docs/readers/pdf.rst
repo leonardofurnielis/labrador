@@ -2,7 +2,6 @@
 JSON
 ============================================
 
-Loads data from PDF.
 
 .. code-block:: bash
 

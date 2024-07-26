@@ -10,7 +10,8 @@ from langchain_community.document_loaders import Docx2txtLoader
 
 
 class DocxReader(BaseReader):
-    """
+    """Microsoft Word (Docx) reader.
+
     Args:
         input_file (str): File path to read.
     """

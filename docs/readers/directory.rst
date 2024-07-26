@@ -2,7 +2,6 @@
 Directory
 ============================================
 
-Provides functionality to load documents from a directory.
 
 .. code-block:: bash
 

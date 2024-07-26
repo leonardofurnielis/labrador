@@ -24,7 +24,8 @@ def _loading_default_file_readers():
 
 
 class DirectoryReader(BaseReader):
-    """
+    """Simple directory reader.
+
     Args:
         input_dir (str): Directory path from which to load the documents.
         recursive (str): Whether to recursively search for files. Defaults to ``False``.

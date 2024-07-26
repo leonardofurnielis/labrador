@@ -10,7 +10,8 @@ from spyder_index.readers import DirectoryReader
 
 
 class S3Reader(BaseReader):
-    """
+    """S3 bucket reader.
+
     Args:
         bucket (str): Name of the S3 bucket.
         ibm_api_key_id (str): IBM Cloud API key ID for accessing the bucket.

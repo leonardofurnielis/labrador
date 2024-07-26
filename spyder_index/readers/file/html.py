@@ -10,7 +10,8 @@ from langchain_community.document_loaders import UnstructuredHTMLLoader
 
 
 class HTMLReader(BaseReader):
-    """
+    """HTML reader.
+
     Args:
         input_file (str): File path to read.
     """

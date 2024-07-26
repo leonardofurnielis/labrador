@@ -2,7 +2,6 @@
 Docx
 ============================================
 
-Loads data from Microsoft Word (Docx) format.
 
 .. code-block:: bash
 

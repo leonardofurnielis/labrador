@@ -2,7 +2,6 @@
 IBM watsonx.ai
 ============================================
 
-Computing text embeddings using IBM watsonx.ai models.
 
 .. code-block:: bash
 

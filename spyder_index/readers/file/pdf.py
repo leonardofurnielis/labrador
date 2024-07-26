@@ -10,7 +10,8 @@ from langchain_community.document_loaders.pdf import PyPDFLoader
 
 
 class PDFReader(BaseReader):
-    """
+    """PDF reader using PyPDF.
+
     Args:
         input_file (str): File path to read.
     """

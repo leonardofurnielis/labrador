@@ -10,7 +10,8 @@ from langchain_community.document_loaders import JSONLoader
 
 
 class JSONReader(BaseReader):
-    """
+    """JSON reader.
+
     Args:
         input_file (str): File path to read.
         jq_schema (str, optional): The jq schema to use to extract the data from the JSON.

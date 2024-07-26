@@ -7,7 +7,9 @@ from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 
 class ChromaVectorStore:
-    """
+    """Chroma is the AI-native open-source vector database.
+    In this vector store, embeddings are stored within a ChromaDB collection.
+
     Args:
         collection_name (str): The name of the ChromaDB collection.
         embed_model (BaseEmbedding): Embedding model to use.

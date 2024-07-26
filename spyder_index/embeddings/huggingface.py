@@ -34,6 +34,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
         Returns:
             Embedding: Embedding vector for the input text.
         """
+
         embedding_text = self.get_texts_embedding([query])[0]
 
         return embedding_text

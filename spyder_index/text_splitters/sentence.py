@@ -5,8 +5,10 @@ from spyder_index.core.document import Document
 from langchain_text_splitters.character import RecursiveCharacterTextSplitter
 
 
-class SentenceSplitter():
-    """
+class SentenceSplitter:
+    """SentenceSplitter is designed to split input text into smaller chunks,
+    particularly useful for processing large documents or texts.
+
     Args:
         chunk_size (int, optional): Size of each chunk. Default is ``512``.
         chunk_overlap (int, optional): Amount of overlap between chunks. Default is ``256``.

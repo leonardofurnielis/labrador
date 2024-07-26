@@ -2,7 +2,6 @@
 S3
 ============================================
 
-Loads data from S3 bucket.
 
 .. code-block:: bash
 

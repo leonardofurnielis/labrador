@@ -7,8 +7,10 @@ from spyder_index.core.embeddings import BaseEmbedding
 from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 
-class ElasticsearchVectorStore():
-    """
+class ElasticsearchVectorStore:
+    """Provides functionality to interact with Elasticsearch for storing and querying document embeddings.
+    It facilitates adding documents, performing similarity searches, and deleting documents from an Elasticsearch index.
+
     Args:
         index_name (str): The name of the Elasticsearch index.
         es_hostname (str): The hostname of the Elasticsearch instance.
