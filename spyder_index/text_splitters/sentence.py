@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from spyder_index.core.document import Document
 
@@ -77,28 +77,37 @@ class SentenceSplitter:
 
         return chunks
 
-    def _split(self, text: str) -> List[str]:
-        splits = []
+    def _split(self, text: str) -> List[dict]:
 
         token_size = len(tokenizer(text))
         if token_size <= self.chunk_size:
-            return self._merge([{"text": text, "is_sentence": True, "token_size": token_size}])
+            return [{"text": text, "is_sentence": True, "token_size": token_size}]
 
+        text_splits = []
+        text_splits_by_fns, is_sentence = self._split_by_fns(text)
 
+        for text_split_by_fns in text_splits_by_fns:
+            token_size = len(tokenizer(text))
+            if token_size <= self.chunk_size:
+                text_splits.append({"text": text_split_by_fns, "is_sentence": is_sentence, "token_size": token_size})
 
+            else:
+                recursive_text_splits = self._split(text_split_by_fns)
+                text_splits.extend(recursive_text_splits)
 
-    def split_by_fns(split_fns: List[Callable], text: str) -> Tuple[List[str], bool]:
+        return text_splits
+
+    def _split_by_fns(self, text: str) -> Tuple[List[str], bool]:
+
         for split_fn in self._split_fns:
             splits = split_fn(text)
             if len(splits) > 1:
                 return splits, True
 
-        for split_fn in self._sub_sentence_split_fns:
+        for split_fn in self._sub_split_fns:
             splits = split_fn(text)
             if len(splits) > 1:
-                break
-
-        return splits, False
+                return splits, False
 
     def _merge(self, splits: List[dict]) -> List[str]:
         pass

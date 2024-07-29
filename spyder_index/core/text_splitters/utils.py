@@ -1,5 +1,6 @@
 from typing import List, Callable
 
+
 def tokenizer(text: str) -> List:
     try:
         import tiktoken
@@ -35,4 +36,3 @@ def split_by_sentence_tokenizer() -> Callable[[str], List[str]]:
 
     _tokenizer = nltk.tokenize.PunktSentenceTokenizer()
     return lambda text: _tokenizer.sentences_from_text(text)
-
