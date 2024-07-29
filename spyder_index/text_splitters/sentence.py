@@ -58,7 +58,10 @@ class SentenceSplitter:
         return text_splitter.split_text(text)
 
     def from_text_new(self, text: str) -> List[str]:
-        pass
+        splits = self._split(text)
+        chunks = self._merge(splits)
+
+        return chunks
 
     def from_documents(self, documents: List[Document]) -> List[Document]:
         """Split documents into chunks.

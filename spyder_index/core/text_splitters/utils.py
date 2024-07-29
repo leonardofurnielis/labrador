@@ -7,7 +7,7 @@ def tokenizer(text: str) -> List:
     except ImportError:
         raise ImportError("tiktoken package not found, please install it with `pip install tiktoken`")
 
-    enc = tiktoken.get_encoding("o200k_base")
+    enc = tiktoken.get_encoding("cl100k_base")
     return enc.encode(text)
 
 
