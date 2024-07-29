@@ -1,5 +1,4 @@
-from typing import List
-
+from typing import List, Callable
 
 def tokenizer(text: str) -> List:
     try:
@@ -11,32 +10,29 @@ def tokenizer(text: str) -> List:
     return enc.encode(text)
 
 
-def num_tokens(text: str) -> int:
-    return len(tokenizer(text))
-
-
-def split_by_sep(text: str, sep) -> List[str]:
+def split_by_sep(sep) -> Callable[[str], List[str]]:
     """Split text by separator."""
-    return text.split(sep)
+    return lambda text: text.split(sep)
 
 
-def split_by_regex(text: str, regex: str) -> List[str]:
+def split_by_regex(regex: str) -> Callable[[str], List[str]]:
     """Split text by regex."""
     import re
 
-    return re.findall(regex, text)
+    return lambda text: re.findall(regex, text)
 
 
-def split_by_char(text: str) -> List[str]:
+def split_by_char() -> Callable[[str], List[str]]:
     """Split text by character."""
-    return list(text)
+    return lambda text: list(text)
 
 
-def split_by_sentence_tokenizer(text: str) -> List[str]:
+def split_by_sentence_tokenizer() -> Callable[[str], List[str]]:
     try:
         import nltk
     except ImportError:
         raise ImportError("nltk package not found, please install it with `pip install nltk`")
 
     _tokenizer = nltk.tokenize.PunktSentenceTokenizer()
-    return _tokenizer.sentences_from_text(text)
+    return lambda text: _tokenizer.sentences_from_text(text)
+
