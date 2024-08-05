@@ -2,7 +2,6 @@ from typing import List, Tuple
 
 from spyder_index.core.document import Document
 
-from langchain_text_splitters.character import RecursiveCharacterTextSplitter
 from spyder_index.core.text_splitters.utils import (
     split_by_regex,
     split_by_sep,
@@ -19,26 +18,31 @@ class SentenceSplitter:
     Args:
         chunk_size (int, optional): Size of each chunk. Default is ``512``.
         chunk_overlap (int, optional): Amount of overlap between chunks. Default is ``256``.
-        separator (str, optional): Separators used to split the text into chunks.
+        separator (str, optional): Separators used for splitting into words. Default is ``" "``
     """
 
     def __init__(self,
                  chunk_size: int = 512,
                  chunk_overlap: int = 256,
-                 separator="\n\n\n"
+                 separator=" "
                  ) -> None:
+
+        if chunk_overlap > chunk_size:
+            raise ValueError(
+                f"Got a larger `chunk_overlap` ({chunk_overlap}) than `chunk_size` "
+                f"({chunk_size}). `chunk_overlap` should be smaller."
+            )
 
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
-        self.separator = separator
 
         self._split_fns = [
-            split_by_sep(self.separator),
+            split_by_sep("\n\n\n"),
             split_by_sentence_tokenizer()
         ]
         self._sub_split_fns = [
             split_by_regex("[^,.;？！]+[,.;？！]?"),
-            split_by_sep(" "),
+            split_by_sep(separator),
             split_by_char()
         ]
 
@@ -48,16 +52,6 @@ class SentenceSplitter:
         Args:
         - text (str): Input text to split.
         """
-
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=self.chunk_size,
-            chunk_overlap=self.chunk_overlap,
-            # separators=self.separators,
-        )
-
-        return text_splitter.split_text(text)
-
-    def from_text_new(self, text: str) -> List[str]:
         splits = self._split(text)
         chunks = self._merge(splits)
 
@@ -69,7 +63,6 @@ class SentenceSplitter:
         Args:
             documents (List[Document]): List of Documents
         """
-
         chunks = []
 
         for document in documents:
@@ -113,4 +106,68 @@ class SentenceSplitter:
                 return splits, False
 
     def _merge(self, splits: List[dict]) -> List[str]:
-        pass
+        """Merge splits into chunks."""
+        chunks: List[str] = []
+        cur_chunk: List[Tuple[str, int]] = []
+        cur_chunk_len = 0
+        last_chunk: List[Tuple[str, int]] = []
+        new_chunk = True
+
+        def close_chunk() -> None:
+            nonlocal chunks, cur_chunk, last_chunk, cur_chunk_len, new_chunk
+
+            chunks.append("".join([text for text, length in cur_chunk]))
+            last_chunk = cur_chunk
+            cur_chunk = []
+            cur_chunk_len = 0
+            new_chunk = True
+
+            # add overlap to the next chunk using previous chunk
+            if len(last_chunk) > 0:
+                last_index = len(last_chunk) - 1
+                while (
+                    last_index >= 0
+                    and cur_chunk_len + last_chunk[last_index][1] <= self.chunk_overlap
+                ):
+                    text, length = last_chunk[last_index]
+                    cur_chunk_len += length
+                    cur_chunk.insert(0, (text, length))
+                    last_index -= 1
+
+        def postprocess_chunks(chunks: List[str]) -> List[str]:
+            """Post-process chunks."""
+            new_chunks = []
+            for chunk in chunks:
+                stripped_chunk = chunk.strip()
+                if stripped_chunk == "":
+                    continue
+                new_chunks.append(stripped_chunk)
+            return new_chunks
+
+        while len(splits) > 0:
+            cur_split = splits[0]
+
+            if cur_split['token_size'] > self.chunk_size:
+                raise ValueError("Single token exceeded chunk size")
+
+            if cur_chunk_len + cur_split['token_size'] > self.chunk_size and not new_chunk:
+                close_chunk()
+            else:
+                if (
+                    cur_split['is_sentence']
+                    or cur_chunk_len + cur_split['token_size'] <= self.chunk_size
+                    or new_chunk  # If `new_chunk`, always add at least one split
+                ):
+                    cur_chunk_len += cur_split['token_size']
+                    cur_chunk.append((cur_split['text'], cur_split['token_size']))
+                    splits.pop(0)
+                    new_chunk = False
+                else:
+                    close_chunk()
+
+        if not new_chunk:
+            chunk = "".join([text for text, length in cur_chunk])
+            chunks.append(chunk)
+
+        return postprocess_chunks(chunks)
+

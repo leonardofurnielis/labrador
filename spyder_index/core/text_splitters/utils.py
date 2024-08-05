@@ -34,5 +34,23 @@ def split_by_sentence_tokenizer() -> Callable[[str], List[str]]:
     except ImportError:
         raise ImportError("nltk package not found, please install it with `pip install nltk`")
 
-    _tokenizer = nltk.tokenize.PunktSentenceTokenizer()
-    return lambda text: _tokenizer.sentences_from_text(text)
+    sentence_tokenizer = nltk.tokenize.PunktSentenceTokenizer()
+    return lambda text: _split_by_sentence_tokenizer(text, sentence_tokenizer)
+
+
+def _split_by_sentence_tokenizer(text: str, sentence_tokenizer) -> List[str]:
+    """Get the spans and then return the sentences.
+
+    Using the start index of each span
+    Instead of using end, use the start of the next span
+    """
+    spans = list(sentence_tokenizer.span_tokenize(text))
+    sentences = []
+    for i, span in enumerate(spans):
+        start = span[0]
+        if i < len(spans) - 1:
+            end = spans[i + 1][0]
+        else:
+            end = len(text)
+        sentences.append(text[start:end])
+    return sentences
