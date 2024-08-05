@@ -13,7 +13,6 @@ keywords = ["framework", "RAG", "index", "data", "LLM", "AI", "semantic search"]
 dependencies = [
     "langchain-core ~= 0.1.48",
     "langchain-community ~= 0.0.36",
-    "langchain-text-splitters ~= 0.0.1",
     "langchain-experimental ~= 0.0.57",
     "sentence-transformers ~= 2.7.0",
     "pydantic ~= 2.7.1",
