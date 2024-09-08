@@ -120,7 +120,7 @@ def merge_splits(splits: List[dict],
         cur_split = splits[0]
 
         if cur_split['token_size'] > chunk_size:
-            raise ValueError("Single token exceeded chunk size")
+            raise ValueError("Got a split size that exceeded chunk size")
 
         if cur_chunk_len + cur_split['token_size'] > chunk_size and not new_chunk:
             close_chunk()
