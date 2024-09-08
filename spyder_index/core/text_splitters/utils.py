@@ -1,4 +1,4 @@
-from typing import List, Callable
+from typing import List, Callable, Tuple
 
 
 def tokenizer(text: str) -> List:
@@ -54,3 +54,82 @@ def _split_by_sentence_tokenizer(text: str, sentence_tokenizer) -> List[str]:
             end = len(text)
         sentences.append(text[start:end])
     return sentences
+
+
+def split_by_fns(text: str, split_fns: List, sub_split_fns: List) -> Tuple[List[str], bool]:
+    """Split text by defined list of split functions."""
+    for split_fn in split_fns:
+        splits = split_fn(text)
+        if len(splits) > 1:
+            return splits, True
+
+    if sub_split_fns:
+        for split_fn in sub_split_fns:
+            splits = split_fn(text)
+            if len(splits) > 1:
+                return splits, False
+
+
+def merge_splits(splits: List[dict], chunk_size: int, chunk_overlap: int) -> List[str]:
+    """Merge splits into chunks."""
+    chunks: List[str] = []
+    cur_chunk: List[Tuple[str, int]] = []
+    cur_chunk_len = 0
+    last_chunk: List[Tuple[str, int]] = []
+    new_chunk = True
+
+    def close_chunk() -> None:
+        nonlocal chunks, cur_chunk, last_chunk, cur_chunk_len, new_chunk
+
+        chunks.append("".join([text for text, length in cur_chunk]))
+        last_chunk = cur_chunk
+        cur_chunk = []
+        cur_chunk_len = 0
+        new_chunk = True
+
+        # add overlap to the next chunk using previous chunk
+        if len(last_chunk) > 0:
+            last_index = len(last_chunk) - 1
+            while (
+                    last_index >= 0
+                    and cur_chunk_len + last_chunk[last_index][1] <= chunk_overlap):
+                text, length = last_chunk[last_index]
+                cur_chunk_len += length
+                cur_chunk.insert(0, (text, length))
+                last_index -= 1
+
+    def postprocess_chunks(_chunks: List[str]) -> List[str]:
+        """Post-process chunks."""
+        post_chunks = []
+        for _chunk in _chunks:
+            stripped_chunk = _chunk.strip()
+            if stripped_chunk == "":
+                continue
+            post_chunks.append(stripped_chunk)
+        return post_chunks
+
+    while len(splits) > 0:
+        cur_split = splits[0]
+
+        if cur_split['token_size'] > chunk_size:
+            raise ValueError("Single token exceeded chunk size")
+
+        if cur_chunk_len + cur_split['token_size'] > chunk_size and not new_chunk:
+            close_chunk()
+        else:
+            if (cur_split['is_sentence']
+                    or cur_chunk_len + cur_split['token_size'] <= chunk_size
+                    or new_chunk):  # If `new_chunk`, always add at least one split
+
+                cur_chunk_len += cur_split['token_size']
+                cur_chunk.append((cur_split['text'], cur_split['token_size']))
+                splits.pop(0)
+                new_chunk = False
+            else:
+                close_chunk()
+
+    if not new_chunk:
+        chunk = "".join([text for text, length in cur_chunk])
+        chunks.append(chunk)
+
+    return postprocess_chunks(chunks)

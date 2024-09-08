@@ -5,7 +5,7 @@ class CharacterTextSplitter:
     def __init__(self,
                  chunk_size: int = 512,
                  chunk_overlap: int = 256,
-                 separator=["\n\n", " "]) -> None:
+                 separator="\n\n") -> None:
 
         if chunk_overlap > chunk_size:
             raise ValueError(
