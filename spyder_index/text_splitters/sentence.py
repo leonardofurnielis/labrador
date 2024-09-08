@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List
 
 from spyder_index.core.document import Document
 
@@ -77,18 +77,17 @@ class SentenceSplitter:
 
     def _split(self, text: str) -> List[dict]:
 
-        token_size = len(tokenizer(text))
-        if token_size <= self.chunk_size:
-            return [{"text": text, "is_sentence": True, "token_size": token_size}]
+        text_len = len(tokenizer(text))
+        if text_len <= self.chunk_size:
+            return [{"text": text, "is_sentence": True, "token_size": text_len}]
 
         text_splits = []
         text_splits_by_fns, is_sentence = split_by_fns(text, self._split_fns, self._sub_split_fns)
 
         for text_split_by_fns in text_splits_by_fns:
-            token_size = len(tokenizer(text))
-            if token_size <= self.chunk_size:
-                text_splits.append({"text": text_split_by_fns, "is_sentence": is_sentence, "token_size": token_size})
-
+            split_len = len(tokenizer(text_split_by_fns))
+            if split_len <= self.chunk_size:
+                text_splits.append({"text": text_split_by_fns, "is_sentence": is_sentence, "token_size": split_len})
             else:
                 recursive_text_splits = self._split(text_split_by_fns)
                 text_splits.extend(recursive_text_splits)

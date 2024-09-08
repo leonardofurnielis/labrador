@@ -56,8 +56,14 @@ def _split_by_sentence_tokenizer(text: str, sentence_tokenizer) -> List[str]:
     return sentences
 
 
-def split_by_fns(text: str, split_fns: List, sub_split_fns: List) -> Tuple[List[str], bool]:
+def split_by_fns(text: str,
+                 split_fns: List[Callable],
+                 sub_split_fns: List[Callable] = None) -> Tuple[List[str], bool]:
     """Split text by defined list of split functions."""
+
+    if not split_fns:
+        raise ValueError("Must provide a `split_fns` parameter")
+
     for split_fn in split_fns:
         splits = split_fn(text)
         if len(splits) > 1:
@@ -70,7 +76,9 @@ def split_by_fns(text: str, split_fns: List, sub_split_fns: List) -> Tuple[List[
                 return splits, False
 
 
-def merge_splits(splits: List[dict], chunk_size: int, chunk_overlap: int) -> List[str]:
+def merge_splits(splits: List[dict],
+                 chunk_size: int,
+                 chunk_overlap: int) -> List[str]:
     """Merge splits into chunks."""
     chunks: List[str] = []
     cur_chunk: List[Tuple[str, int]] = []
