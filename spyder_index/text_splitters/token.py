@@ -12,7 +12,13 @@ from spyder_index.core.text_splitters.utils import (
 
 
 class TokenTextSplitter:
+    """TokenTextSplitter is designed to split input text into smaller chunks looking at word tokens.
 
+    Args:
+        chunk_size (int, optional): Size of each chunk. Default is ``512``.
+        chunk_overlap (int, optional): Amount of overlap between chunks. Default is ``256``.
+        separator (str, optional): Separators used for splitting into words. Default is ``"\n\n"``
+    """
     def __init__(self,
                  chunk_size: int = 512,
                  chunk_overlap: int = 256,
