@@ -7,3 +7,4 @@ Text Splitters
     
     Semantic <semantic>
     Sentence <sentence>
+    Token <token>

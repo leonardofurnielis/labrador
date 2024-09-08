@@ -11,7 +11,7 @@ from spyder_index.core.text_splitters.utils import (
 )
 
 
-class CharacterTextSplitter:
+class TokenTextSplitter:
 
     def __init__(self,
                  chunk_size: int = 512,
@@ -74,7 +74,7 @@ class CharacterTextSplitter:
         for text_split_by_fns in text_splits_by_fns:
             split_len = len(tokenizer(text_split_by_fns))
             if split_len <= self.chunk_size:
-                text_splits.append({"text": text_split_by_fns, "is_sentence": is_sentence, "token_size": split_len})
+                text_splits.append({"text": text_split_by_fns, "is_sentence": False, "token_size": split_len})
             else:
                 recursive_text_splits = self._split(text_split_by_fns)
                 text_splits.extend(recursive_text_splits)
