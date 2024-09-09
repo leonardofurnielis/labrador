@@ -11,17 +11,17 @@ class ElasticsearchVectorStore:
     """Provides functionality to interact with Elasticsearch for storing and querying document embeddings.
 
     Args:
-        index_name (str): The name of the Elasticsearch index.
-        es_hostname (str): The hostname of the Elasticsearch instance.
-        es_user (str): The username for authentication.
-        es_password (str): The password for authentication.
-        dims_length (int): The length of the embedding dimensions.
+        index_name (str): Name of the Elasticsearch index.
+        es_hostname (str): Elasticsearch hostname.
+        es_user (str): Elasticsearch username.
+        es_password (str): Elasticsearch password.
+        dims_length (int): Length of the embedding dimensions.
         embed_model (BaseEmbedding): Embedding model to use.
-        batch_size (int, optional): The batch size for bulk operations. Defaults to 200.
-        ssl (bool, optional): Whether to use SSL. Defaults to False.
-        distance_strategy (str, optional): The distance strategy for similarity search. Defaults to "cosine".
-        text_field (str, optional): The name of the field containing text. Defaults to "text".
-        vector_field (str, optional): The name of the field containing vector embeddings. Defaults to "embedding".
+        batch_size (int, optional): Optional. Batch size for bulk operations. Defaults to `200`.
+        ssl (bool, optional): Optional. Whether to use SSL. Defaults to `False`.
+        distance_strategy (str, optional): Optional. Distance strategy for similarity search. Defaults to `cosine`.
+        text_field (str, optional): Optional. Name of the field containing text. Defaults to `text`.
+        vector_field (str, optional): Optional. Name of the field containing vector embeddings. Defaults to `embedding`.
     """
 
     def __init__(self,
@@ -71,9 +71,8 @@ class ElasticsearchVectorStore:
             raise
 
     def _create_index_if_not_exists(self) -> None:
-        """
-        Creates the Elasticsearch index if it doesn't already exist.
-        """
+        """Creates the Elasticsearch index if it doesn't already exist."""
+
         if self._client.indices.exists(index=self.index_name):
             logging.info(f"Index {self.index_name} already exists. Skipping creation.")
 
@@ -112,10 +111,10 @@ class ElasticsearchVectorStore:
             self._client.indices.create(index=self.index_name, mappings=index_mappings)
 
     def add_documents(self, documents: List[Document], create_index_if_not_exists: bool = True) -> None:
-        """Adds documents to the Elasticsearch index.
+        """Add documents to the Elasticsearch index.
 
         Args:
-            documents (List[Document]): A list of Document objects to add to the index.
+            documents (List[Document]): List of `Document` objects.
             create_index_if_not_exists (bool, optional): Whether to create the index if it doesn't exist. Defaults to True.
         """
 
@@ -145,7 +144,7 @@ class ElasticsearchVectorStore:
         """Performs a similarity search for top-k most similar documents.
 
         Args:
-            query (str): The query text.
+            query (str)
             top_k (int, optional): The number of top results to return. Defaults to 4.
         """
         query_embedding = self._embed_model.get_query_embedding(query)
@@ -178,10 +177,10 @@ class ElasticsearchVectorStore:
         return docs_and_scores
 
     def delete(self, ids: List[str] = None) -> None:
-        """Deletes documents from the Elasticsearch index.
+        """Delete documents from the Elasticsearch index.
 
         Args:
-            ids (List[str]): A list of document IDs to delete.
+            ids (List[str]): List of `Document` IDs to delete.
         """
         if not ids:
             raise ValueError("No ids provided to delete.")
