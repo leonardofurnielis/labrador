@@ -8,7 +8,10 @@ from langchain_experimental.text_splitter import SemanticChunker
 
 
 class SemanticSplitter(BaseModel):
-    """Semantic Splitter is a Python class designed to split text into chunks using semantic understanding.
+    """Python class designed to split text into chunks using semantic understanding.
+
+    Note:
+        Credit to Greg Kamradt's notebook: `5 Levels Of Text Splitting <https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/tutorials/LevelsOfTextSplitting/5_Levels_Of_Text_Splitting.ipynb>`_.
 
     Args:
         embed_model (BaseEmbedding): Embedding model to use.
