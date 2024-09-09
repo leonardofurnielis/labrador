@@ -14,8 +14,8 @@ from spyder_index.core.text_splitters.utils import (
 
 
 class SentenceSplitter:
-    """SentenceSplitter is designed to split input text into smaller chunks,
-    particularly useful for processing large documents or texts.
+    """Designed to split input text into smaller chunks,
+    particularly useful for processing large documents or texts, tries to keep sentences and paragraphs together.
 
     Args:
         chunk_size (int, optional): Size of each chunk. Default is ``512``.
