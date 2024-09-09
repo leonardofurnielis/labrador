@@ -12,7 +12,7 @@ class KnowledgeBaseCoverage(BaseModel):
 
     Args:
         embed_model (BaseEmbedding): Embedding model to use.
-        similarity_mode (str, optional): The similarity strategy. Defaults to ``cosine``.
+        similarity_mode (str, optional): Similarity strategy. Defaults to ``cosine``.
         similarity_threshold (float, optional): Embedding similarity threshold for "passing". Defaults to ``0.8``.
     """
 
@@ -26,8 +26,8 @@ class KnowledgeBaseCoverage(BaseModel):
     def evaluate(self, contexts: List[str], output: str) -> Dict:
         """
         Args:
-            contexts (str): List of Strings used as LLM context.
-            output (str): The LLM response based on given context.
+            contexts (str): List text used as LLM context.
+            output (str): LLM response based on given context.
         """
 
         if not contexts or not output:

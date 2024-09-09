@@ -50,7 +50,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
         """Compute embeddings for a list of documents.
 
         Args:
-            documents (List[Document]): List of Document.
+            documents (List[Document]): List of ``Document``.
         """
 
         texts = [document.get_content() for document in documents]
