@@ -7,16 +7,15 @@ from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 
 class ChromaVectorStore:
-    """Chroma is the AI-native open-source vector database.
-    In this vector store, embeddings are stored within a ChromaDB collection.
+    """Chroma is the AI-native open-source vector database. Embeddings are stored within a ChromaDB collection.
 
     Args:
-        collection_name (str): The name of the ChromaDB collection.
+        collection_name (str): Name of the ChromaDB collection.
         embed_model (BaseEmbedding): Embedding model to use.
-        distance_strategy (str, optional): The distance strategy for similarity search. Defaults to ``cosine``.
+        distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.
     """
 
-    def __init__(self, collection_name: str = "spyder-index",
+    def __init__(self, collection_name: str = "chroma-index",
                  embed_model: BaseEmbedding = None,
                  distance_strategy: str = "cosine") -> None:
         try:
@@ -40,10 +39,10 @@ class ChromaVectorStore:
         )
 
     def add_documents(self, documents: List[Document]) -> List:
-        """Adds documents to the ChromaDB collection.
+        """Add documents to the ChromaDB collection.
 
         Args:
-            documents (List[Document]): A list of Document objects to add to the collection.
+            documents (List[Document]): List of ``Document`` objects to add to the collection.
         """
 
         embeddings = []
@@ -68,8 +67,8 @@ class ChromaVectorStore:
         """Performs a similarity search for top-k most similar documents.
 
         Args:
-            query (str): The query text.
-            top_k (int, optional): The number of top results to return. Defaults to ``4``.
+            query (str): Query text.
+            top_k (int, optional): Number of top results to return. Defaults to ``4``.
         """
 
         query_embedding = self._embed_model.get_query_embedding(query)
@@ -96,10 +95,10 @@ class ChromaVectorStore:
         return docs_and_scores
 
     def delete(self, ids: List[str] = None) -> None:
-        """Deletes documents from the ChromaDB collection.
+        """Delete documents from the ChromaDB collection.
 
         Args:
-            ids (List[str]): A list of document IDs to delete. Defaults to ``None``.
+            ids (List[str]): List of ``Document`` IDs to delete. Defaults to ``None``.
         """
 
         if not ids:

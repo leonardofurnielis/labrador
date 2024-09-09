@@ -17,11 +17,11 @@ class ElasticsearchVectorStore:
         es_password (str): Elasticsearch password.
         dims_length (int): Length of the embedding dimensions.
         embed_model (BaseEmbedding): Embedding model to use.
-        batch_size (int, optional): Optional. Batch size for bulk operations. Defaults to `200`.
-        ssl (bool, optional): Optional. Whether to use SSL. Defaults to `False`.
-        distance_strategy (str, optional): Optional. Distance strategy for similarity search. Defaults to `cosine`.
-        text_field (str, optional): Optional. Name of the field containing text. Defaults to `text`.
-        vector_field (str, optional): Optional. Name of the field containing vector embeddings. Defaults to `embedding`.
+        batch_size (int, optional): Batch size for bulk operations. Defaults to ``200``.
+        ssl (bool, optional): Whether to use SSL. Defaults to ``False``.
+        distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.
+        text_field (str, optional): Name of the field containing text. Defaults to ``text``.
+        vector_field (str, optional): Name of the field containing vector embeddings. Defaults to ``embedding``.
     """
 
     def __init__(self,
@@ -114,8 +114,8 @@ class ElasticsearchVectorStore:
         """Add documents to the Elasticsearch index.
 
         Args:
-            documents (List[Document]): List of `Document` objects.
-            create_index_if_not_exists (bool, optional): Whether to create the index if it doesn't exist. Defaults to True.
+            documents (List[Document]): List of ``Document`` objects.
+            create_index_if_not_exists (bool, optional): Whether to create the index if it doesn't exist. Defaults to ``True``.
         """
 
         if create_index_if_not_exists:
@@ -144,8 +144,8 @@ class ElasticsearchVectorStore:
         """Performs a similarity search for top-k most similar documents.
 
         Args:
-            query (str)
-            top_k (int, optional): The number of top results to return. Defaults to 4.
+            query (str): Query text.
+            top_k (int, optional): The number of top results to return. Defaults to ``4``.
         """
         query_embedding = self._embed_model.get_query_embedding(query)
         #  TO-DO: Add elasticsearch `filter` option
@@ -180,7 +180,7 @@ class ElasticsearchVectorStore:
         """Delete documents from the Elasticsearch index.
 
         Args:
-            ids (List[str]): List of `Document` IDs to delete.
+            ids (List[str]): List of ``Document`` IDs to delete.
         """
         if not ids:
             raise ValueError("No ids provided to delete.")
