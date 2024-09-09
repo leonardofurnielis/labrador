@@ -28,7 +28,7 @@ class DirectoryReader(BaseReader):
 
     Args:
         input_dir (str): Directory path from which to load the documents.
-        recursive (str): Whether to recursively search for files. Defaults to ``False``.
+        recursive (str, optional): Whether to recursively search for files. Defaults to ``False``.
     """
 
     input_dir: Callable = _loading_default_file_readers

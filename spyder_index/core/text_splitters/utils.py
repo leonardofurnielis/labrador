@@ -42,8 +42,8 @@ def _split_by_sentence_tokenizer(text: str, sentence_tokenizer) -> List[str]:
     """Get the spans and then return the sentences.
 
     Using the start index of each span
-    Instead of using end, use the start of the next span
-    """
+    Instead of using end, use the start of the next span"""
+
     spans = list(sentence_tokenizer.span_tokenize(text))
     sentences = []
     for i, span in enumerate(spans):
@@ -80,6 +80,7 @@ def merge_splits(splits: List[dict],
                  chunk_size: int,
                  chunk_overlap: int) -> List[str]:
     """Merge splits into chunks."""
+
     chunks: List[str] = []
     cur_chunk: List[Tuple[str, int]] = []
     cur_chunk_len = 0

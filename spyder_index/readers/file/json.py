@@ -14,7 +14,7 @@ class JSONReader(BaseReader):
 
     Args:
         input_file (str): File path to read.
-        jq_schema (str, optional): The jq schema to use to extract the data from the JSON.
+        jq_schema (str, optional): jq schema to use to extract the data from the JSON.
         text_content (bool, optional): Flag to indicate whether the content is in string format. Default is ``False``
     """
 
