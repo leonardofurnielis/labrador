@@ -56,7 +56,7 @@ class TokenTextSplitter:
         """Split documents into chunks.
 
         Args:
-            documents (List[Document]): List of Documents
+            documents (List[Document]): List of ``Document``
         """
         chunks = []
 
