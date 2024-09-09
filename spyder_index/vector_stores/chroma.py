@@ -15,7 +15,7 @@ class ChromaVectorStore:
         distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.
     """
 
-    def __init__(self, collection_name: str = "chroma-index",
+    def __init__(self, collection_name: str = "chroma-index-" + str(uuid.uuid4())[:8],
                  embed_model: BaseEmbedding = None,
                  distance_strategy: str = "cosine") -> None:
         try:
