@@ -11,16 +11,16 @@ class WatsonDiscoveryRetriever:
     See https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-getting-started for more info.
 
     Args:
-        hostname (str): Watson Discovery hostname.
-        apikey (str): Watson Discovery apikey.
+        url (str): Watson Discovery instance url.
+        api_key (str): Watson Discovery apikey.
         project_id (str): Watson Discovery project ID.
         version (str, optional): Watson Discovery version. Defaults to ``2023-03-31``.
         disable_passages (bool, optional): Return the full document instead of passages (only enable this if all documents are short). Defaults to ``False``.
     """
 
     def __init__(self,
-                 hostname: str,
-                 apikey: str,
+                 url: str,
+                 api_key: str,
                  project_id: str,
                  version: str = '2023-03-31',
                  disable_passages: bool = False
@@ -36,11 +36,11 @@ class WatsonDiscoveryRetriever:
         self.project_id = project_id
 
         try:
-            authenticator = IAMAuthenticator(apikey)
+            authenticator = IAMAuthenticator(api_key)
             self._client = DiscoveryV2(authenticator=authenticator,
                                        version=version)
 
-            self._client.set_service_url(hostname)
+            self._client.set_service_url(url)
         except Exception as e:
             logging.error(f"Error connecting to IBM Watson Discovery: {e}")
             raise

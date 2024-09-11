@@ -2,9 +2,8 @@ import uuid
 import logging
 
 from typing import List
-from spyder_index.core.document import Document
+from spyder_index.core.document import Document, DocumentWithScore
 from spyder_index.core.embeddings import BaseEmbedding
-from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 
 class ElasticsearchVectorStore:
@@ -12,9 +11,9 @@ class ElasticsearchVectorStore:
 
     Args:
         index_name (str): Name of the Elasticsearch index.
-        es_hostname (str): Elasticsearch hostname.
-        es_user (str): Elasticsearch username.
-        es_password (str): Elasticsearch password.
+        url (str): Elasticsearch instance url.
+        user (str): Elasticsearch username.
+        password (str): Elasticsearch password.
         dims_length (int): Length of the embedding dimensions.
         embed_model (BaseEmbedding): Embedding model to use.
         batch_size (int, optional): Batch size for bulk operations. Defaults to ``200``.
@@ -26,9 +25,9 @@ class ElasticsearchVectorStore:
 
     def __init__(self,
                  index_name: str,
-                 es_hostname: str,
-                 es_user: str,
-                 es_password: str,
+                 url: str,
+                 user: str,
+                 password: str,
                  dims_length: int,
                  embed_model: BaseEmbedding,
                  batch_size: int = 200,
@@ -55,10 +54,10 @@ class ElasticsearchVectorStore:
         self.text_field = text_field
 
         self._client = Elasticsearch(
-            hosts=[es_hostname],
+            hosts=[url],
             basic_auth=(
-                es_user,
-                es_password
+                user,
+                password
             ),
             verify_certs=ssl,
             ssl_show_warn=False
@@ -98,7 +97,7 @@ class ElasticsearchVectorStore:
                     "metadata": {
                         "properties": {
                             "creation_date": {"type": "keyword"},
-                            "file_name": {"type": "keyword"},
+                            "filename": {"type": "keyword"},
                             "file_type": {"type": "keyword"},
                             "page": {"type": "keyword"},
                         }
@@ -132,7 +131,7 @@ class ElasticsearchVectorStore:
                 self.vector_field: self._embed_model.get_query_embedding(doc.get_content()),
                 "metadata": _metadata,
                 "metadata.creation_date": _metadata["creation_date"] if _metadata["creation_date"] else None,
-                "metadata.file_name": _metadata["file_name"] if _metadata["file_name"] else None,
+                "metadata.filename": _metadata["filename"] if _metadata["filename"] else None,
                 "metadata.file_type": _metadata["file_type"] if _metadata["file_type"] else None,
                 "metadata.page": _metadata["page"] if _metadata["page"] else None,
             })
@@ -140,7 +139,7 @@ class ElasticsearchVectorStore:
         self._es_bulk(self._client, vector_store_data, chunk_size=self.batch_size, refresh=True)
         print(f"Added {len(vector_store_data)} documents to `{self.index_name}`")
 
-    def query(self, query: str, top_k: int = 4) -> List[VectorStoreQueryResult]:
+    def query(self, query: str, top_k: int = 4) -> List[DocumentWithScore]:
         """Performs a similarity search for top-k most similar documents.
 
         Args:
@@ -158,19 +157,19 @@ class ElasticsearchVectorStore:
         }}
 
         results = self._client.search(index=self.index_name,
-                                       **es_query,
-                                       size=top_k,
-                                       _source={"excludes": [self.vector_field]})
+                                      **es_query,
+                                      size=top_k,
+                                      _source={"excludes": [self.vector_field]})
 
         hits = results["hits"]["hits"]
 
-        docs_and_scores = [VectorStoreQueryResult(
+        docs_and_scores = [DocumentWithScore(
             document=Document(
                 doc_id=hit["_id"],
                 text=hit["_source"]["text"],
                 metadata=hit["_source"]["metadata"],
             ),
-            confidence=hit["_score"])
+            score=hit["_score"])
             for hit in hits
         ]
 

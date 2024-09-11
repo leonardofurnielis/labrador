@@ -2,7 +2,7 @@ import os
 import re
 import tempfile
 
-from typing import List
+from typing import List, Optional
 
 from spyder_index.core.readers import BaseReader
 from spyder_index.core.document import Document
@@ -39,7 +39,7 @@ class S3Reader(BaseReader):
         self.ibm_service_instance_id = ibm_service_instance_id
         self.s3_endpoint_url = s3_endpoint_url
 
-    def load_data(self) -> List[Document]:
+    def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified s3 bucket."""
 
         ibm_s3 = self._ibm_boto3.resource(
