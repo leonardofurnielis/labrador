@@ -8,7 +8,7 @@ Readers
     Directory <directory>
     Docx <docx>
     HTML <html>
+    IBM Watson Discovery <watson_discovery>
     JSON <json>
     PDF <pdf>
     S3 <s3>
-    IBM Watson Discovery <watson_discovery>
