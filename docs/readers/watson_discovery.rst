@@ -7,6 +7,6 @@ IBM Watson Discovery
 
     pip install ibm-watson
 
-.. automodule:: spyder_index.reader.watson_discovery
+.. automodule:: spyder_index.readers.watson_discovery
     :members:
 
