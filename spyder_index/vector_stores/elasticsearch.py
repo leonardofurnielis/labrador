@@ -145,7 +145,7 @@ class ElasticsearchVectorStore:
 
         Args:
             query (str): Query text.
-            top_k (int, optional): The number of top results to return. Defaults to ``4``.
+            top_k (int, optional): Number of top results to return. Defaults to ``4``.
         """
         query_embedding = self._embed_model.get_query_embedding(query)
         #  TO-DO: Add elasticsearch `filter` option
