@@ -1,7 +1,8 @@
 import uuid
 
+from dataclasses import dataclass
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Dict
+from typing import TYPE_CHECKING, Any, Dict, Optional
 from pydantic.v1 import BaseModel, Field, validator
 
 if TYPE_CHECKING:
@@ -57,3 +58,38 @@ class Document(BaseDocument):
             doc (LangChainDocument): Document in LangChain format.
         """
         return cls(text=doc.page_content, metadata=doc.metadata)
+
+
+@dataclass
+class DocumentWithScore:
+    document: BaseDocument
+    score: Optional[float] = None
+
+    @classmethod
+    def class_name(cls) -> str:
+        return "DocumentWithScore"
+
+    def get_score(self) -> float:
+        """Get score of the document."""
+        if self.score is None:
+            return 0.0
+        else:
+            return self.score
+
+    # #### pass through methods to BaseDocument ####
+    @property
+    def doc_id(self) -> str:
+        return self.document.doc_id
+
+    @property
+    def text(self) -> str:
+        if isinstance(self.document, Document):
+            return self.document.text
+        else:
+            raise ValueError("Must be a Document to get text")
+
+    def get_content(self) -> str:
+        return self.document.get_content()
+
+    def get_metadata(self) -> str:
+        return self.document.get_metadata()
