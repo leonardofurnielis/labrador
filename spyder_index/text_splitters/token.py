@@ -45,7 +45,7 @@ class TokenTextSplitter:
         """Split text into chunks.
 
         Args:
-        - text (str): Input text to split.
+            text (str): Input text to split.
         """
         splits = self._split(text)
         chunks = merge_splits(splits, self.chunk_size, self.chunk_overlap)
