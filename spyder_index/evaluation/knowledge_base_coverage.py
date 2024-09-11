@@ -7,8 +7,8 @@ from pydantic.v1 import BaseModel
 
 
 class KnowledgeBaseCoverage(BaseModel):
-    """Indicates how much the KnowledgeBase has contributed to the answer's coverage.
-    If the LLM response contains information from the KnowledgeBase, this percentage is going to be very high.
+    """Measures how much the knowledge base (context) has contributed to the answer’s coverage.
+    Higher value suggests greater proportion of context are in LLM response.
 
     Args:
         embed_model (BaseEmbedding): Embedding model to use.
@@ -26,7 +26,7 @@ class KnowledgeBaseCoverage(BaseModel):
     def evaluate(self, contexts: List[str], output: str) -> Dict:
         """
         Args:
-            contexts (str): List text used as LLM context.
+            contexts (List[str]): List text used as LLM context.
             output (str): LLM response based on given context.
         """
 

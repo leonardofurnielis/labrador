@@ -5,4 +5,4 @@ Evaluation
 .. toctree::
     :maxdepth: 2
     
-    Coverage % <coverage>
+    Knowledge Base Coverage <knowledge_base_coverage>
