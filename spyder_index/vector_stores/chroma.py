@@ -1,9 +1,8 @@
 import uuid
 
 from typing import List
-from spyder_index.core.document import Document
+from spyder_index.core.document import Document, DocumentWithScore
 from spyder_index.core.embeddings import BaseEmbedding
-from spyder_index.core.vector_stores import VectorStoreQueryResult
 
 
 class ChromaVectorStore:
@@ -63,7 +62,7 @@ class ChromaVectorStore:
 
         return ids
 
-    def query(self, query: str, top_k: int = 4) -> List[VectorStoreQueryResult]:
+    def query(self, query: str, top_k: int = 4) -> List[DocumentWithScore]:
         """Performs a similarity search for top-k most similar documents.
 
         Args:
@@ -79,11 +78,11 @@ class ChromaVectorStore:
         )
 
         docs_and_scores = [
-            VectorStoreQueryResult(document=Document(
+            DocumentWithScore(document=Document(
                 doc_id=result[0],
                 text=result[1],
                 metadata=result[2]
-            ), confidence=result[3])
+            ), score=result[3])
             for result in zip(
                 results["ids"][0],
                 results["documents"][0],
