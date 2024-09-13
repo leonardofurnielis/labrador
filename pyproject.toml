@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "spyder-index"
 version = "0.2.11"
-description = "spyder-index is an open-source data framework for building LLM applications"
+description = "Integration package connecting data and LLMs"
 authors = ["Leonardo Furnielis <leonardofurnielis@outlook.com>"]
 license = "MIT"
 readme = "README.md"
