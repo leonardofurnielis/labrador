@@ -23,7 +23,7 @@ packages = [{include = "spyder_index"}]
 keywords = ["retrieval", "RAG", "index", "data", "LLM", "AI", "NLP"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 langchain-core = "^0.1.48"
 langchain-community = "^0.0.36"
 langchain-experimental = "^0.0.57"
