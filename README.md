@@ -7,7 +7,7 @@
 ## Installation 
 
 ```bash
-pip install --upgrade spyder-index
+pip install spyder-index
 ```
 
 ## 📄 Documentation
