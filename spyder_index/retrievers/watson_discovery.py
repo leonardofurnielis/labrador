@@ -45,7 +45,7 @@ class WatsonDiscoveryRetriever:
             logging.error(f"Error connecting to IBM Watson Discovery: {e}")
             raise
 
-    def query(self, query: str, filter: str = None, top_k: int = 4) -> List:
+    def query(self, query: str, filter: str = None, top_k: int = 4) -> List[DocumentWithScore]:
         """Search your data in the Discovery API and return a list of documents.
 
         Args:
