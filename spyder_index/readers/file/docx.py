@@ -32,7 +32,7 @@ class DocxReader(BaseReader):
         self.input_file = Path(input_file)
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
-        """Loads the document from specified directory."""
+        """Loads data from the specified directory."""
 
         lc_documents = Docx2txtLoader(file_path=self.input_file).load()
 

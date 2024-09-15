@@ -40,7 +40,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
         """Compute embeddings for list of texts.
 
         Args:
-            texts (List[str]): List of input texts to compute embedding.
+            texts (List[str]): List of text to compute embeddings.
         """
         embedding_texts = self._client.encode(texts).tolist()
 
@@ -50,7 +50,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
         """Compute embeddings for a list of documents.
 
         Args:
-            documents (List[Document]): List of ``Document``.
+            documents (List[Document]): List of `Document` objects to compute embeddings.
         """
 
         texts = [document.get_content() for document in documents]

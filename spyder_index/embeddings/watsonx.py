@@ -9,9 +9,9 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
     """IBM watsonx embedding models.
 
     Note:
-            One of these parameters is required: [project_id, space_id].
-    Note:
-            For the watsonx.ai API endpoints: https://cloud.ibm.com/apidocs/watsonx-ai#endpoint-url
+            One of these parameters is required: ``project_id`` or ``space_id``.
+
+    See https://cloud.ibm.com/apidocs/watsonx-ai#endpoint-url for the watsonx.ai API endpoints.
 
     Args:
         model_name (str): IBM watsonx.ai model to be used. Defaults to ``ibm/slate-30m-english-rtrvr``.
@@ -70,7 +70,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         """Compute embeddings for list of texts.
 
         Args:
-            texts (List[str]): List of input texts to compute embedding.
+            texts (List[str]): List of text to compute embeddings.
         """
         embedding_texts = self._client.embed_documents(texts)
 
@@ -80,7 +80,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         """Compute embeddings for a list of documents.
 
         Args:
-            documents (List[Document]): List of ``Document``.
+            documents (List[Document]): List of `Document` objects to compute embeddings.
         """
 
         texts = [document.get_content() for document in documents]

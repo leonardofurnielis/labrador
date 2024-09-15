@@ -40,7 +40,7 @@ class S3Reader(BaseReader):
         self.s3_endpoint_url = s3_endpoint_url
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
-        """Loads data from the specified s3 bucket."""
+        """Loads data from the specified S3 bucket."""
 
         ibm_s3 = self._ibm_boto3.resource(
             "s3",

@@ -51,7 +51,7 @@ class WatsonDiscoveryReader(BaseReader):
             raise
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
-        """Loads documents from Watson Discovery."""
+        """Loads documents from the Watson Discovery."""
         from ibm_watson.discovery_v2 import QueryLargePassages
         last_batch_size = self.batch_size
         offset_len = 0
