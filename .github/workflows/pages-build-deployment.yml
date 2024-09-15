@@ -24,4 +24,12 @@ jobs:
     - name: install docs dependencies
       run: poetry install --only docs
     - name: running sphinx build
-      run: ls
+      run: sphinx-build -M html ./docs ./tmp/sphinx-pages
+    - name: setup pages
+      uses: actions/configure-pages@v4
+    - name: upload pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./tmp/sphinx-pages
+    - name: deploy to github pages
+      uses: actions/deploy-pages@v4
