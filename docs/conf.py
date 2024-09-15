@@ -41,6 +41,7 @@ autodoc_default_options = {"exclude-members": "__init__"}
 
 html_theme = 'furo'
 html_static_path = ['_static']
+html_css_files = ["custom.css"]
 html_title = "🕸️ spyder-index Framework"
 html_last_updated_fmt = "%b %d, %Y"
 html_copy_source = False
