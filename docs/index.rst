@@ -1,5 +1,5 @@
 ============================================
-Welcome to 🕷️ spyder-index documentation!
+Welcome to 🕸️️ spyder-index documentation!
 ============================================
 
 spyder-index is an open-source data framework for building LLMs (Large Language Model) applications
