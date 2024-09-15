@@ -30,6 +30,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '.idea']
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autoclass_content
 
+add_module_names = False
 autoclass_content = "class"
 autodoc_typehints = "description"
 autodoc_typehints_format = "short"

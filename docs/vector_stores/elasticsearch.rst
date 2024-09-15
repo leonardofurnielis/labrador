@@ -6,5 +6,5 @@ Elasticsearch
 
     pip install elasticsearch
 
-.. autoclass:: spyder_index.vector_stores.elasticsearch::ElasticsearchVectorStore
+.. automodule:: spyder_index.vector_stores.elasticsearch
     :members:
