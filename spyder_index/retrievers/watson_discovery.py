@@ -50,7 +50,7 @@ class WatsonDiscoveryRetriever:
 
         Args:
             query (str): Query text.
-            filter (str, optional): Searches for documents that march the filter. Use Discovery Query Language syntax.
+            filter (str, optional): Searches for documents that match the filter. Use Discovery Query Language syntax.
             top_k (int, optional): Number of top results to return. Defaults to ``4``.
         """
         from ibm_watson.discovery_v2 import QueryLargePassages

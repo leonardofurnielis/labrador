@@ -63,7 +63,7 @@ class SentenceSplitter:
         """Split documents into chunks.
 
         Args:
-            documents (List[Document]): List of ``Documents``
+            documents (List[Document]): List of `Document` objects to split.
         """
         chunks = []
 

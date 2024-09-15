@@ -113,7 +113,7 @@ class ElasticsearchVectorStore:
         """Add documents to the Elasticsearch index.
 
         Args:
-            documents (List[Document]): List of ``Document`` objects.
+            documents (List[Document]): List of `Document` objects to add to the index.
             create_index_if_not_exists (bool, optional): Whether to create the index if it doesn't exist. Defaults to ``True``.
         """
 
@@ -179,7 +179,7 @@ class ElasticsearchVectorStore:
         """Delete documents from the Elasticsearch index.
 
         Args:
-            ids (List[str]): List of ``Document`` IDs to delete.
+            ids (List[str]): List of `Document` IDs to delete.
         """
         if not ids:
             raise ValueError("No ids provided to delete.")

@@ -41,7 +41,7 @@ class ChromaVectorStore:
         """Add documents to the ChromaDB collection.
 
         Args:
-            documents (List[Document]): List of ``Document`` objects to add to the collection.
+            documents (List[Document]): List of `Document` objects to add to the collection.
         """
 
         embeddings = []
@@ -97,7 +97,7 @@ class ChromaVectorStore:
         """Delete documents from the ChromaDB collection.
 
         Args:
-            ids (List[str]): List of ``Document`` IDs to delete. Defaults to ``None``.
+            ids (List[str]): List of `Document` IDs to delete. Defaults to ``None``.
         """
 
         if not ids:

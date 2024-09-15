@@ -45,7 +45,7 @@ class SemanticSplitter(BaseModel):
         """Split documents into chunks.
         
         Args:
-            documents (List[Document]): List of ``Document``
+            documents (List[Document]): List of `Document` objects to split.
         """
 
         chunks = []
