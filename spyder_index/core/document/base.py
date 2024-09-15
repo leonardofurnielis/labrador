@@ -43,11 +43,11 @@ class Document(BaseDocument):
         return "Document"
 
     def get_content(self) -> str:
-        """Get the text content of the document."""
+        """Get the text content."""
         return self.text
 
     def get_metadata(self) -> dict:
-        """Get the metadata of the document."""
+        """Get metadata."""
         return self.metadata
 
     @classmethod
@@ -71,7 +71,7 @@ class DocumentWithScore:
         return "DocumentWithScore"
 
     def get_score(self) -> float:
-        """Get score of the document."""
+        """Get score."""
         if self.score is None:
             return 0.0
         else:
