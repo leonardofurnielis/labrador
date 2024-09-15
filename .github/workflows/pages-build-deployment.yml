@@ -24,7 +24,7 @@ jobs:
       run: | 
         pip install sphinx
         poetry install --only docs
-        poetry run sphinx-build -M html ./docs ./tmp/sphinx-pages
+        poetry run sphinx-build -b html ./docs ./tmp/sphinx-pages
 #        PATH=$HOME/.local/bin:$PATH
 #        sphinx-build -M html ./docs ./tmp/sphinx-pages
     - name: setup pages
