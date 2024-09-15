@@ -30,7 +30,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '.idea']
 
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autoclass_content
 
-add_module_names = False
 autoclass_content = "class"
 autodoc_typehints = "description"
 autodoc_typehints_format = "short"
@@ -46,3 +45,8 @@ html_title = "🕸️ spyder-index Framework"
 html_last_updated_fmt = "%b %d, %Y"
 html_copy_source = False
 html_show_sourcelink = False
+
+# -- Options for Python domain -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-the-python-domain
+
+add_module_names = False
