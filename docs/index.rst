@@ -15,6 +15,7 @@ spyder-index is an open-source data framework for building LLMs (Large Language 
     Retrievers <retrievers/index>
     Text Splitters <text_splitters/index>
     Vector Stores <vector_stores/index>
+    Schema <schema>
 
 Features
 ---------------
