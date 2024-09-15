@@ -22,6 +22,7 @@ jobs:
         python-version: 3.10.14
     - name: install docs dependencies and sphinx build
       run: | 
+        pip install sphinx
         poetry install --only docs
         PATH=$HOME/.local/bin:$PATH
         sphinx-build -M html ./docs ./tmp/sphinx-pages
