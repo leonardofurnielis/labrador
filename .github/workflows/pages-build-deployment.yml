@@ -23,7 +23,7 @@ jobs:
         cache: 'poetry'
     - name: install docs dependencies and sphinx build
       run: | 
-        poetry install --only docs
+        poetry install --with docs
         poetry run sphinx-build -b html ./docs ./tmp/sphinx-pages
     - name: setup pages
       uses: actions/configure-pages@v4
