@@ -2,6 +2,7 @@
 JSON
 ============================================
 
+In order to use ``PDFReader`` you need to install the ``pypdf`` package.
 
 .. code-block:: bash
 
