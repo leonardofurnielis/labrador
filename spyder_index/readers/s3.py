@@ -17,6 +17,19 @@ class S3Reader(BaseReader):
         ibm_api_key_id (str): IBM Cloud API key ID for accessing the bucket.
         ibm_service_instance_id (str): Service instance ID for the IBM COS.
         s3_endpoint_url (str): Endpoint URL for the S3 service.
+
+        **Example**
+
+         .. code-block:: python
+
+            from spyder_index.readers import S3Reader
+
+            loader = S3Reader(bucket="spyder-bucket",
+                     ibm_api_key_id="<your_api_key>",
+                     ibm_service_instance_id="<your_instance_id>",
+                     s3_endpoint_url="<your_api_url>")
+
+docs = loader.load_data()
     """
 
     def __init__(self, bucket: str,
