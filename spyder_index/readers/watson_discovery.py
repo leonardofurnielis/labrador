@@ -23,8 +23,8 @@ class WatsonDiscoveryReader(BaseReader):
     A way you may use:
         >>> from spyder_index.readers import WatsonDiscoveryReader
         >>> wd_reader = WatsonDiscoveryReader(url="<your_url>",
-                                                api_key="<your_api_key>",
-                                                project_id="<your_project_id>")
+                                              api_key="<your_api_key>",
+                                              project_id="<your_project_id>")
     """
 
     def __init__(self,
