@@ -64,7 +64,6 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
         A way you may use:
         >>> from spyder_index.embeddings import WatsonxEmbedding
-        >>>
         >>> text = "A python data library for building AI applications"
         >>> embed_engine = WatsonxEmbedding(api_key="<you_api_key>",
                                             url="https://us-south.ml.cloud.ibm.com",
