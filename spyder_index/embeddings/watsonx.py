@@ -17,7 +17,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         model_name (str): IBM watsonx.ai model to be used. Defaults to ``ibm/slate-30m-english-rtrvr``.
         api_key (str): API Key for accessing IBM watsonx.ai.
         url (str): Service instance url.
-        truncate_input_tokens (str): Maximum number of input tokens accepted.
+        truncate_input_tokens (str): Maximum number of input tokens accepted. Defaults to ``512``
         project_id (str, optional): ID of the watsonx.ai project.
         space_id (str, optional): ID of the watsonx.ai space.
     """
@@ -61,6 +61,15 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
         Args:
             query (str): Input query to compute embedding.
+
+        A way you may use:
+        >>> from spyder_index.embeddings import WatsonxEmbedding
+        >>>
+        >>> text = "A python data library for building AI applications"
+        >>> embed_engine = WatsonxEmbedding(api_key="<you_api_key>",
+                                            url="https://us-south.ml.cloud.ibm.com",
+                                            project_id="<your_project_id>")
+        >>> embeddings = embed_engine.get_query_embedding(text)
         """
         embedding_text = self.get_texts_embedding([query])[0]
 
