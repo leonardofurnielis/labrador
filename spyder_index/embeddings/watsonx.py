@@ -63,9 +63,9 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
             query (str): Input query to compute embedding.
 
         Examples:
-        >>> from spyder_index.embeddings import WatsonxEmbedding
-        >>> text = "A python data library for building AI applications"
-        >>> watsonx_embed = WatsonxEmbedding(api_key="<you_api_key>", url="https://us-south.ml.cloud.ibm.com", project_id="<your_project_id>")
+            >>> from spyder_index.embeddings import WatsonxEmbedding
+            >>> text = "A python data library for building AI applications"
+            >>> watsonx_embed = WatsonxEmbedding(api_key="<you_api_key>", url="https://us-south.ml.cloud.ibm.com", project_id="<your_project_id>")
         """
         embedding_text = self.get_texts_embedding([query])[0]
 
