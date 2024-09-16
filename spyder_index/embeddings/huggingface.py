@@ -12,6 +12,10 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
     Args:
         model_name (str): Hugging Face model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
         device (str): Device to run the model on. Defaults to ``cpu``.
+
+    A way you may use:
+        >>> from spyder_index.embeddings import HuggingFaceEmbedding
+        >>> huggingface_embed = HuggingFaceEmbedding()
     """
 
     model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
@@ -30,15 +34,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         Args:
             query (str): Input query to compute embedding.
-
-        A way you may use:
-        >>> from spyder_index.embeddings import HuggingFaceEmbedding
-        >>>
-        >>> text = "A python data library for building AI applications"
-        >>> embed_engine = HuggingFaceEmbedding()
-        >>> embeddings = embed_engine.get_query_embedding(text)
         """
-
         embedding_text = self.get_texts_embedding([query])[0]
 
         return embedding_text

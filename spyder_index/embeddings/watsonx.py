@@ -20,6 +20,12 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         truncate_input_tokens (str): Maximum number of input tokens accepted. Defaults to ``512``
         project_id (str, optional): ID of the watsonx.ai project.
         space_id (str, optional): ID of the watsonx.ai space.
+
+    A way you may use:
+        >>> from spyder_index.embeddings import WatsonxEmbedding
+        >>> watsonx_embed = WatsonxEmbedding(api_key="<you_api_key>",
+                                                url="https://us-south.ml.cloud.ibm.com",
+                                                project_id="<your_project_id>")
     """
 
     model_name: str = "ibm/slate-30m-english-rtrvr"
@@ -61,13 +67,6 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
         Args:
             query (str): Input query to compute embedding.
-
-        A way you may use:
-            >>> from spyder_index.embeddings import WatsonxEmbedding
-            >>> text = "A python data library for building AI applications"
-            >>> watsonx_embed = WatsonxEmbedding(api_key="<you_api_key>",
-                                                url="https://us-south.ml.cloud.ibm.com",
-                                                project_id="<your_project_id>")
         """
         embedding_text = self.get_texts_embedding([query])[0]
 
