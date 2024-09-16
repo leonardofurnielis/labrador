@@ -18,6 +18,14 @@ class TokenTextSplitter:
         chunk_size (int, optional): Size of each chunk. Default is ``512``.
         chunk_overlap (int, optional): Amount of overlap between chunks. Default is ``256``.
         separator (str, optional): Separators used for splitting into words. Default is ``\\n\\n``.
+
+    **Example**
+
+    .. code-block:: python
+
+        from spyder_index.text_splitters import TokenTextSplitter
+
+        splitter = TokenTextSplitter()
     """
     def __init__(self,
                  chunk_size: int = 512,

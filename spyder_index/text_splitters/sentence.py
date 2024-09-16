@@ -21,6 +21,14 @@ class SentenceSplitter:
         chunk_size (int, optional): Size of each chunk. Default is ``512``.
         chunk_overlap (int, optional): Amount of overlap between chunks. Default is ``256``.
         separator (str, optional): Separators used for splitting into words. Default is ``" "``
+
+    **Example**
+
+    .. code-block:: python
+
+        from spyder_index.text_splitters import SentenceSplitter
+
+        splitter = SentenceSplitter()
     """
 
     def __init__(self,

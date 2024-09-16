@@ -17,6 +17,16 @@ class SemanticSplitter(BaseModel):
         buffer_size (int, optional): Size of the buffer for semantic chunking. Default is ``1``.
         breakpoint_threshold_amount (int, optional): Threshold percentage for detecting breakpoints. Default is ``95``.
         device (str, optional): Device to use for processing, either "cpu" or "cuda". Default is ``cpu``.
+
+    **Example**
+
+    .. code-block:: python
+
+        from spyder_index.embeddings import HuggingFaceEmbedding
+        from spyder_index.text_splitters import SemanticSplitter
+
+        embed = HuggingFaceEmbedding()
+        splitter = SemanticSplitter(embed_model=embed)
     """
 
     embed_model: BaseEmbedding
