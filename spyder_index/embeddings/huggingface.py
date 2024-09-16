@@ -43,7 +43,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         .. code-block:: python
 
-            embed.get_query_embedding("spyder-index is an open-source data framework for building LLMs")
+            embedded_query = embed.get_query_embedding("spyder-index is an open-source data framework for building LLMs")
         """
         embedding_text = self.get_texts_embedding([query])[0]
 

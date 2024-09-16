@@ -38,6 +38,12 @@ class KnowledgeBaseCoverage(BaseModel):
         Args:
             contexts (List[str]): List text used as LLM context.
             output (str): LLM response based on given context.
+
+        **Example**
+
+         .. code-block:: python
+
+            context_coverage = coverage.evaluate([<context>], "<output>")
         """
 
         if not contexts or not output:
