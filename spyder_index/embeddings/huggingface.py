@@ -19,7 +19,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         from spyder_index.embeddings import HuggingFaceEmbedding
 
-        huggingface_embed = HuggingFaceEmbedding()
+        embed = HuggingFaceEmbedding()
     """
 
     model_name: str = "sentence-transformers/all-MiniLM-L6-v2"

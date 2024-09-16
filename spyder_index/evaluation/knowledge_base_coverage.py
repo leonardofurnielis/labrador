@@ -22,8 +22,8 @@ class KnowledgeBaseCoverage(BaseModel):
         from spyder_index.evaluation import KnowledgeBaseCoverage
         from spyder_index.embeddings import HuggingFaceEmbedding
 
-        huggingface_embed = HuggingFaceEmbedding()
-        kb_coverage = KnowledgeBaseCoverage(embed_model=huggingface_embed)
+        embed = HuggingFaceEmbedding()
+        coverage = KnowledgeBaseCoverage(embed_model=embed)
     """
 
     embed_model: BaseEmbedding
