@@ -61,6 +61,12 @@ class SentenceSplitter:
         
         Args:
             text (str): Input text to split.
+
+        **Example**
+
+        .. code-block:: python
+
+            chunks = splitter.from_text("spyder-index is an open-source data framework for building LLMs")
         """
         splits = self._split(text)
         chunks = merge_splits(splits, self.chunk_size, self.chunk_overlap)

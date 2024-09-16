@@ -62,6 +62,12 @@ class WatsonDiscoveryRetriever:
             query (str): Query text.
             filter (str, optional): Searches for documents that match the filter. Use Discovery Query Language syntax.
             top_k (int, optional): Number of top results to return. Defaults to ``4``.
+
+        **Example**
+
+        .. code-block:: python
+
+            docs = retriever.query("What's spyder index?")
         """
         from ibm_watson.discovery_v2 import QueryLargePassages
         return_fields = ["extracted_metadata.filename", "extracted_metadata.file_type"]
