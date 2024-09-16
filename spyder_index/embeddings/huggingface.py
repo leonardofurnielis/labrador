@@ -32,9 +32,9 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
             query (str): Input query to compute embedding.
 
         Examples:
-            >> from spyder_index.embeddings import HuggingFaceEmbedding
-            >> embed_engine = HuggingFaceEmbedding()
-            >> text_embed = embed_engine.get_query_embedding("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
+            >>> from spyder_index.embeddings import HuggingFaceEmbedding
+            >>> embed_engine = HuggingFaceEmbedding()
+            >>> text_embed = embed_engine.get_query_embedding("Lorem Ipsum is simply dummy text of the printing and typesetting industry.")
         """
 
         embedding_text = self.get_texts_embedding([query])[0]
