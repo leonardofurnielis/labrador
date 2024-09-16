@@ -19,6 +19,12 @@ class WatsonDiscoveryReader(BaseReader):
         version (str, optional): Watson Discovery version. Defaults to ``2023-03-31``.
         batch_size (int, optional): Batch size for bulk operations. Defaults to ``50``.
         date_gte (str, optional): Load Watson Discovery documents uploaded/created after given date, expected format ``YYYY-MM-DD``. Defaults to ``datetime.today()``.
+
+    A way you may use:
+        >>> from spyder_index.readers import WatsonDiscoveryReader
+        >>> wd_reader = WatsonDiscoveryReader(url="<your_url>",
+                                                api_key="<your_api_key>",
+                                                project_id="<your_project_id>")
     """
 
     def __init__(self,
