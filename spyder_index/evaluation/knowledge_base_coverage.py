@@ -14,6 +14,12 @@ class KnowledgeBaseCoverage(BaseModel):
         embed_model (BaseEmbedding): Embedding model to use.
         similarity_mode (str, optional): Similarity strategy. Defaults to ``cosine``.
         similarity_threshold (float, optional): Embedding similarity threshold for "passing". Defaults to ``0.8``.
+
+    A way you may use:
+        >>> from spyder_index.evaluation import KnowledgeBaseCoverage
+        >>> from spyder_index.embeddings import HuggingFaceEmbedding
+        >>> huggingface_embed = HuggingFaceEmbedding()
+        >>> kb_coverage = KnowledgeBaseCoverage(embed_model=huggingface_embed)
     """
 
     embed_model: BaseEmbedding
