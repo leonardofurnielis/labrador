@@ -29,7 +29,6 @@ class S3Reader(BaseReader):
                      ibm_service_instance_id="<your_instance_id>",
                      s3_endpoint_url="<your_api_url>")
 
-docs = loader.load_data()
     """
 
     def __init__(self, bucket: str,
