@@ -32,7 +32,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '.idea']
 # https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autoclass_content
 
 autoclass_content = "class"
-autodoc_typehints = "description"
+autodoc_typehints = "signature"
 autodoc_typehints_format = "short"
 autodoc_class_signature = "separated"
 autodoc_default_options = {"exclude-members": "__init__"}

@@ -19,7 +19,7 @@ class WatsonDiscoveryRetriever:
 
     **Example**
 
-    . code-block:: python
+    .. code-block:: python
         from spyder_index.retrievers import WatsonDiscoveryRetriever
         wd_retriever = WatsonDiscoveryRetriever(url="<your_url>",
                                                 api_key="<your_api_key>",
