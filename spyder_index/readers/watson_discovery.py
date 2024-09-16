@@ -63,7 +63,7 @@ class WatsonDiscoveryReader(BaseReader):
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads documents from the Watson Discovery.
 
-         **Example**
+        **Example**
 
         .. code-block:: python
 
