@@ -26,7 +26,7 @@ class WatsonDiscoveryReader(BaseReader):
 
         from spyder_index.readers import WatsonDiscoveryReader
 
-        wd_reader = WatsonDiscoveryReader(url="<your_url>",
+        reader = WatsonDiscoveryReader(url="<your_url>",
                                           api_key="<your_api_key>",
                                           project_id="<your_project_id>")
     """
