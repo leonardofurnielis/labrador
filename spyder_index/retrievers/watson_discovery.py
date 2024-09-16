@@ -22,6 +22,7 @@ class WatsonDiscoveryRetriever:
     .. code-block:: python
 
         from spyder_index.retrievers import WatsonDiscoveryRetriever
+
         wd_retriever = WatsonDiscoveryRetriever(url="<your_url>",
                                                 api_key="<your_api_key>",
                                                 project_id="<your_project_id>")
