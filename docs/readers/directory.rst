@@ -1,5 +1,5 @@
 ============================================
-Directory
+File Directory
 ============================================
 
 In order to use ``DirectoryReader`` you need to install the ``docx2txt`` and ``pypdf`` package.
