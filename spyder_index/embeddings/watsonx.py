@@ -71,6 +71,12 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
         Args:
             query (str): Input query to compute embedding.
+
+        **Example**
+
+        .. code-block:: python
+
+            watsonx_embed.get_query_embedding("spyder-index is an open-source data framework for building LLMs")
         """
         embedding_text = self.get_texts_embedding([query])[0]
 
