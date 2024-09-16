@@ -10,4 +10,5 @@ In order to use ``WatsonDiscoveryRetriever`` you need to install the ``ibm-watso
 
 .. automodule:: spyder_index.retrievers.watson_discovery
     :members:
+    :annotation:
 
