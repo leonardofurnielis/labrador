@@ -41,7 +41,7 @@ class KnowledgeBaseCoverage(BaseModel):
 
         **Example**
 
-         .. code-block:: python
+        .. code-block:: python
 
             context_coverage = coverage.evaluate([<context>], "<output>")
         """

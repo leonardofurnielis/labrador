@@ -20,7 +20,7 @@ class S3Reader(BaseReader):
 
         **Example**
 
-         .. code-block:: python
+        .. code-block:: python
 
             from spyder_index.readers import S3Reader
 
