@@ -21,11 +21,15 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         project_id (str, optional): ID of the watsonx.ai project.
         space_id (str, optional): ID of the watsonx.ai space.
 
-    A way you may use:
-        >>> from spyder_index.embeddings import WatsonxEmbedding
-        >>> watsonx_embed = WatsonxEmbedding(api_key="<you_api_key>",
-                                             url="https://us-south.ml.cloud.ibm.com",
-                                             project_id="<your_project_id>")
+    **Example**
+
+    .. code-block:: python
+
+        from spyder_index.embeddings import WatsonxEmbedding
+
+        watsonx_embed = WatsonxEmbedding(api_key="<you_api_key>",
+                                         url="https://us-south.ml.cloud.ibm.com",
+                                         project_id="<your_project_id>")
     """
 
     model_name: str = "ibm/slate-30m-english-rtrvr"

@@ -13,9 +13,13 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
         model_name (str): Hugging Face model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
         device (str): Device to run the model on. Defaults to ``cpu``.
 
-    A way you may use:
-        >>> from spyder_index.embeddings import HuggingFaceEmbedding
-        >>> huggingface_embed = HuggingFaceEmbedding()
+    **Example**
+
+    .. code-block:: python
+
+        from spyder_index.embeddings import HuggingFaceEmbedding
+
+        huggingface_embed = HuggingFaceEmbedding()
     """
 
     model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
