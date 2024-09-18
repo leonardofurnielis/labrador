@@ -24,7 +24,7 @@ class S3Reader(BaseReader):
 
         from spyder_index.readers import S3Reader
 
-        loader = S3Reader(bucket="spyder-bucket",
+        loader = S3Reader(bucket="your_bucket",
                      ibm_api_key_id="your_api_key",
                      ibm_service_instance_id="your_instance_id",
                      s3_endpoint_url="your_api_url")
