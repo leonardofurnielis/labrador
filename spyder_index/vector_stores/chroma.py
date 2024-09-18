@@ -22,7 +22,7 @@ class ChromaVectorStore:
         from spyder_index.vector_stores import ChromaVectorStore
 
         embedding = HuggingFaceEmbedding()
-        chromadb = ChromaVectorStore(embed_model=embedding)
+        db = ChromaVectorStore(embed_model=embedding)
     """
 
     def __init__(self, embed_model: BaseEmbedding,
