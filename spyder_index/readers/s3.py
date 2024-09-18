@@ -14,7 +14,7 @@ class S3Reader(BaseReader):
 
     Args:
         bucket (str): Name of the S3 bucket.
-        ibm_api_key_id (str): IBM Cloud API key ID for accessing the bucket.
+        ibm_api_key_id (str): IBM Cloud API key.
         ibm_service_instance_id (str): Service instance ID for the IBM COS.
         s3_endpoint_url (str): Endpoint URL for the S3 service.
 
