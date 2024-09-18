@@ -1,4 +1,5 @@
 import uuid
+import logging
 
 from typing import List
 from spyder_index.core.document import Document, DocumentWithScore
@@ -9,13 +10,13 @@ class ChromaVectorStore:
     """Chroma is the AI-native open-source vector database. Embeddings are stored within a ChromaDB collection.
 
     Args:
-        collection_name (str): Name of the ChromaDB collection.
-        embed_model (BaseEmbedding): Embedding model to use.
+        embed_model (BaseEmbedding):
+        collection_name (str, optional): Name of the ChromaDB collection.
         distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.
     """
 
-    def __init__(self, collection_name: str = "chroma-index-" + str(uuid.uuid4())[:8],
-                 embed_model: BaseEmbedding = None,
+    def __init__(self, embed_model: BaseEmbedding,
+                 collection_name: str = None,
                  distance_strategy: str = "cosine") -> None:
         try:
             import chromadb
@@ -30,6 +31,10 @@ class ChromaVectorStore:
 
         if distance_strategy not in ["cosine", "ip", "l2"]:
             raise ValueError(f"Similarity {distance_strategy} not supported.")
+
+        if collection_name is None:
+            collection_name = "auto-generated-" + str(uuid.uuid4())[:8]
+            logging.info(f"collection_name: {collection_name}")
 
         self._collection = self._client.get_or_create_collection(
             name=collection_name,
