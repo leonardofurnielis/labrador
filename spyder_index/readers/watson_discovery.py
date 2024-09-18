@@ -19,6 +19,7 @@ class WatsonDiscoveryReader(BaseReader):
         version (str, optional): Watson Discovery API version. Defaults to ``2023-03-31``.
         batch_size (int, optional): Batch size for bulk operations. Defaults to ``50``.
         date_gte (str, optional): Load documents created after the date. Expected format ``YYYY-MM-DD``. Defaults to ``datetime.today()``.
+        pre_additional_data_field (str, optional): Additional data field to be added to the beginning of the Document content. Defaults to ``None``.
 
     **Example**
 
@@ -37,7 +38,8 @@ class WatsonDiscoveryReader(BaseReader):
                  project_id: str,
                  version: str = '2023-03-31',
                  batch_size: int = 50,
-                 date_gte: str = datetime.today().strftime('%Y-%m-%d')
+                 date_gte: str = datetime.today().strftime('%Y-%m-%d'),
+                 pre_additional_data_field: str = None
                  ) -> None:
         try:
             from ibm_watson import DiscoveryV2
@@ -49,6 +51,7 @@ class WatsonDiscoveryReader(BaseReader):
         self.project_id = project_id
         self.batch_size = batch_size
         self.date_gte = date_gte
+        self.pre_additional_data_field = pre_additional_data_field
 
         try:
             authenticator = IAMAuthenticator(api_key)
@@ -73,13 +76,17 @@ class WatsonDiscoveryReader(BaseReader):
         last_batch_size = self.batch_size
         offset_len = 0
         documents = []
+        return_fields = ["extracted_metadata.filename", "extracted_metadata.file_type", 'text']
+
+        if self.pre_additional_data_field:
+            return_fields.append(self.pre_additional_data_field)
 
         while last_batch_size == self.batch_size:
             results = self._client.query(
                 project_id=self.project_id,
                 count=self.batch_size,
                 offset=offset_len,
-                return_=["extracted_metadata.filename", "extracted_metadata.file_type", 'text'],
+                return_=return_fields,
                 filter="extracted_metadata.publicationdate>={}".format(self.date_gte),
                 passages=QueryLargePassages(enabled=False)).get_result()
 
@@ -89,10 +96,25 @@ class WatsonDiscoveryReader(BaseReader):
             # Make sure all retrieved document 'text' exist
             results_documents = [doc for doc in results['results'] if 'text' in doc]
 
+            if self.pre_additional_data_field:
+                for i, doc in enumerate(results_documents):
+                    doc['text'].insert(0, self._get_nested_value(doc, self.pre_additional_data_field))
+
             documents.extend([Document(doc_id=doc['document_id'],
-                                       text=' '.join(doc['text']),
+                                       text='\n'.join(doc['text']),
                                        metadata={'collection_id': doc['result_metadata']['collection_id']} | doc[
                                            'extracted_metadata'])
                               for doc in results_documents])
 
         return documents
+
+    @staticmethod
+    def _get_nested_value(d, key_path, separator: Optional[str] = '.'):
+        """Accesses a nested value in a dictionary using a string key path."""
+        keys = key_path.split(separator)  # Split the key_path using the separator
+        nested_value = d
+
+        for key in keys:
+            nested_value = nested_value[key]  # Traverse the dictionary by each key
+
+        return nested_value
