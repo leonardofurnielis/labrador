@@ -13,7 +13,7 @@ class SemanticSplitter(BaseModel):
     Credit to Greg Kamradt's notebook: `5 Levels Of Text Splitting <https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/tutorials/LevelsOfTextSplitting/5_Levels_Of_Text_Splitting.ipynb>`_.
 
     Args:
-        embed_model (BaseEmbedding): Embedding model to use.
+        embed_model (BaseEmbedding):
         buffer_size (int, optional): Size of the buffer for semantic chunking. Default is ``1``.
         breakpoint_threshold_amount (int, optional): Threshold percentage for detecting breakpoints. Default is ``95``.
         device (str, optional): Device to use for processing, either "cpu" or "cuda". Default is ``cpu``.
@@ -25,8 +25,8 @@ class SemanticSplitter(BaseModel):
         from spyder_index.embeddings import HuggingFaceEmbedding
         from spyder_index.text_splitters import SemanticSplitter
 
-        embed = HuggingFaceEmbedding()
-        splitter = SemanticSplitter(embed_model=embed)
+        embedding = HuggingFaceEmbedding()
+        splitter = SemanticSplitter(embed_model=embedding)
     """
 
     embed_model: BaseEmbedding

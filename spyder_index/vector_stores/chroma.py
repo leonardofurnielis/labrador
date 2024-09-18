@@ -13,6 +13,16 @@ class ChromaVectorStore:
         embed_model (BaseEmbedding):
         collection_name (str, optional): Name of the ChromaDB collection.
         distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.
+
+    **Example**
+
+    .. code-block:: python
+
+        from spyder_index.embeddings import HuggingFaceEmbedding
+        from spyder_index.vector_stores import ChromaVectorStore
+
+        embedding = HuggingFaceEmbedding()
+        chromadb = ChromaVectorStore(embed_model=embedding)
     """
 
     def __init__(self, embed_model: BaseEmbedding,

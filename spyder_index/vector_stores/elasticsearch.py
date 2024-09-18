@@ -15,7 +15,7 @@ class ElasticsearchVectorStore:
         user (str): Elasticsearch username.
         password (str): Elasticsearch password.
         dims_length (int): Length of the embedding dimensions.
-        embed_model (BaseEmbedding): Embedding model to use.
+        embed_model (BaseEmbedding):
         batch_size (int, optional): Batch size for bulk operations. Defaults to ``200``.
         ssl (bool, optional): Whether to use SSL. Defaults to ``False``.
         distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.

@@ -19,7 +19,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         from spyder_index.embeddings import HuggingFaceEmbedding
 
-        embed = HuggingFaceEmbedding()
+        embedding = HuggingFaceEmbedding()
     """
 
     model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
@@ -43,7 +43,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         .. code-block:: python
 
-            embedded_query = embed.get_query_embedding("spyder-index is an open-source data framework for building LLMs")
+            embedded_query = embedding.get_query_embedding("spyder-index is an open-source data framework for building LLMs")
         """
         embedding_text = self.get_texts_embedding([query])[0]
 

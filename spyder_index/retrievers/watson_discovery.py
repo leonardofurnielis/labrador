@@ -12,9 +12,9 @@ class WatsonDiscoveryRetriever:
 
     Args:
         url (str): Watson Discovery instance url.
-        api_key (str): Watson Discovery apikey.
-        project_id (str): Watson Discovery project ID.
-        version (str, optional): Watson Discovery version. Defaults to ``2023-03-31``.
+        api_key (str): Watson Discovery API key.
+        project_id (str): Watson Discovery project_id.
+        version (str, optional): Watson Discovery API version. Defaults to ``2023-03-31``.
         disable_passages (bool, optional): Return the full document instead of passages (only enable this if all documents are short). Defaults to ``False``.
 
     **Example**
@@ -23,9 +23,9 @@ class WatsonDiscoveryRetriever:
 
         from spyder_index.retrievers import WatsonDiscoveryRetriever
 
-        retriever = WatsonDiscoveryRetriever(url="<your_url>",
-                                                api_key="<your_api_key>",
-                                                project_id="<your_project_id>")
+        retriever = WatsonDiscoveryRetriever(url="your_url",
+                                                api_key="your_api_key",
+                                                project_id="your_project_id")
     """
 
     def __init__(self,

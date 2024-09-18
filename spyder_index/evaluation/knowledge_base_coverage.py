@@ -11,7 +11,7 @@ class KnowledgeBaseCoverage(BaseModel):
     Higher value suggests greater proportion of context are in LLM response.
 
     Args:
-        embed_model (BaseEmbedding): Embedding model to use.
+        embed_model (BaseEmbedding):
         similarity_mode (str, optional): Similarity strategy. Defaults to ``cosine``.
         similarity_threshold (float, optional): Embedding similarity threshold for "passing". Defaults to ``0.8``.
 
@@ -22,8 +22,8 @@ class KnowledgeBaseCoverage(BaseModel):
         from spyder_index.embeddings import HuggingFaceEmbedding
         from spyder_index.evaluation import KnowledgeBaseCoverage
 
-        embed = HuggingFaceEmbedding()
-        coverage = KnowledgeBaseCoverage(embed_model=embed)
+        embedding = HuggingFaceEmbedding()
+        coverage = KnowledgeBaseCoverage(embed_model=embedding)
     """
 
     embed_model: BaseEmbedding
@@ -43,7 +43,7 @@ class KnowledgeBaseCoverage(BaseModel):
 
         .. code-block:: python
 
-            context_coverage = coverage.evaluate([<context>], "<output>")
+            context_coverage = coverage.evaluate(context=[], output="<output>")
         """
 
         if not contexts or not output:
