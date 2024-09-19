@@ -33,29 +33,29 @@ class KnowledgeBaseCoverage(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def evaluate(self, contexts: List[str], output: str) -> Dict:
+    def compute_metric(self, contexts: List[str], candidate: str) -> Dict:
         """
         Args:
             contexts (List[str]): List text used as LLM context.
-            output (str): LLM response based on given context.
+            candidate (str): LLM response based on given context.
 
         **Example**
 
         .. code-block:: python
 
-            context_coverage = coverage.evaluate(context=[], output="<output>")
+            context_coverage = coverage.evaluate(context=[], candidate="<candidate>")
         """
 
-        if not contexts or not output:
-            raise ValueError("Must provide these parameters [`contexts`, `output`]")
+        if not contexts or not candidate:
+            raise ValueError("Must provide these parameters [`contexts`, `candidate`]")
 
         coverage = {"contexts_score": [], "score": 0}
-        output_embedding = self.embed_model.get_query_embedding(output)
+        candidate_embedding = self.embed_model.get_query_embedding(candidate)
 
         for context in contexts:
             context_embedding = self.embed_model.get_query_embedding(context)
             coverage["contexts_score"].append(
-                self.embed_model.similarity(output_embedding, context_embedding, mode=self.similarity_mode))
+                self.embed_model.similarity(candidate_embedding, context_embedding, mode=self.similarity_mode))
 
         coverage["score"] = np.mean(coverage["contexts_score"])
         coverage["passing"] = coverage["score"] >= self.similarity_threshold
