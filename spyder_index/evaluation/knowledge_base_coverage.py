@@ -43,7 +43,7 @@ class KnowledgeBaseCoverage(BaseModel):
 
         .. code-block:: python
 
-            context_coverage = coverage.evaluate(context=[], candidate="<candidate>")
+            context_coverage = coverage.compute_metric(context=[], candidate="<candidate>")
         """
 
         if not contexts or not candidate:
