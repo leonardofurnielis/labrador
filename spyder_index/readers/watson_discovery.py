@@ -18,7 +18,7 @@ class WatsonDiscoveryReader(BaseReader):
         project_id (str): Watson Discovery project_id.
         version (str, optional): Watson Discovery API version. Defaults to ``2023-03-31``.
         batch_size (int, optional): Batch size for bulk operations. Defaults to ``50``.
-        date_gte (str, optional): Load documents created after the date. Expected format ``YYYY-MM-DD``. Defaults to ``datetime.today()``.
+        created_date (str, optional): Load documents created after the date. Expected format ``YYYY-MM-DD``. Defaults to ``datetime.today()``.
         pre_additional_data_field (str, optional): Additional data field to be added to the beginning of the Document content. Defaults to ``None``.
 
     **Example**
@@ -38,7 +38,7 @@ class WatsonDiscoveryReader(BaseReader):
                  project_id: str,
                  version: str = '2023-03-31',
                  batch_size: int = 50,
-                 date_gte: str = datetime.today().strftime('%Y-%m-%d'),
+                 created_date: str = datetime.today().strftime('%Y-%m-%d'),
                  pre_additional_data_field: str = None
                  ) -> None:
         try:
@@ -50,7 +50,7 @@ class WatsonDiscoveryReader(BaseReader):
 
         self.project_id = project_id
         self.batch_size = batch_size
-        self.date_gte = date_gte
+        self.created_date = created_date
         self.pre_additional_data_field = pre_additional_data_field
 
         try:
@@ -87,7 +87,7 @@ class WatsonDiscoveryReader(BaseReader):
                 count=self.batch_size,
                 offset=offset_len,
                 return_=return_fields,
-                filter="extracted_metadata.publicationdate>={}".format(self.date_gte),
+                filter="extracted_metadata.publicationdate>={}".format(self.created_date),
                 passages=QueryLargePassages(enabled=False)).get_result()
 
             last_batch_size = len(results['results'])
