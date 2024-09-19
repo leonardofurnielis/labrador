@@ -108,7 +108,7 @@ class ChromaVectorStore:
 
         return docs_and_scores
 
-    def delete(self, ids: List[str] = None) -> None:
+    def delete_documents(self, ids: List[str] = None) -> None:
         """Delete documents from the ChromaDB collection.
 
         Args:
