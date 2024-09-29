@@ -1,4 +1,4 @@
-# 🪨 Deep Text
+# DeepText
 
 ![PyPI - License](https://img.shields.io/pypi/l/deeptext-index)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/deeptext-index)
