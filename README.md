@@ -1,17 +1,16 @@
-# 🕸️ spyder-index
+# 🪨 Deep Text
 
-![PyPI - Version](https://img.shields.io/pypi/v/spyder-index)
-![PyPI - License](https://img.shields.io/pypi/l/spyder-index)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/spyder-index)
+![PyPI - License](https://img.shields.io/pypi/l/deeptext-index)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/deeptext-index)
 
 ## Installation 
 
 ```bash
-pip install spyder-index
+pip install deeptext-index
 ```
 
 ## 📄 Documentation
 
-The documentation can be found Click [here](https://leonardofurnielis.github.io/spyder_index)!
+The documentation can be found Click [here](https://leonardofurnielis.github.io/deeptext-index)!
 
 Please check it out for overview of the interfaces, components, integrations and other resources!
