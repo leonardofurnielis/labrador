@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "deeptext-ai"
-version = "0.3.1"
+version = "0.4.1"
 description = "Integration package connecting data and AI applications"
 authors = ["Leonardo Furnielis <leonardofurnielis@outlook.com>"]
 license = "MIT"

@@ -11,7 +11,7 @@ import sys
 project = 'deeptext-ai'
 copyright = '2024, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-version = '0.3.1'
+version = '0.4.1'
 release = version
 
 # -- General configuration ---------------------------------------------------
