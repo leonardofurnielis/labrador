@@ -3,5 +3,5 @@ Semantic splitter
 ============================================
 
 
-.. automodule:: spyder_index.text_splitters.semantic
+.. automodule:: deeptext.text_splitters.semantic
     :members:

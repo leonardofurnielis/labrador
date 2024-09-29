@@ -3,5 +3,5 @@ HTML
 ============================================
 
 
-.. automodule:: spyder_index.readers.file.html
+.. automodule:: deeptext.readers.file.html
     :members:

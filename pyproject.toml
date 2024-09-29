@@ -19,7 +19,7 @@ classifiers = [
 ]
 documentation = "https://leonardofurnielis.github.io/deeptext-ai"
 repository = "https://github.com/leonardofurnielis/deeptext-ai"
-packages = [{include = "deeptext-ai"}]
+packages = [{include = "deeptext"}]
 keywords = ["retrieval", "RAG", "index", "data", "LLM", "AI", "NLP"]
 
 [tool.poetry.dependencies]

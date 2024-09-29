@@ -8,5 +8,5 @@ In order to use ``JSONReader`` you need to install the ``jq`` package.
 
     pip install jq
 
-.. automodule:: spyder_index.readers.file.json
+.. automodule:: deeptext.readers.file.json
     :members:

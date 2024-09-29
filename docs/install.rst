@@ -1,10 +1,10 @@
 Installation
 ============================================
 
-The spyder-index Python library is publicly available on PyPI: https://pypi.org/project/spyder-index/
+The Deep Text Python library is publicly available on PyPI: https://pypi.org/project/deeptext-ai/
 
 The package can be installed with pip:
 
 .. code-block:: bash
 
-    pip install spyder-index
+    pip install deeptext-ai

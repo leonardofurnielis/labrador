@@ -3,5 +3,5 @@ Token text splitter
 ============================================
 
 
-.. automodule:: spyder_index.text_splitters.token
+.. automodule:: deeptext.text_splitters.token
     :members:

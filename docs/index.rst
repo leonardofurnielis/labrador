@@ -1,8 +1,8 @@
 ============================================
-Welcome to 🕸️️ spyder-index documentation!
+Welcome to Deep Text documentation!
 ============================================
 
-spyder-index is an open-source data framework for building LLMs (Large Language Model) applications
+Deep Text is a data framework to build context-aware AI applications
 
 .. toctree::
     :hidden:

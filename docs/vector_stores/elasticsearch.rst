@@ -8,5 +8,5 @@ In order to use ``ElasticsearchVectorStore`` you need to install the ``elasticse
 
     pip install elasticsearch
 
-.. automodule:: spyder_index.vector_stores.elasticsearch
+.. automodule:: deeptext.vector_stores.elasticsearch
     :members:

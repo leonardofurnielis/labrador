@@ -8,5 +8,5 @@ In order to use ``PDFReader`` you need to install the ``pypdf`` package.
 
     pip install pypdf
 
-.. automodule:: spyder_index.readers.file.pdf
+.. automodule:: deeptext.readers.file.pdf
     :members:
