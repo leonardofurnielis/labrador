@@ -1,4 +1,4 @@
-# Deep Text Toolkit
+# Deep Text
 
 ![PyPI - Version](https://img.shields.io/pypi/v/deeptext-ai)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
