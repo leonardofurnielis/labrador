@@ -58,7 +58,6 @@ class ChromaVectorStore:
         Args:
             documents (List[Document]): List of `Document` objects to add to the collection.
         """
-
         embeddings = []
         metadatas = []
         ids = []
@@ -84,7 +83,6 @@ class ChromaVectorStore:
             query (str): Query text.
             top_k (int, optional): Number of top results to return. Defaults to ``4``.
         """
-
         query_embedding = self._embed_model.get_query_embedding(query)
 
         results = self._collection.query(
@@ -92,7 +90,7 @@ class ChromaVectorStore:
             n_results=top_k
         )
 
-        docs_and_scores = [
+        return [
             DocumentWithScore(document=Document(
                 doc_id=result[0],
                 text=result[1],
@@ -106,15 +104,12 @@ class ChromaVectorStore:
             )
         ]
 
-        return docs_and_scores
-
     def delete_documents(self, ids: List[str] = None) -> None:
         """Delete documents from the ChromaDB collection.
 
         Args:
             ids (List[str]): List of `Document` IDs to delete. Defaults to ``None``.
         """
-
         if not ids:
             raise ValueError("No ids provided to delete.")
 

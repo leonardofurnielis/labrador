@@ -52,12 +52,11 @@ class S3Reader(BaseReader):
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified S3 bucket."""
-
         ibm_s3 = self._ibm_boto3.resource(
             "s3",
             ibm_api_key_id=self.ibm_api_key_id,
             ibm_service_instance_id=self.ibm_service_instance_id,
-            config=self._boto_config(signature_version='oauth'),
+            config=self._boto_config(signature_version="oauth"),
             endpoint_url=self.s3_endpoint_url,
         )
 

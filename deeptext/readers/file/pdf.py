@@ -19,7 +19,7 @@ class PDFReader(BaseReader):
     def __init__(self, input_file: str = None):
 
         try:
-            import pypdf
+            import pypdf  # noqa: F401
         except ImportError:
             raise ImportError("pypdf package not found, please install it with `pip install pypdf`")
 
@@ -33,7 +33,6 @@ class PDFReader(BaseReader):
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory."""
-
         lc_documents = PyPDFLoader(file_path=self.input_file).load()
 
         return [Document().from_langchain_format(doc=doc) for doc in lc_documents]

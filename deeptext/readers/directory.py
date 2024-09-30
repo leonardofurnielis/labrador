@@ -53,7 +53,6 @@ class DirectoryReader(BaseReader):
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory."""
-
         documents = []
         default_file_reader_cls = DirectoryReader.default_file_reader_fn()
 

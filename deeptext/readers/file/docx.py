@@ -19,7 +19,7 @@ class DocxReader(BaseReader):
     def __init__(self, input_file: str = None):
 
         try:
-            import docx2txt
+            import docx2txt  # noqa: F401
         except ImportError:
             raise ImportError("docx2txt package not found, please install it with `pip install docx2txt`")
 
@@ -33,7 +33,6 @@ class DocxReader(BaseReader):
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory."""
-
         lc_documents = Docx2txtLoader(file_path=self.input_file).load()
 
         return [Document().from_langchain_format(doc=doc) for doc in lc_documents]

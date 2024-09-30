@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 
 class BaseDocument(ABC, BaseModel):
-    """Generic abstract interface for retrievable documents"""
+    """Generic abstract interface for retrievable documents."""
 
     doc_id: str = Field(
         default_factory=lambda: str(uuid.uuid4()),
@@ -36,6 +36,7 @@ class BaseDocument(ABC, BaseModel):
 
 class Document(BaseDocument):
     """Generic interface for data document."""
+
     text: str = Field(default="", description="Text content of the document.")
 
     @classmethod

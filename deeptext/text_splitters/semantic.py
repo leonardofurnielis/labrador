@@ -43,7 +43,6 @@ class SemanticSplitter(BaseModel):
         Args:
             text (str): Input text to split.
         """
-
         text_splitter = SemanticChunker(
             embeddings=self.embed_model,
             buffer_size=self.buffer_size,
@@ -57,7 +56,6 @@ class SemanticSplitter(BaseModel):
         Args:
             documents (List[Document]): List of `Document` objects to split.
         """
-
         chunks = []
 
         for document in documents:

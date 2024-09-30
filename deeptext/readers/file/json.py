@@ -22,7 +22,7 @@ class JSONReader(BaseReader):
                  jq_schema: Optional[str] = None,
                  text_content: Optional[bool] = False):
         try:
-            import jq
+            import jq  # noqa: F401
         except ImportError:
             raise ImportError("jq package not found, please install it with `pip install jq`")
 
@@ -38,7 +38,6 @@ class JSONReader(BaseReader):
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory."""
-
         lc_documents = JSONLoader(file_path=self.input_file,
                                   jq_schema=self.jq_schema,
                                   text_content=self.text_content).load()

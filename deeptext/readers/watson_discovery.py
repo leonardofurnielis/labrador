@@ -36,9 +36,9 @@ class WatsonDiscoveryReader(BaseReader):
                  url: str,
                  api_key: str,
                  project_id: str,
-                 version: str = '2023-03-31',
+                 version: str = "2023-03-31",
                  batch_size: int = 50,
-                 created_date: str = datetime.today().strftime('%Y-%m-%d'),
+                 created_date: str = datetime.today().strftime("%Y-%m-%d"),
                  pre_additional_data_field: str = None
                  ) -> None:
         try:
@@ -76,7 +76,7 @@ class WatsonDiscoveryReader(BaseReader):
         last_batch_size = self.batch_size
         offset_len = 0
         documents = []
-        return_fields = ["extracted_metadata.filename", "extracted_metadata.file_type", 'text']
+        return_fields = ["extracted_metadata.filename", "extracted_metadata.file_type", "text"]
 
         if self.pre_additional_data_field:
             return_fields.append(self.pre_additional_data_field)
@@ -90,26 +90,26 @@ class WatsonDiscoveryReader(BaseReader):
                 filter="extracted_metadata.publicationdate>={}".format(self.created_date),
                 passages=QueryLargePassages(enabled=False)).get_result()
 
-            last_batch_size = len(results['results'])
+            last_batch_size = len(results["results"])
             offset_len = offset_len + last_batch_size
 
             # Make sure all retrieved document 'text' exist
-            results_documents = [doc for doc in results['results'] if 'text' in doc]
+            results_documents = [doc for doc in results["results"] if "text" in doc]
 
             if self.pre_additional_data_field:
                 for i, doc in enumerate(results_documents):
-                    doc['text'].insert(0, self._get_nested_value(doc, self.pre_additional_data_field))
+                    doc["text"].insert(0, self._get_nested_value(doc, self.pre_additional_data_field))
 
-            documents.extend([Document(doc_id=doc['document_id'],
-                                       text='\n'.join(doc['text']),
-                                       metadata={'collection_id': doc['result_metadata']['collection_id']} | doc[
-                                           'extracted_metadata'])
+            documents.extend([Document(doc_id=doc["document_id"],
+                                       text="\n".join(doc["text"]),
+                                       metadata={"collection_id": doc["result_metadata"]["collection_id"]} | doc[
+                                           "extracted_metadata"])
                               for doc in results_documents])
 
         return documents
 
     @staticmethod
-    def _get_nested_value(d, key_path, separator: Optional[str] = '.'):
+    def _get_nested_value(d, key_path, separator: Optional[str] = "."):
         """Accesses a nested value in a dictionary using a string key path."""
         keys = key_path.split(separator)  # Split the key_path using the separator
         nested_value = d

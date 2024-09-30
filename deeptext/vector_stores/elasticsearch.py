@@ -71,7 +71,6 @@ class ElasticsearchVectorStore:
 
     def _create_index_if_not_exists(self) -> None:
         """Creates the Elasticsearch index if it doesn't already exist."""
-
         if self._client.indices.exists(index=self.index_name):
             logging.info(f"Index {self.index_name} already exists. Skipping creation.")
 
@@ -116,7 +115,6 @@ class ElasticsearchVectorStore:
             documents (List[Document]): List of `Document` objects to add to the index.
             create_index_if_not_exists (bool, optional): Whether to create the index if it doesn't exist. Defaults to ``True``.
         """
-
         if create_index_if_not_exists:
             self._create_index_if_not_exists()
 
@@ -163,7 +161,7 @@ class ElasticsearchVectorStore:
 
         hits = results["hits"]["hits"]
 
-        docs_and_scores = [DocumentWithScore(
+        return [DocumentWithScore(
             document=Document(
                 doc_id=hit["_id"],
                 text=hit["_source"]["text"],
@@ -172,8 +170,6 @@ class ElasticsearchVectorStore:
             score=hit["_score"])
             for hit in hits
         ]
-
-        return docs_and_scores
 
     def delete_documents(self, ids: List[str] = None) -> None:
         """Delete documents from the Elasticsearch index.

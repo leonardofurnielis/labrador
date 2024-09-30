@@ -42,8 +42,8 @@ def _split_by_sentence_tokenizer(text: str, sentence_tokenizer) -> List[str]:
     """Get the spans and then return the sentences.
 
     Using the start index of each span
-    Instead of using end, use the start of the next span"""
-
+    Instead of using end, use the start of the next span
+    """
     spans = list(sentence_tokenizer.span_tokenize(text))
     sentences = []
     for i, span in enumerate(spans):
@@ -60,7 +60,6 @@ def split_by_fns(text: str,
                  split_fns: List[Callable],
                  sub_split_fns: List[Callable] = None) -> Tuple[List[str], bool]:
     """Split text by defined list of split functions."""
-
     if not split_fns:
         raise ValueError("Must provide a `split_fns` parameter")
 
@@ -69,8 +68,8 @@ def split_by_fns(text: str,
         if len(splits) > 1:
             return splits, True
 
-    if sub_split_fns:
-        for split_fn in sub_split_fns:
+    if sub_split_fns: # noqa: RET503
+        for split_fn in sub_split_fns: # noqa: RET503
             splits = split_fn(text)
             if len(splits) > 1:
                 return splits, False
@@ -80,7 +79,6 @@ def merge_splits(splits: List[dict],
                  chunk_size: int,
                  chunk_overlap: int) -> List[str]:
     """Merge splits into chunks."""
-
     chunks: List[str] = []
     cur_chunk: List[Tuple[str, int]] = []
     cur_chunk_len = 0
@@ -120,18 +118,18 @@ def merge_splits(splits: List[dict],
     while len(splits) > 0:
         cur_split = splits[0]
 
-        if cur_split['token_size'] > chunk_size:
+        if cur_split["token_size"] > chunk_size:
             raise ValueError("Got a split size that exceeded chunk size")
 
-        if cur_chunk_len + cur_split['token_size'] > chunk_size and not new_chunk:
+        if cur_chunk_len + cur_split["token_size"] > chunk_size and not new_chunk:
             close_chunk()
         else:
-            if (cur_split['is_sentence']
-                    or cur_chunk_len + cur_split['token_size'] <= chunk_size
+            if (cur_split["is_sentence"]
+                    or cur_chunk_len + cur_split["token_size"] <= chunk_size
                     or new_chunk):  # If `new_chunk`, always add at least one split
 
-                cur_chunk_len += cur_split['token_size']
-                cur_chunk.append((cur_split['text'], cur_split['token_size']))
+                cur_chunk_len += cur_split["token_size"]
+                cur_chunk.append((cur_split["text"], cur_split["token_size"]))
                 splits.pop(0)
                 new_chunk = False
             else:

@@ -12,7 +12,7 @@ from deeptext.core.text_splitters.utils import (
 
 
 class TokenTextSplitter:
-    """This is the simplest splitting method. Designed to split input text into smaller chunks looking at word tokens.
+    r"""This is the simplest splitting method. Designed to split input text into smaller chunks looking at word tokens.
 
     Args:
         chunk_size (int, optional): Size of each chunk. Default is ``512``.
@@ -27,6 +27,7 @@ class TokenTextSplitter:
 
         splitter = TokenTextSplitter()
     """
+
     def __init__(self,
                  chunk_size: int = 512,
                  chunk_overlap: int = 256,
@@ -62,9 +63,8 @@ class TokenTextSplitter:
             chunks = splitter.from_text("Deep Text is a data framework to build context-aware AI applications")
         """
         splits = self._split(text)
-        chunks = merge_splits(splits, self.chunk_size, self.chunk_overlap)
 
-        return chunks
+        return merge_splits(splits, self.chunk_size, self.chunk_overlap)
 
     def from_documents(self, documents: List[Document]) -> List[Document]:
         """Split documents into chunks.

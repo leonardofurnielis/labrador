@@ -78,9 +78,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
             embedded_query = watsonx_embedding.get_query_embedding("Deep Text is a data framework to build context-aware AI applications")
         """
-        embedding_text = self.get_texts_embedding([query])[0]
-
-        return embedding_text
+        return self.get_texts_embedding([query])[0]
 
     def get_texts_embedding(self, texts: List[str]) -> List[Embedding]:
         """Compute embeddings for list of texts.
@@ -88,9 +86,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         Args:
             texts (List[str]): List of text to compute embeddings.
         """
-        embedding_texts = self._client.embed_documents(texts)
-
-        return embedding_texts
+        return self._client.embed_documents(texts)
 
     def get_documents_embedding(self, documents: List[Document]) -> List[Embedding]:
         """Compute embeddings for a list of documents.
@@ -98,8 +94,6 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         Args:
             documents (List[Document]): List of `Document` objects to compute embeddings.
         """
-
         texts = [document.get_content() for document in documents]
-        embedding_documents = self.get_texts_embedding(texts)
 
-        return embedding_documents
+        return self.get_texts_embedding(texts)

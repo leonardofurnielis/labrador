@@ -32,7 +32,7 @@ class WatsonDiscoveryRetriever:
                  url: str,
                  api_key: str,
                  project_id: str,
-                 version: str = '2023-03-31',
+                 version: str = "2023-03-31",
                  disable_passages: bool = False
                  ) -> None:
         try:
@@ -92,29 +92,29 @@ class WatsonDiscoveryRetriever:
 
         docs_and_scores = []
 
-        if not self.disable_passages and len(discovery_results['passages']) > 0:
+        if not self.disable_passages and len(discovery_results["passages"]) > 0:
             # If not `disable_passages`, always use discovery passages (recommended)
-            for passage in discovery_results['passages']:
-                document_id_target = passage['document_id']
-                document = [doc for doc in discovery_results['results'] if doc['document_id'] == document_id_target]
+            for passage in discovery_results["passages"]:
+                document_id_target = passage["document_id"]
+                document = [doc for doc in discovery_results["results"] if doc["document_id"] == document_id_target]
 
                 docs_and_scores.append(DocumentWithScore(
                     document=Document(
-                        text=passage['passage_text'],
-                        metadata={'collection_id': passage['collection_id']} | document[0]['extracted_metadata']),
+                        text=passage["passage_text"],
+                        metadata={"collection_id": passage["collection_id"]} | document[0]["extracted_metadata"]),
                     score=passage["passage_score"] / 100))
 
-        elif discovery_results['matching_results'] > 0:
+        elif discovery_results["matching_results"] > 0:
             # If `disable_passages`, use document text (not recommended,
             # make sure that all documents are short to not exceed the model context window)
-            logging.warning('Not recommended to disable passages. Make sure that all documents are short to not '
-                            'exceed the model context window.')
-            for document in discovery_results['results']:
+            logging.warning("Not recommended to disable passages. Make sure that all documents are short to not "
+                            "exceed the model context window.")
+            for document in discovery_results["results"]:
                 docs_and_scores.append(DocumentWithScore(
                     document=Document(
-                        text=' '.join(document['text']),
-                        metadata={'collection_id': document['result_metadata']['collection_id']} | document[
-                            'extracted_metadata']),
-                    score=document['result_metadata']['confidence']))
+                        text=" ".join(document["text"]),
+                        metadata={"collection_id": document["result_metadata"]["collection_id"]} | document[
+                            "extracted_metadata"]),
+                    score=document["result_metadata"]["confidence"]))
 
         return docs_and_scores

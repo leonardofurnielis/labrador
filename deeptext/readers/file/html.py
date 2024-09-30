@@ -28,7 +28,6 @@ class HTMLReader(BaseReader):
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory."""
-
         lc_documents = UnstructuredHTMLLoader(file_path=self.input_file).load()
 
         return [Document().from_langchain_format(doc=doc) for doc in lc_documents]

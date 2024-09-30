@@ -45,7 +45,6 @@ class KnowledgeBaseCoverage(BaseModel):
 
             context_coverage = coverage.compute_metric(context=[], candidate="<candidate>")
         """
-
         if not contexts or not candidate:
             raise ValueError("Must provide these parameters [`contexts`, `candidate`]")
 
