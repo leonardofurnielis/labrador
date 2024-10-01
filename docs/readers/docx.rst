@@ -8,5 +8,5 @@ In order to use ``DocxReader`` you need to install the ``docx2txt`` package.
 
     pip install docx2txt
 
-.. automodule:: deeptext.readers.file.docx
+.. automodule:: deeptxt.readers.file.docx
     :members:

@@ -8,6 +8,6 @@ In order to use ``WatsonxEmbedding`` you need to install the ``ibm-watsonx-ai`` 
 
     pip install ibm-watsonx-ai
 
-.. automodule:: deeptext.embeddings.watsonx
+.. automodule:: deeptxt.embeddings.watsonx
     :members:
 

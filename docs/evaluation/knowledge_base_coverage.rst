@@ -3,5 +3,5 @@ Knowledge Base Coverage
 ============================================
 
 
-.. automodule:: deeptext.evaluation.knowledge_base_coverage
+.. automodule:: deeptxt.evaluation.knowledge_base_coverage
     :members:

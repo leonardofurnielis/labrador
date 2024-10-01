@@ -1,8 +1,8 @@
 ============================================
-Welcome to Deep Text documentation!
+Welcome to Deeptxt documentation!
 ============================================
 
-Deep Text is a data framework to build context-aware AI applications
+Deeptxt is a data library to build context-aware AI applications.
 
 .. toctree::
     :hidden:

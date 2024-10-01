@@ -4,5 +4,5 @@ Schema
 
 Base schema for data structures.
 
-.. automodule:: deeptext.core.document.schema
+.. automodule:: deeptxt.core.document.schema
     :members:

@@ -3,5 +3,5 @@ HTML
 ============================================
 
 
-.. automodule:: deeptext.readers.file.html
+.. automodule:: deeptxt.readers.file.html
     :members:

@@ -8,7 +8,7 @@
 import os
 import sys
 
-project = 'deeptext-ai'
+project = 'deeptxt-ai'
 copyright = '2024, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
 version = '0.4.1'

@@ -8,5 +8,5 @@ In order to use ``PDFReader`` you need to install the ``pypdf`` package.
 
     pip install pypdf
 
-.. automodule:: deeptext.readers.file.pdf
+.. automodule:: deeptxt.readers.file.pdf
     :members:

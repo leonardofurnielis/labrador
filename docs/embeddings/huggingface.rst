@@ -3,5 +3,5 @@ Hugging Face
 ============================================
 
 
-.. automodule:: deeptext.embeddings.huggingface
+.. automodule:: deeptxt.embeddings.huggingface
     :members:

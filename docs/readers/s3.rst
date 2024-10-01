@@ -8,5 +8,5 @@ In order to use ``S3Reader`` you need to install the ``ibm-cos-sdk``, ``docx2txt
 
     pip install ibm-cos-sdk docx2txt pypdf
 
-.. automodule:: deeptext.readers.s3
+.. automodule:: deeptxt.readers.s3
     :members:

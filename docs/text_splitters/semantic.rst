@@ -3,5 +3,5 @@ Semantic splitter
 ============================================
 
 
-.. automodule:: deeptext.text_splitters.semantic
+.. automodule:: deeptxt.text_splitters.semantic
     :members:

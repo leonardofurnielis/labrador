@@ -8,6 +8,6 @@ In order to use ``WatsonDiscoveryReader`` you need to install the ``ibm-watson``
 
     pip install ibm-watson
 
-.. automodule:: deeptext.readers.watson_discovery
+.. automodule:: deeptxt.readers.watson_discovery
     :members:
 
