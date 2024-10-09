@@ -1,5 +1,5 @@
 ============================================
-JSON
+PDF
 ============================================
 
 In order to use ``PDFReader`` you need to install the ``pypdf`` package.
