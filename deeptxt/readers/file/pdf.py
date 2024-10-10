@@ -15,7 +15,6 @@ class PDFReader(BaseReader):
     """
 
     def __init__(self, input_file: str = None):
-
         try:
             import pypdf  # noqa: F401
         except ImportError:
