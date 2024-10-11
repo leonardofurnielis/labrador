@@ -33,12 +33,10 @@ class PDFReader(BaseReader):
 
         pdf_reader = pypdf.PdfReader(self.input_file)
 
-        documents = [
+        return [
             Document(
                 text=page.extract_text().strip(),
                 metadata={"source": self.input_file, "page": page_number}
             )
             for page_number, page in enumerate(pdf_reader.pages)
         ]
-
-        return documents

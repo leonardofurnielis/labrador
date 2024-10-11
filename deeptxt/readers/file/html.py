@@ -12,6 +12,7 @@ class HTMLReader(BaseReader):
 
     Args:
         input_file (str): File path to read.
+        tag (str): HTML tag to extract. Defaults to ``section``.
     """
 
     def __init__(self, input_file: str = None, tag: str = "section"):
@@ -54,7 +55,7 @@ class HTMLReader(BaseReader):
 
         return documents
 
-    def _extract_text_from_tag(self, tag: "Tag") -> str:
+    def _extract_text_from_tag(self, tag) -> str:
         """Extract the text from an HTML tag, ignoring other nested tags."""
         try:
             from bs4 import NavigableString  # noqa: F401
