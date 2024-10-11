@@ -32,7 +32,7 @@ class JSONReader(BaseReader):
         if not os.path.isfile(input_file):
             raise ValueError(f"File `{input_file}` does not exist")
 
-        self.input_file = Path(input_file)
+        self.input_file = str(Path(input_file).resolve())
         self.jq_schema = jq_schema
         self.text_content = text_content
 
