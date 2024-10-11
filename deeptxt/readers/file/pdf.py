@@ -15,10 +15,6 @@ class PDFReader(BaseReader):
     """
 
     def __init__(self, input_file: str = None):
-        try:
-            import pypdf  # noqa: F401
-        except ImportError:
-            raise ImportError("pypdf package not found, please install it with `pip install pypdf`")
 
         if not input_file:
             raise ValueError("You must provide a `input_dir` parameter")
