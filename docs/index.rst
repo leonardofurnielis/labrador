@@ -1,8 +1,8 @@
 ============================================
-Welcome to Deeptxt documentation!
+Welcome to Tempest AI documentation!
 ============================================
 
-Deeptxt is a data library to build context-aware AI applications.
+Tempest AI is a data library to build context-aware AI applications.
 
 .. toctree::
     :hidden:

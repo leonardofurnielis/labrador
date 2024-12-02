@@ -8,5 +8,5 @@ In order to use ``ChromaVectorStore`` you need to install the ``chromadb`` packa
 
     pip install chromadb
 
-.. automodule:: deeptxt.vector_stores.chroma
+.. automodule:: tempestai.vector_stores.chroma
     :members:

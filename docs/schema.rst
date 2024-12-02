@@ -4,5 +4,5 @@ Schema
 
 Base schema for data structures.
 
-.. automodule:: deeptxt.core.document.schema
+.. automodule:: tempestai.core.document.schema
     :members:
