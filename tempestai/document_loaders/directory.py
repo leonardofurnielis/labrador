@@ -10,9 +10,9 @@ from langchain_community.document_loaders import DirectoryLoader
 
 
 def _loading_default_file_readers():
-    from tempestai.readers.file import DocxReader
-    from tempestai.readers.file import HTMLReader
-    from tempestai.readers.file import PDFReader
+    from tempestai.document_loaders import DocxReader
+    from tempestai.document_loaders import HTMLReader
+    from tempestai.document_loaders import PDFReader
 
     default_file_reader_cls: dict[str, Type[BaseReader]] = {
         ".docx": DocxReader,

@@ -6,7 +6,7 @@ from typing import List, Optional
 
 from tempestai.core.readers import BaseReader
 from tempestai.core.document import Document
-from tempestai.readers import DirectoryReader
+from tempestai.document_loaders import DirectoryReader
 
 
 class S3Reader(BaseReader):
