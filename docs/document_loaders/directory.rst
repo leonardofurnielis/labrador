@@ -8,5 +8,5 @@ In order to use ``DirectoryReader`` you need to install the ``docx2txt`` and ``p
 
     pip install docx2txt pypdf
 
-.. automodule:: tempestai.readers.directory
+.. automodule:: tempestai.document_loaders.directory
     :members:

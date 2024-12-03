@@ -8,5 +8,5 @@ In order to use ``JSONReader`` you need to install the ``jq`` package.
 
     pip install jq
 
-.. automodule:: tempestai.readers.file.json
+.. automodule:: tempestai.document_loaders.json
     :members:

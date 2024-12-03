@@ -8,5 +8,5 @@ In order to use ``HTMLReader`` you need to install the ``beautifulsoup4`` packag
 
     pip install beautifulsoup4
 
-.. automodule:: tempestai.readers.file.html
+.. automodule:: tempestai.document_loaders.html
     :members:
