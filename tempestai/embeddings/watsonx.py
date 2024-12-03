@@ -76,7 +76,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
         .. code-block:: python
 
-            embedded_query = watsonx_embedding.get_query_embedding("Deep Text is a data framework to build context-aware AI applications")
+            embedded_query = watsonx_embedding.get_query_embedding("Tempest AI is a data framework to build context-aware AI applications")
         """
         return self.get_texts_embedding([query])[0]
 
