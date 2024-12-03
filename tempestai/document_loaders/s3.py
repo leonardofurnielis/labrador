@@ -4,13 +4,13 @@ import tempfile
 
 from typing import List, Optional
 
-from tempestai.core.readers import BaseReader
 from tempestai.core.document import Document
-from tempestai.document_loaders import DirectoryReader
+from tempestai.core.document_loaders import BaseLoader
+from tempestai.document_loaders import DirectoryLoader
 
 
-class S3Reader(BaseReader):
-    """S3 bucket reader.
+class S3Loader(BaseLoader):
+    """S3 bucket loader.
 
     Args:
         bucket (str): Name of the S3 bucket.
@@ -22,9 +22,9 @@ class S3Reader(BaseReader):
 
     .. code-block:: python
 
-        from tempestai.readers import S3Reader
+        from tempestai.document_loaders import S3Loader
 
-        loader = S3Reader(bucket="your_bucket",
+        loader = S3Loader(bucket="your_bucket",
                      ibm_api_key_id="your_api_key",
                      ibm_service_instance_id="your_instance_id",
                      s3_endpoint_url="your_api_url")
@@ -70,4 +70,4 @@ class S3Reader(BaseReader):
 
             s3_source = re.sub(r"^(https?)://", "", self.s3_endpoint_url)
 
-            return DirectoryReader(input_dir=temp_dir).load_data(extra_info={"source": f"{s3_source}/{self.bucket}"})
+            return DirectoryLoader(input_dir=temp_dir).load_data(extra_info={"source": f"{s3_source}/{self.bucket}"})

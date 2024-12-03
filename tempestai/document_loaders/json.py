@@ -3,17 +3,17 @@ import os
 from pathlib import Path
 from typing import List, Optional
 
-from tempestai.core.readers import BaseReader
 from tempestai.core.document import Document
+from tempestai.core.document_loaders import BaseLoader
 
-from langchain_community.document_loaders import JSONLoader
+from langchain_community.document_loaders import JSONLoader as LangChainJSONLoader
 
 
-class JSONReader(BaseReader):
-    """JSON reader.
+class JSONLoader(BaseLoader):
+    """JSON loader.
 
     Args:
-        input_file (str): File path to read.
+        input_file (str): File path to load.
         jq_schema (str, optional): jq schema to use to extract the data from the JSON.
         text_content (bool, optional): Flag to indicate whether the content is in string format. Default is ``False``
     """
@@ -38,7 +38,7 @@ class JSONReader(BaseReader):
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory."""
-        lc_documents = JSONLoader(file_path=self.input_file,
+        lc_documents = LangChainJSONLoader(file_path=self.input_file,
                                   jq_schema=self.jq_schema,
                                   text_content=self.text_content).load()
 

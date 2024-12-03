@@ -3,15 +3,15 @@ import os
 from pathlib import Path
 from typing import List, Optional
 
-from tempestai.core.readers import BaseReader
 from tempestai.core.document import Document
+from tempestai.core.document_loaders import BaseLoader
 
 
-class HTMLReader(BaseReader):
+class HTMLLoader(BaseLoader):
     """Load HTML file and extract text from a specific tag.
 
     Args:
-        input_file (str): File path to read.
+        input_file (str): File path to load.
         tag (str): HTML tag to extract. Defaults to ``section``.
     """
 

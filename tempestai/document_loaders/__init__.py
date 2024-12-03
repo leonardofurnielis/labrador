@@ -1,17 +1,17 @@
-from tempestai.document_loaders.directory import DirectoryReader
-from tempestai.document_loaders.docx import DocxReader
-from tempestai.document_loaders.html import HTMLReader
-from tempestai.document_loaders.json import JSONReader
-from tempestai.document_loaders.pdf import PDFReader
-from tempestai.document_loaders.s3 import S3Reader
-from tempestai.document_loaders.watson_discovery import  WatsonDiscoveryReader
+from tempestai.document_loaders.directory import DirectoryLoader
+from tempestai.document_loaders.docx import DocxLoader
+from tempestai.document_loaders.html import HTMLLoader
+from tempestai.document_loaders.json import JSONLoader
+from tempestai.document_loaders.pdf import PDFLoader
+from tempestai.document_loaders.s3 import S3Loader
+from tempestai.document_loaders.watson_discovery import  WatsonDiscoveryLoader
 
 __all__ = [
-    "DirectoryReader",
-    "DocxReader",
-    "HTMLReader",
-    "JSONReader",
-    "PDFReader",
-    "S3Reader",
-    "WatsonDiscoveryReader",
+    "DirectoryLoader",
+    "DocxLoader",
+    "HTMLLoader",
+    "JSONLoader",
+    "PDFLoader",
+    "S3Loader",
+    "WatsonDiscoveryLoader",
 ]

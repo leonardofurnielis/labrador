@@ -3,11 +3,11 @@ import logging
 from datetime import datetime
 from typing import List, Optional
 
-from tempestai.core.readers import BaseReader
 from tempestai.core.document import Document
+from tempestai.core.document_loaders import BaseLoader
 
 
-class WatsonDiscoveryReader(BaseReader):
+class WatsonDiscoveryLoader(BaseLoader):
     """Provides functionality to load documents from IBM Watson Discovery.
 
     See https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-getting-started for more info.
@@ -25,9 +25,9 @@ class WatsonDiscoveryReader(BaseReader):
 
     .. code-block:: python
 
-        from tempestai.readers import WatsonDiscoveryReader
+        from tempestai.document_loaders import WatsonDiscoveryLoader
 
-        reader = WatsonDiscoveryReader(url="your_url",
+        doc_loader = WatsonDiscoveryLoader(url="your_url",
                                           api_key="your_api_key",
                                           project_id="your_project_id")
     """
@@ -70,7 +70,7 @@ class WatsonDiscoveryReader(BaseReader):
 
         .. code-block:: python
 
-            docs = reader.load_data()
+            docs = doc_loader.load_data()
         """
         from ibm_watson.discovery_v2 import QueryLargePassages
         last_batch_size = self.batch_size

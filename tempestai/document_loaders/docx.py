@@ -3,15 +3,15 @@ import os
 from pathlib import Path
 from typing import List, Optional
 
-from tempestai.core.readers import BaseReader
 from tempestai.core.document import Document
+from tempestai.core.document_loaders import BaseLoader
 
 
-class DocxReader(BaseReader):
-    """Microsoft Word (Docx) reader.
+class DocxLoader(BaseLoader):
+    """Microsoft Word (Docx) loader.
 
     Args:
-        input_file (str): File path to read.
+        input_file (str): File path to load.
     """
 
     def __init__(self, input_file: str = None):

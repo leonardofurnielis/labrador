@@ -4,12 +4,12 @@ from abc import ABC, abstractmethod
 from tempestai.core.document import Document
 
 
-class BaseReader(ABC):
-    """An interface for readers."""
+class BaseLoader(ABC):
+    """An interface for document loader."""
 
     @classmethod
     def class_name(cls) -> str:
-        return "BaseReader"
+        return "BaseLoader"
 
     @abstractmethod
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:

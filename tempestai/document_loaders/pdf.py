@@ -3,15 +3,15 @@ import os
 from pathlib import Path
 from typing import List, Optional
 
-from tempestai.core.readers import BaseReader
 from tempestai.core.document import Document
+from tempestai.core.document_loaders import BaseLoader
 
 
-class PDFReader(BaseReader):
-    """PDF reader using PyPDF.
+class PDFLoader(BaseLoader):
+    """PDF loader using PyPDF.
 
     Args:
-        input_file (str): File path to read.
+        input_file (str): File path to load.
     """
 
     def __init__(self, input_file: str = None):
@@ -31,12 +31,12 @@ class PDFReader(BaseReader):
         except ImportError:
             raise ImportError("pypdf package not found, please install it with `pip install pypdf`")
 
-        pdf_reader = pypdf.PdfReader(self.input_file)
+        pdf_loader = pypdf.PdfReader(self.input_file)
 
         return [
             Document(
                 text=page.extract_text().strip(),
                 metadata={"source": self.input_file, "page": page_number}
             )
-            for page_number, page in enumerate(pdf_reader.pages)
+            for page_number, page in enumerate(pdf_loader.pages)
         ]
