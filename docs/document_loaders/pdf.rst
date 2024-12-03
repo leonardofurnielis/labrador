@@ -2,7 +2,7 @@
 PDF
 ============================================
 
-In order to use ``PDFReader`` you need to install the ``pypdf`` package.
+In order to use ``PDFLoader`` you need to install the ``pypdf`` package.
 
 .. code-block:: bash
 

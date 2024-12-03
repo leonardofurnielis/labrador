@@ -2,7 +2,7 @@
 JSON
 ============================================
 
-In order to use ``JSONReader`` you need to install the ``jq`` package.
+In order to use ``JSONLoader`` you need to install the ``jq`` package.
 
 .. code-block:: bash
 

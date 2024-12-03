@@ -2,7 +2,7 @@
 Docx
 ============================================
 
-In order to use ``DocxReader`` you need to install the ``docx2txt`` package.
+In order to use ``DocxLoader`` you need to install the ``docx2txt`` package.
 
 .. code-block:: bash
 
