@@ -3,5 +3,5 @@ Hugging Face
 ============================================
 
 
-.. automodule:: deeptxt.embeddings.huggingface
+.. automodule:: tempestai.embeddings.huggingface
     :members:

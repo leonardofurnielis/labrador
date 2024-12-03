@@ -3,5 +3,5 @@ Token text splitter
 ============================================
 
 
-.. automodule:: deeptxt.text_splitters.token
+.. automodule:: tempestai.text_splitters.token
     :members:

@@ -3,5 +3,5 @@ Knowledge Base Coverage
 ============================================
 
 
-.. automodule:: deeptxt.evaluation.knowledge_base_coverage
+.. automodule:: tempestai.evaluation.knowledge_base_coverage
     :members:

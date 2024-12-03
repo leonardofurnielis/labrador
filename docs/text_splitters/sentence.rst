@@ -3,5 +3,5 @@ Sentence splitter
 ============================================
 
 
-.. automodule:: deeptxt.text_splitters.sentence
+.. automodule:: tempestai.text_splitters.sentence
     :members:
