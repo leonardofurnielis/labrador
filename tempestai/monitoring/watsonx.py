@@ -7,7 +7,7 @@ def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = 
     # Ensure all required keys are in the source dictionary
     missing_keys = [key for key in required_keys if key not in original_dict]
     if missing_keys:
-        raise KeyError(f"Missing required parameter: {', '.join(missing_keys)}")
+        raise KeyError(f"Missing required parameter: {missing_keys}")
     
     # Create a new dictionary with only the key-value pairs where the key is in the list 'keys'
     return {key: original_dict[key] for key in keys if key in original_dict}
@@ -32,7 +32,7 @@ class WatsonxExternalPromptMonitoring:
                                   please install it with `pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai`""")
 
             self.subscription_id = subscription_id
-            self._apikey = api_key
+            self._api_key = api_key
             self._space_id = space_id
             self._wml_url = wml_url
             
@@ -42,7 +42,7 @@ class WatsonxExternalPromptMonitoring:
             
             try:
                 _aigov_client = AIGovFactsClient(
-                    api_key=self._apikey,
+                    api_key=self._api_key,
                     container_id=self._space_id,
                     container_type="space",
                     disable_tracing=True
@@ -71,6 +71,7 @@ class WatsonxExternalPromptMonitoring:
                         "url": self._wml_url,
                         "apikey": self._api_key 
                         })
+                _wml_client.set.default_space(self._space_id)
                 
             except Exception as e:
                 logging.error(f"Error connecting to IBM watsonx.ai: {e}")
@@ -80,7 +81,7 @@ class WatsonxExternalPromptMonitoring:
                 _wml_client.deployments.ConfigurationMetaNames.PROMPT_TEMPLATE: { "id" : asset_id },
                 _wml_client.deployments.ConfigurationMetaNames.DETACHED: {},
                 _wml_client.deployments.ConfigurationMetaNames.BASE_MODEL_ID: self.detached_details['model_id'],
-                _wml_client.deployments.ConfigurationMetaNames.NAME: self.external_prompt['name'] + "deployment",
+                _wml_client.deployments.ConfigurationMetaNames.NAME: self.external_prompt['name'] + " " + "deployment"
             }
             
             created_deployment = _wml_client.deployments.create(asset_id, meta_props)
@@ -106,10 +107,10 @@ class WatsonxExternalPromptMonitoring:
                                                        ["model_version", "prompt_variables", "prompt_instruction",
                                                         "input_prefix", "output_prefix", "input", "model_parameters"])
             self.detached_details = _filter_dict_by_keys(prompt_metadata, 
-                                                       ["prompt_id", "model_id", "model_provider", "model_name", 
+                                                       ["model_id", "model_provider", "model_name", 
                                                         "model_url", "prompt_url", "prompt_additional_info"],
                                                        ["model_id", "model_provider"])
-            self.detached_details['detached_prompt'] = "detached_prompt" + + str(uuid.uuid4())
+            self.detached_details['prompt_id'] = "detached_prompt" + str(uuid.uuid4())
             self.external_prompt = _filter_dict_by_keys(prompt_metadata, 
                                                        ["name", "model_id", "task_id", "description", "container_id"],
                                                        ["name", "model_id", "task_id"])
