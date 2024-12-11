@@ -246,7 +246,7 @@ class WatsonxExternalPromptMonitoring:
         
                     
     def payload_logging(self, data: List[dict], subscription_id: str = None) -> None:
-        """Store records to payload logging.
+        """**(Beta)** – Store records to payload logging.
 
         Args:
             data (List[dict]): 
@@ -273,11 +273,12 @@ class WatsonxExternalPromptMonitoring:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
                 raise
             
-        self.subscription_id = subscription_id
+        if subscription_id:
+            self.subscription_id = subscription_id
             
         if not self.subscription_id:
             raise ValueError(f"No `subscription_id` provided or exist.")
-            
+        
         subscription_details = self._wos_client.subscriptions.get(self.subscription_id).result
         subscription_details = json.loads(str(subscription_details))
             
