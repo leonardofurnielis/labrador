@@ -2,7 +2,7 @@ import logging
 import uuid
 import json
 
-from typing import List
+from typing import List, Literal
 
 def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = []):
     # Ensure all required keys are in the source dictionary
@@ -21,7 +21,6 @@ class WatsonxExternalPromptMonitoring:
         api_key (str): IBM watsonx.governance API key.
         space_id (str, optional): watsonx.governance space_id, required to create prompt monitor.
         wml_url (str, optional): watsonx.ai Runtime url. Defaults to ``https://us-south.ml.cloud.ibm.com``
-        subscription_id (str, optional): watsonx.governance subscription_id, required for payload logging.
 
     **Example**
 
@@ -133,8 +132,8 @@ class WatsonxExternalPromptMonitoring:
                               name: str,
                               model_id: str,
                               model_provider: str,
-                              context_fields: List[str],
-                              question_field: str,
+                              context_fields: List[str] = None,
+                              question_field: str = None,
                               model_name: str = None,
                               model_version: str = None,
                               model_parameters: dict = None,
@@ -147,15 +146,15 @@ class WatsonxExternalPromptMonitoring:
                               prompt_url: str = None,
                               prompt_additional_info: dict = None,
                               description: str = None,
-                              task_id: str = "retrieval_augmented_generation") -> str:
+                              task_id: Literal["retrieval_augmented_generation", "summarization"] = None) -> str:
         """**(Beta)** – Create a Detached/External Prompt Template Asset and setup monitors for a given prompt template asset.
 
         Args:
             name (str): The name of the external prompt.
             model_id (str): Id of the model associated with the prompt.
             model_provider (str): The provider of the model.
-            context_fields (List): A list of fields that will provide context to the prompt.
-            question_field (str): The field containing the question to be answered.
+            context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
+            question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
             model_name (str, optional): The name of the model.
             model_version (str, optional): The version of the model.
             model_parameters (dict, optional): Model parameters and their respective values.
@@ -168,7 +167,7 @@ class WatsonxExternalPromptMonitoring:
             prompt_url (str, optional): URL of the prompt.
             prompt_additional_info (dict, optional): Additional information related to the prompt.
             description (str, optional): Description of the external prompt to be created.
-            task_id (str, optional): The task identifier. Defaults to ``retrieval_augmented_generation``.
+            task_id (Literal["retrieval_augmented_generation", "summarization"], optional): The task identifier.
             
         Returns:
             str: subscription_id.
