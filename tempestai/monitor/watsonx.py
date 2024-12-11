@@ -174,7 +174,7 @@ class WatsonxExternalPromptMonitoring:
             prompt_url (str, optional): URL of the prompt.
             prompt_additional_info (dict, optional): Additional information related to the prompt.
             description (str, optional): Description of the external prompt to be created.
-            task_id (str, optional): The task identifier. Defaults to "retrieval_augmented_generation".
+            task_id (str, optional): The task identifier. Defaults to ``retrieval_augmented_generation``.
             
         Returns:
             str: subscription_id.

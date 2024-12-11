@@ -2,7 +2,7 @@
 IBM watsonx.governance
 ============================================
 
-In order to use ``WatsonxExternalPromptMonitoring`` you need to install the ``ibm-aigov-facts-client``, ``ibm-watson-openscale`` and ``ibm-watsonx-ai`` package.
+**(Beta)** – In order to use ``WatsonxExternalPromptMonitoring`` you need to install the ``ibm-aigov-facts-client``, ``ibm-watson-openscale`` and ``ibm-watsonx-ai`` package.
 
 .. code-block:: bash
 
