@@ -133,7 +133,7 @@ class WatsonxExternalPromptMonitoring:
                               name: str,
                               model_id: str,
                               model_provider: str,
-                              context_fields: List,
+                              context_fields: List[str],
                               question_field: str,
                               model_name: str = None,
                               model_version: str = None,
