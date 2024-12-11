@@ -15,7 +15,7 @@ def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = 
 
 
 class WatsonxExternalPromptMonitoring:
-    """(Beta) Provides functionality to interact with IBM watsonx.governance for monitoring external LLM's.
+    """**(Beta)** – Provides functionality to interact with IBM watsonx.governance for monitoring external LLM's.
 
     Args:
         api_key (str): IBM watsonx.governance API key.
@@ -61,11 +61,11 @@ class WatsonxExternalPromptMonitoring:
             
         try:
              _aigov_client = AIGovFactsClient(
-                api_key=self._api_key,
-                container_id=self._space_id,
-                container_type="space",
-                disable_tracing=True
-                )
+                 api_key=self._api_key,
+                 container_id=self._space_id,
+                 container_type="space",
+                 disable_tracing=True
+                 )
                 
         except Exception as e:
             logging.error(f"Error connecting to IBM factsheets: {e}")
@@ -87,9 +87,9 @@ class WatsonxExternalPromptMonitoring:
             
         try:
             _wml_client = APIClient({
-                    "url": self._wml_url,
-                    "apikey": self._api_key 
-                    })
+                "url": self._wml_url,
+                "apikey": self._api_key 
+                })
             _wml_client.set.default_space(self._space_id)
                 
         except Exception as e:
@@ -152,7 +152,7 @@ class WatsonxExternalPromptMonitoring:
                               prompt_additional_info: dict = None,
                               description: str = None,
                               task_id: str = "retrieval_augmented_generation") -> str:
-        """(Beta - only RAG) Create a Detached/External Prompt Template Asset and setup monitors for a given prompt template asset.
+        """**(Beta)** – Create a Detached/External Prompt Template Asset and setup monitors for a given prompt template asset.
 
         Args:
             name (str): The name of the external prompt.
@@ -164,11 +164,11 @@ class WatsonxExternalPromptMonitoring:
             model_version (str, optional): The version of the model.
             model_parameters (dict, optional): Model parameters and their respective values.
             model_url (str, optional): URL of the model.
-            prompt_variables (dict, optional): Values for prompt variables.
-            prompt_instruction (str, optional): Instruction for using the prompt.
+            input (str, optional): The input data for the prompt.
             input_prefix (str, optional): A prefix to add to the input.
             output_prefix (str, optional): A prefix to add to the output.
-            input (str, optional): The input data for the prompt.
+            prompt_variables (dict, optional): Values for prompt variables.
+            prompt_instruction (str, optional): Instruction for using the prompt.
             prompt_url (str, optional): URL of the prompt.
             prompt_additional_info (dict, optional): Additional information related to the prompt.
             description (str, optional): Description of the external prompt to be created.
@@ -205,22 +205,22 @@ class WatsonxExternalPromptMonitoring:
             raise
         
         self.prompt_details = _filter_dict_by_keys(prompt_metadata, 
-                                                       ["model_version", "prompt_variables", "prompt_instruction",
-                                                        "input_prefix", "output_prefix", "input", "model_parameters"])
+                                                   ["model_version", "prompt_variables", "prompt_instruction",
+                                                    "input_prefix", "output_prefix", "input", "model_parameters"])
         self.detached_details = _filter_dict_by_keys(prompt_metadata, 
-                                                       ["model_id", "model_provider", "model_name", 
-                                                        "model_url", "prompt_url", "prompt_additional_info"],
-                                                       ["model_id", "model_provider"])
+                                                     ["model_id", "model_provider", "model_name", 
+                                                      "model_url", "prompt_url", "prompt_additional_info"],
+                                                     ["model_id", "model_provider"])
         self.detached_details['prompt_id'] = "detached_prompt" + str(uuid.uuid4())
         self.external_prompt = _filter_dict_by_keys(prompt_metadata, 
-                                                       ["name", "model_id", "task_id", "description"],
-                                                       ["name", "model_id", "task_id"])
+                                                    ["name", "model_id", "task_id", "description"],
+                                                    ["name", "model_id", "task_id"])
             
         pta_id = self._create_detached_prompt()
         deployment_id =  self._create_deployment_pta(asset_id=pta_id)
             
         monitors = {
-                "generative_ai_quality": {
+            "generative_ai_quality": {
                 "parameters": {
                     "min_sample_size": 10,
                     "metrics_configuration":{}
@@ -228,16 +228,16 @@ class WatsonxExternalPromptMonitoring:
                 }}
             
         generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(prompt_template_asset_id = pta_id, 
-                                                                   space_id = self._space_id,
-                                                                   deployment_id = deployment_id,
-                                                                   label_column = "reference_output",
-                                                                   context_fields=context_fields,     
-                                                                   question_field = question_field,   
-                                                                   operational_space_id = "production", 
-                                                                   problem_type = self.external_prompt['task_id'],
-                                                                   input_data_type = "unstructured_text", 
-                                                                   supporting_monitors = monitors, 
-                                                                   background_mode = False).result
+                                                                                  space_id = self._space_id,
+                                                                                  deployment_id = deployment_id,
+                                                                                  label_column = "reference_output",
+                                                                                  context_fields=context_fields,     
+                                                                                  question_field = question_field,   
+                                                                                  operational_space_id = "production", 
+                                                                                  problem_type = self.external_prompt['task_id'],
+                                                                                  input_data_type = "unstructured_text", 
+                                                                                  supporting_monitors = monitors, 
+                                                                                  background_mode = False).result
 
         generative_ai_monitor_details = generative_ai_monitor_details._to_dict()
         self.subscription_id = generative_ai_monitor_details["subscription_id"]
@@ -250,7 +250,7 @@ class WatsonxExternalPromptMonitoring:
 
         Args:
             data (List[dict]): 
-            subscription_id (str, optional): The list of prompt variables containing the context.
+            subscription_id (str, optional):
 
         **Example**
 
@@ -259,7 +259,7 @@ class WatsonxExternalPromptMonitoring:
             watsonx_monitor.payload_logging(data=[{"context1": "value_context1",
                                                     "context2": "value_context1",
                                                     "input_query": "what's tempestai?"}], 
-                                        subscription_id="5d62977c-a53d-4b6d-bda1-7b79b3b9d1a0")
+                                            subscription_id="5d62977c-a53d-4b6d-bda1-7b79b3b9d1a0")
         """
         from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
         from ibm_watson_openscale import APIClient as WosAPIClient
@@ -283,14 +283,14 @@ class WatsonxExternalPromptMonitoring:
             
         feature_fields = subscription_details['entity']['asset_properties']['feature_fields']
             
-        payload_data_set_id = self._wos_client.data_sets.list(type=DataSetTypes.PAYLOAD_LOGGING, 
-                                                target_target_id=self.subscription_id, 
-                                                target_target_type=TargetTypes.SUBSCRIPTION).result.data_sets[0].metadata.id
+        payload_data_set_id = self._wos_client.data_sets.list(type=DataSetTypes.PAYLOAD_LOGGING,
+                                                              target_target_id=self.subscription_id, 
+                                                              target_target_type=TargetTypes.SUBSCRIPTION).result.data_sets[0].metadata.id
             
         payload_data = self._parse_payload_data(data, feature_fields)
         self._wos_client.data_sets.store_records(data_set_id=payload_data_set_id, 
-                                                     request_body=payload_data,
-                                                     background_mode=False)
+                                                 request_body=payload_data,
+                                                 background_mode=False)
             
         return        
                 
