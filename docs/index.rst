@@ -12,6 +12,7 @@ Tempest AI is a data library to build context-aware AI applications.
     Document Loaders <document_loaders/index>
     Embeddings <embeddings/index>
     Evaluation <evaluation/index>
+    Monitor <monitor/index>
     Retrievers <retrievers/index>
     Text Splitters <text_splitters/index>
     Vector Stores <vector_stores/index>
