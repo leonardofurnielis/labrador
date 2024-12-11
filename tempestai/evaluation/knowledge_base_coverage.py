@@ -12,7 +12,7 @@ class KnowledgeBaseCoverage(BaseModel):
 
     Args:
         embed_model (BaseEmbedding):
-        similarity_mode (str, optional): Similarity strategy. Defaults to ``cosine``.
+        similarity_mode (Literal["cosine", "dot_product", "euclidean"], optional): Similarity strategy. Defaults to ``cosine``.
         similarity_threshold (float, optional): Embedding similarity threshold for "passing". Defaults to ``0.8``.
 
      **Example**

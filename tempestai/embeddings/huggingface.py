@@ -11,7 +11,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
     Args:
         model_name (str): Hugging Face model to be used. Defaults to ``sentence-transformers/all-MiniLM-L6-v2``.
-        device (str): Device to run the model on. Defaults to ``cpu``.
+        device (Literal["cpu", "cuda"]): Device to run the model on. Defaults to ``cpu``.
 
     **Example**
 
