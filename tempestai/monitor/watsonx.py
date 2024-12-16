@@ -11,8 +11,8 @@ def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = 
     if missing_keys:
         raise KeyError(f"Missing required parameter: {missing_keys}")
     
-    # Create a new dictionary with only the key-value pairs where the key is in the list 'keys'
-    return {key: original_dict[key] for key in keys if key in original_dict}         
+    # Create a new dictionary with only the key-value pairs where the key is in 'keys' and value is not None
+    return {key: original_dict[key] for key in keys if key in original_dict and original_dict[key] is not None}     
 
 
 class WatsonxExternalPromptMonitoring:
@@ -131,7 +131,7 @@ class WatsonxExternalPromptMonitoring:
                               model_id: str,
                               task_id: str,
                               detached_model_provider: str,
-                              description: str = None,
+                              description: str = "",
                               model_parameters: dict = None,
                               detached_model_name: str = None,
                               detached_model_url: str = None,
@@ -173,6 +173,7 @@ class WatsonxExternalPromptMonitoring:
 
             detached_watsonx_monitor.create_prompt_monitor(name="Detached prompt (model AWS Anthropic)",
                                                     model_id="anthropic.claude-v2",
+                                                    task_id="retrieval_augmented_generation",
                                                     detached_model_provider="AWS Bedrock",
                                                     detached_model_name="Anthropic Claude 2.0",
                                                     detached_model_url="https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-claude.html",
@@ -225,7 +226,7 @@ class WatsonxExternalPromptMonitoring:
         detached_asset_details = _filter_dict_by_keys(prompt_metadata, 
                                                     ["name", "model_id", "task_id", "description"],
                                                     ["name", "model_id", "task_id"])
-            
+        
         detached_pta_id = self._create_detached_prompt(detached_details, prompt_details, detached_asset_details)
         deployment_id =  self._create_deployment_pta(detached_pta_id, name, model_id)
             
@@ -415,7 +416,7 @@ class WatsonxPromptMonitoring:
                               name: str,
                               model_id: str,
                               task_id: str,
-                              description: str = None,
+                              description: str = "",
                               model_parameters: dict = None,
                               prompt_variables: List[str] = None,
                               prompt_template_version: str = None,
