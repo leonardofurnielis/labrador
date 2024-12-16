@@ -29,7 +29,7 @@ class WatsonxExternalPromptMonitoring:
 
         from tempestai.monitor import WatsonxExternalPromptMonitoring
 
-        watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="*******",
+        detached_watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="*******",
                                                 space_id="5d62977c-a53d-4b6d-bda1-7b79b3b9d1a0")
     """
     
@@ -56,7 +56,7 @@ class WatsonxExternalPromptMonitoring:
                     
     def _create_detached_prompt(self, detached_details: dict, 
                                 prompt_template_details: dict, 
-                                external_prompt: dict) -> str:
+                                detached_asset_details: dict) -> str:
         from ibm_aigov_facts_client import DetachedPromptTemplate, PromptTemplate, AIGovFactsClient
             
         try:
@@ -70,16 +70,13 @@ class WatsonxExternalPromptMonitoring:
         except Exception as e:
             logging.error(f"Error connecting to IBM watsonx.governance (factsheets): {e}")
             raise
-            
-        detached_information = DetachedPromptTemplate(**detached_details)
-        prompt_template = PromptTemplate(**prompt_template_details)
 
-        created_external_pta = aigov_client.assets.create_detached_prompt(
-            **external_prompt,
-            prompt_details=prompt_template,
-            detached_information=detached_information)
+        created_detached_pta = aigov_client.assets.create_detached_prompt(
+            **detached_asset_details,
+            prompt_details=PromptTemplate(**prompt_template_details),
+            detached_information=DetachedPromptTemplate(**detached_details))
             
-        return created_external_pta.to_dict()["asset_id"]
+        return created_detached_pta.to_dict()["asset_id"]
             
             
     def _create_deployment_pta(self, asset_id: str,
@@ -130,67 +127,78 @@ class WatsonxExternalPromptMonitoring:
         
             
     def create_prompt_monitor(self,
-                              name: str,
-                              model_id: str,
-                              model_provider: str,
-                              context_fields: List[str] = None,
-                              question_field: str = None,
-                              model_name: str = None,
-                              model_version: str = None,
+                              name: str = None,
+                              description: str = None,
+                              model_id: str = None,
                               model_parameters: dict = None,
-                              model_url: str = None,
-                              prompt_variables: dict = None,
+                              detached_model_provider: str = None,
+                              detached_model_name: str = None,
+                              detached_model_url: str = None,
+                              detached_prompt_url: str = None,
+                              detached_prompt_additional_info: dict = None,
+                              prompt_variables: List[str] = None,
+                              prompt_template_version: str = None,
                               prompt_instruction: str = None,
+                              input_text: str = None,
                               input_prefix: str = None,
                               output_prefix: str = None,
-                              input: str = None,
-                              prompt_url: str = None,
-                              prompt_additional_info: dict = None,
-                              description: str = None,
-                              task_id: Literal["retrieval_augmented_generation", "summarization"] = None) -> str:
+                              task_id: str = None,
+                              context_fields: List[str] = None,
+                              question_field: str = None) -> dict:
         """**(Beta)** – Create a Detached/External Prompt Template Asset and setup monitors for a given prompt template asset.
 
         Args:
-            name (str): The name of the external prompt.
+            name (str): The name of the External Prompt Template Asset..
+            description (str, optional): Description of the External Prompt Template Asset.
             model_id (str): Id of the model associated with the prompt.
-            model_provider (str): The provider of the model.
-            context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
-            question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
-            model_name (str, optional): The name of the model.
-            model_version (str, optional): The version of the model.
             model_parameters (dict, optional): Model parameters and their respective values.
-            model_url (str, optional): URL of the model.
-            input (str, optional): The input data for the prompt.
+            detached_model_provider (str): The external model provider.
+            detached_model_name (str, optional): The name of the external model.
+            detached_model_url (str, optional): URL of the external model.
+            detached_prompt_url (str, optional): URL of the external prompt.
+            detached_prompt_additional_info (dict, optional): Additional information related to the external prompt.
+            prompt_variables (List[str], optional): Values for prompt variables.
+            prompt_template_version (str, optional): Semantic version of the External Prompt Template Asset.
+            prompt_instruction (str, optional): Instruction for using the prompt.
+            input_text (str, optional): The input text for the prompt.
             input_prefix (str, optional): A prefix to add to the input.
             output_prefix (str, optional): A prefix to add to the output.
-            prompt_variables (dict, optional): Values for prompt variables.
-            prompt_instruction (str, optional): Instruction for using the prompt.
-            prompt_url (str, optional): URL of the prompt.
-            prompt_additional_info (dict, optional): Additional information related to the prompt.
-            description (str, optional): Description of the external prompt to be created.
             task_id (Literal["retrieval_augmented_generation", "summarization"], optional): The task identifier.
-            
-        Returns:
-            str: subscription_id.
+            context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
+            question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
 
         **Example**
 
         .. code-block:: python
 
-            watsonx_monitor.create_prompt_monitor(name="External prompt (model AWS Anthropic)"
-                                                    model_id="anthropic.claude-v2"
-                                                    model_provider="AWS Bedrock"
-                                                    context_fields=["context1", "context2"]
-                                                    question_field="input_query"
-                                                    model_name="Anthropic Claude 2.0"
-                                                    model_url="https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-claude.html"
-                                                    prompt_variables={"context1":"", "context2":"", "input_query":""}
-                                                    input="Prompt text to be given")
+            detached_watsonx_monitor.create_prompt_monitor(name="Detached prompt (model AWS Anthropic)",
+                                                    model_id="anthropic.claude-v2",
+                                                    detached_model_provider="AWS Bedrock",
+                                                    detached_model_name="Anthropic Claude 2.0",
+                                                    detached_model_url="https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-claude.html",
+                                                    prompt_variables=["context1", "context2", "input_query"],
+                                                    input_text="Prompt text to be given",
+                                                    context_fields=["context1", "context2"],
+                                                    question_field="input_query")
             
         """
         prompt_metadata = locals()
-        prompt_metadata.pop('context_fields', None)
-        prompt_metadata.pop('question_field', None)
+        # remove unused vars from dict
+        prompt_metadata.pop("self", None)
+        prompt_metadata.pop("context_fields", None)
+        prompt_metadata.pop("question_field", None)
+        
+        # update name of keys to aigov_facts api
+        prompt_metadata["model_version"] = prompt_metadata.pop("prompt_template_version", None)
+        prompt_metadata["input"] = prompt_metadata.pop("input_text", None)
+        prompt_metadata["model_provider"] = prompt_metadata.pop("detached_model_provider", None)
+        prompt_metadata["model_name"] = prompt_metadata.pop("detached_model_name", None)
+        prompt_metadata["model_url"] = prompt_metadata.pop("detached_model_url", None)
+        prompt_metadata["prompt_url"] = prompt_metadata.pop("detached_prompt_url", None)
+        prompt_metadata["prompt_additional_info"] = prompt_metadata.pop("detached_prompt_additional_info", None)
+        
+        # update list of vars to dict
+        prompt_metadata["prompt_variables"] = { prompt_var: "" for prompt_var in prompt_metadata["prompt_variables"] }
         
         from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
         from ibm_watson_openscale import APIClient as WosAPIClient
@@ -208,18 +216,18 @@ class WatsonxExternalPromptMonitoring:
                                                      ["model_id", "model_provider", "model_name", 
                                                       "model_url", "prompt_url", "prompt_additional_info"],
                                                      ["model_id", "model_provider"])
-        detached_details['prompt_id'] = "detached_prompt" + str(uuid.uuid4())
+        detached_details['prompt_id'] = "detached_prompt_" + str(uuid.uuid4())
         
         prompt_details = _filter_dict_by_keys(prompt_metadata, 
                                                    ["model_version", "prompt_variables", "prompt_instruction",
                                                     "input_prefix", "output_prefix", "input", "model_parameters"])
         
-        external_prompt = _filter_dict_by_keys(prompt_metadata, 
+        detached_asset_details = _filter_dict_by_keys(prompt_metadata, 
                                                     ["name", "model_id", "task_id", "description"],
                                                     ["name", "model_id", "task_id"])
             
-        external_pta_id = self._create_detached_prompt(detached_details, prompt_details, external_prompt)
-        deployment_id =  self._create_deployment_pta(external_pta_id, name, model_id)
+        detached_pta_id = self._create_detached_prompt(detached_details, prompt_details, detached_asset_details)
+        deployment_id =  self._create_deployment_pta(detached_pta_id, name, model_id)
             
         monitors = {
             "generative_ai_quality": {
@@ -229,7 +237,7 @@ class WatsonxExternalPromptMonitoring:
                     }
                 }}
             
-        generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(prompt_template_asset_id = external_pta_id, 
+        generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(prompt_template_asset_id = detached_pta_id, 
                                                                                   space_id = self._space_id,
                                                                                   deployment_id = deployment_id,
                                                                                   label_column = "reference_output",
@@ -243,7 +251,9 @@ class WatsonxExternalPromptMonitoring:
 
         generative_ai_monitor_details = generative_ai_monitor_details._to_dict()
             
-        return generative_ai_monitor_details["subscription_id"]
+        return {"detached_prompt_template_asset_id": detached_pta_id,
+                "deployment_id": deployment_id,
+                "subscription_id": generative_ai_monitor_details["subscription_id"]} 
         
                     
     def payload_logging(self, payload_records: List[dict], subscription_id: str) -> None:
@@ -257,7 +267,7 @@ class WatsonxExternalPromptMonitoring:
 
         .. code-block:: python
 
-            watsonx_monitor.payload_logging(data=[{"context1": "value_context1",
+            detached_watsonx_monitor.payload_logging(payload_records=[{"context1": "value_context1",
                                                     "context2": "value_context1",
                                                     "input_query": "what's tempestai?",
                                                     "input_token_count": 25,
@@ -294,7 +304,7 @@ class WatsonxExternalPromptMonitoring:
  
      
 class WatsonxPromptMonitoring:
-    """**(Beta)** – Provides functionality to interact with IBM watsonx.governance for monitoring external LLM's.
+    """**(Beta)** – Provides functionality to interact with IBM watsonx.governance for monitoring IBM watsonx.ai LLM's.
 
     Args:
         api_key (str): IBM watsonx.governance API key.
@@ -433,9 +443,6 @@ class WatsonxPromptMonitoring:
             context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
             question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
             
-        Returns:
-            str: subscription_id.
-            
         """
         prompt_metadata = locals()
         # remove unused vars from dict
@@ -511,7 +518,7 @@ class WatsonxPromptMonitoring:
 
         .. code-block:: python
 
-            watsonx_monitor.payload_logging(data=[{"context1": "value_context1",
+            watsonx_monitor.payload_logging(payload_records=[{"context1": "value_context1",
                                                     "context2": "value_context1",
                                                     "input_query": "what's tempestai?",
                                                     "input_token_count": 25,
