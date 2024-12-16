@@ -127,11 +127,12 @@ class WatsonxExternalPromptMonitoring:
         
             
     def create_prompt_monitor(self,
-                              name: str = None,
+                              name: str,
+                              model_id: str,
+                              task_id: str,
+                              detached_model_provider: str,
                               description: str = None,
-                              model_id: str = None,
                               model_parameters: dict = None,
-                              detached_model_provider: str = None,
                               detached_model_name: str = None,
                               detached_model_url: str = None,
                               detached_prompt_url: str = None,
@@ -142,17 +143,17 @@ class WatsonxExternalPromptMonitoring:
                               input_text: str = None,
                               input_prefix: str = None,
                               output_prefix: str = None,
-                              task_id: str = None,
                               context_fields: List[str] = None,
                               question_field: str = None) -> dict:
         """**(Beta)** – Create a Detached/External Prompt Template Asset and setup monitors for a given prompt template asset.
 
         Args:
             name (str): The name of the External Prompt Template Asset..
-            description (str, optional): Description of the External Prompt Template Asset.
             model_id (str): Id of the model associated with the prompt.
-            model_parameters (dict, optional): Model parameters and their respective values.
+            task_id (str): The task identifier. Currently supports "retrieval_augmented_generation" and "summarization" tasks.
             detached_model_provider (str): The external model provider.
+            description (str, optional): Description of the External Prompt Template Asset.
+            model_parameters (dict, optional): Model parameters and their respective values.
             detached_model_name (str, optional): The name of the external model.
             detached_model_url (str, optional): URL of the external model.
             detached_prompt_url (str, optional): URL of the external prompt.
@@ -163,7 +164,6 @@ class WatsonxExternalPromptMonitoring:
             input_text (str, optional): The input text for the prompt.
             input_prefix (str, optional): A prefix to add to the input.
             output_prefix (str, optional): A prefix to add to the output.
-            task_id (Literal["retrieval_augmented_generation", "summarization"], optional): The task identifier.
             context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
             question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
 
@@ -412,9 +412,10 @@ class WatsonxPromptMonitoring:
         
             
     def create_prompt_monitor(self,
-                              name: str = None,
+                              name: str,
+                              model_id: str,
+                              task_id: str,
                               description: str = None,
-                              model_id: str = None,
                               model_parameters: dict = None,
                               prompt_variables: List[str] = None,
                               prompt_template_version: str = None,
@@ -422,7 +423,6 @@ class WatsonxPromptMonitoring:
                               input_text: str = None,
                               input_prefix: str = None,
                               output_prefix: str = None,
-                              task_id: str = None,
                               context_fields: List[str] = None,
                               question_field: str = None,
                               ) -> dict:
@@ -430,8 +430,9 @@ class WatsonxPromptMonitoring:
 
         Args:
             name (str): The name of the Prompt Template Asset.
-            description (str, optional): Description of the Prompt Template Asset.
             model_id (str): Id of the model associated with the prompt.
+            task_id (str): The task identifier. Currently supports "retrieval_augmented_generation" and "summarization" tasks.
+            description (str, optional): Description of the Prompt Template Asset.
             model_parameters (dict, optional): Model parameters and their respective values.
             prompt_variables (List[str], optional): Values for prompt input variables.
             prompt_template_version (str, optional): Semantic version of the Prompt Template Asset.
@@ -439,7 +440,6 @@ class WatsonxPromptMonitoring:
             input_text (str, optional): The input text for the prompt.
             input_prefix (str, optional): A prefix to add to the input.
             output_prefix (str, optional): A prefix to add to the output.
-            task_id (Literal["retrieval_augmented_generation", "summarization"], optional): The task identifier.
             context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
             question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
             
