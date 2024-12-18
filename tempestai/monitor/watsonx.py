@@ -2,7 +2,7 @@ import logging
 import uuid
 import json
 
-from typing import List, Literal
+from typing import List
 
 
 def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = []):
@@ -39,10 +39,10 @@ class WatsonxExternalPromptMonitoring:
                  wml_url: str = "https://us-south.ml.cloud.ibm.com"
                  ) -> None:
         try:
-            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-            from ibm_aigov_facts_client import AIGovFactsClient
-            from ibm_watson_openscale import APIClient as WosAPIClient
-            from ibm_watsonx_ai import APIClient
+            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # noqa: F401
+            from ibm_aigov_facts_client import AIGovFactsClient # noqa: F401
+            from ibm_watson_openscale import APIClient as WosAPIClient # noqa: F401
+            from ibm_watsonx_ai import APIClient # noqa: F401
 
         except ImportError:
             raise ImportError("""ibm-aigov-facts-client, ibm-watson-openscale or ibm-watsonx-ai not found, 
@@ -116,7 +116,7 @@ class WatsonxExternalPromptMonitoring:
             request = { "parameters": { "template_variables": {}}}
             results = {}
                 
-            request["parameters"]["template_variables"] = {field: str(record.get(field, '')) for field in feature_fields}
+            request["parameters"]["template_variables"] = {field: str(record.get(field, "")) for field in feature_fields}
             
             results = {field: record.get(field) for field in response_fields if record.get(field)}
                 
@@ -217,7 +217,7 @@ class WatsonxExternalPromptMonitoring:
                                                      ["model_id", "model_provider", "model_name", 
                                                       "model_url", "prompt_url", "prompt_additional_info"],
                                                      ["model_id", "model_provider"])
-        detached_details['prompt_id'] = "detached_prompt_" + str(uuid.uuid4())
+        detached_details["prompt_id"] = "detached_prompt_" + str(uuid.uuid4())
         
         prompt_details = _filter_dict_by_keys(prompt_metadata, 
                                                    ["model_version", "prompt_variables", "prompt_instruction",
@@ -290,7 +290,7 @@ class WatsonxExternalPromptMonitoring:
         subscription_details = self._wos_client.subscriptions.get(subscription_id).result
         subscription_details = json.loads(str(subscription_details))
             
-        feature_fields = subscription_details['entity']['asset_properties']['feature_fields']
+        feature_fields = subscription_details["entity"]["asset_properties"]["feature_fields"]
             
         payload_data_set_id = self._wos_client.data_sets.list(type=DataSetTypes.PAYLOAD_LOGGING,
                                                               target_target_id=subscription_id, 
@@ -300,8 +300,7 @@ class WatsonxExternalPromptMonitoring:
         self._wos_client.data_sets.store_records(data_set_id=payload_data_set_id, 
                                                  request_body=payload_data,
                                                  background_mode=False)
-            
-        return        
+                   
  
      
 class WatsonxPromptMonitoring:
@@ -328,9 +327,9 @@ class WatsonxPromptMonitoring:
                  wml_url: str = "https://us-south.ml.cloud.ibm.com"
                  ) -> None:
         try:
-            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-            from ibm_watson_openscale import APIClient as WosAPIClient
-            from ibm_watsonx_ai import APIClient
+            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # noqa: F401
+            from ibm_watson_openscale import APIClient as WosAPIClient # noqa: F401
+            from ibm_watsonx_ai import APIClient # noqa: F401
 
         except ImportError:
             raise ImportError("""ibm-watson-openscale or ibm-watsonx-ai not found, 
@@ -402,7 +401,7 @@ class WatsonxPromptMonitoring:
             request = { "parameters": { "template_variables": {}}}
             results = {}
                 
-            request["parameters"]["template_variables"] = {field: str(record.get(field, '')) for field in feature_fields}
+            request["parameters"]["template_variables"] = {field: str(record.get(field, "")) for field in feature_fields}
             
             results = {field: record.get(field) for field in response_fields if record.get(field)}
                 
@@ -541,7 +540,7 @@ class WatsonxPromptMonitoring:
         subscription_details = self._wos_client.subscriptions.get(subscription_id).result
         subscription_details = json.loads(str(subscription_details))
             
-        feature_fields = subscription_details['entity']['asset_properties']['feature_fields']
+        feature_fields = subscription_details["entity"]["asset_properties"]["feature_fields"]
             
         payload_data_set_id = self._wos_client.data_sets.list(type=DataSetTypes.PAYLOAD_LOGGING,
                                                               target_target_id=subscription_id, 
@@ -551,6 +550,5 @@ class WatsonxPromptMonitoring:
         self._wos_client.data_sets.store_records(data_set_id=payload_data_set_id, 
                                                  request_body=payload_data,
                                                  background_mode=False)
-            
-        return        
+                  
                   
