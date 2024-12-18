@@ -1,8 +1,8 @@
 ============================================
-Welcome to Tempest AI documentation!
+Welcome to Tempest documentation!
 ============================================
 
-Tempest AI is a data library to build context-aware AI applications.
+Tempest is a data library to build context-aware AI applications.
 
 .. toctree::
     :hidden:
@@ -21,9 +21,11 @@ Tempest AI is a data library to build context-aware AI applications.
 Features
 ---------------
 
-✅ **Data connectors**: gather data from various sources like Docx, PDFs, Buckets, and more, maintaining their original format.
+✅ **Data connectors**: Gather data from various sources like Docx, PDFs, Buckets, and more, maintaining their original format.
 
-✅ **Data indexes**: organize this data into structured representations optimized for efficient consumption by language models.
+✅ **Data indexes**: Organize this data into structured representations optimized for efficient consumption by language models.
 
-✅ **Models**: enable natural language interaction with your data
+✅ **Models**: Enable natural language interaction with your data.
+
+✅ **Monitor and Evaluation**: Enable evaluation and monitoring of LLMs models.
 

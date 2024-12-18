@@ -1,4 +1,4 @@
-# Tempest AI Python Client
+# Tempest Python Client
 
 ![PyPI - Version](https://img.shields.io/pypi/v/tempestai)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
