@@ -443,6 +443,18 @@ class WatsonxPromptMonitoring:
             context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
             question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
             
+        **Example**
+
+        .. code-block:: python
+
+            watsonx_monitor.create_prompt_monitor(name="IBM prompt template",
+                                                    model_id="ibm/granite-3-2b-instruct",
+                                                    task_id="retrieval_augmented_generation",
+                                                    prompt_variables=["context1", "context2", "input_query"],
+                                                    input_text="Prompt text to be given",
+                                                    context_fields=["context1", "context2"],
+                                                    question_field="input_query")
+            
         """
         prompt_metadata = locals()
         # remove unused vars from dict
