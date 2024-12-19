@@ -29,8 +29,8 @@ class WatsonxExternalPromptMonitoring:
 
         from tempestai.monitor import WatsonxExternalPromptMonitoring
 
-        detached_watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="*******", 
-                                                               space_id="*******")
+        detached_watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="your_api_key", 
+                                                               space_id="your_space_id")
     """
     
     def __init__(self,
@@ -317,8 +317,8 @@ class WatsonxPromptMonitoring:
 
         from tempestai.monitor import WatsonxPromptMonitoring
 
-        watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="*******", 
-                                                        space_id="*******")
+        watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="your_api_key", 
+                                                        space_id="your_space_id")
     """
     
     def __init__(self,
