@@ -17,10 +17,14 @@ def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = 
 
 class WatsonxExternalPromptMonitoring:
     """**(Beta)** – Provides functionality to interact with IBM watsonx.governance for monitoring external LLM's.
+    
+    Note:
+            One of these parameters is required to create prompt monitor: ``project_id`` or ``space_id``. Not both.
 
     Args:
         api_key (str): IBM watsonx.governance API key.
-        space_id (str, optional): watsonx.governance space_id, required to create prompt monitor.
+        space_id (str, optional): watsonx.governance space_id.
+        project_id (str, optional): watsonx.governance project_id.
         wml_url (str, optional): watsonx.ai Runtime url. Defaults to ``https://us-south.ml.cloud.ibm.com``
 
     **Example**
@@ -36,8 +40,10 @@ class WatsonxExternalPromptMonitoring:
     def __init__(self,
                  api_key: str,
                  space_id: str = None,
+                 project_id: str = None,
                  wml_url: str = "https://us-south.ml.cloud.ibm.com"
                  ) -> None:
+        
         try:
             from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # noqa: F401
             from ibm_aigov_facts_client import AIGovFactsClient # noqa: F401
@@ -47,9 +53,17 @@ class WatsonxExternalPromptMonitoring:
         except ImportError:
             raise ImportError("""ibm-aigov-facts-client, ibm-watson-openscale or ibm-watsonx-ai not found, 
                                 please install it with `pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai`""")
+            
+        if (not (project_id or space_id)) or (project_id and space_id):
+            raise ValueError("Must provide one of these parameters [`project_id`, `space_id`], not both.")
+
+        self._container_id = space_id if space_id else project_id
+        self._container_type = "space" if space_id else "project"
+        self._deployment_stage = "production" if space_id else "development"
 
         self._api_key = api_key
         self._space_id = space_id
+        self._project_id = project_id
         self._wml_url = wml_url
         self._wos_client = None
 
@@ -62,8 +76,8 @@ class WatsonxExternalPromptMonitoring:
         try:
              aigov_client = AIGovFactsClient(
                  api_key=self._api_key,
-                 container_id=self._space_id,
-                 container_type="space",
+                 container_id=self._container_id,
+                 container_type=self._container_type,
                  disable_tracing=True
                  )
                 
@@ -228,7 +242,9 @@ class WatsonxExternalPromptMonitoring:
                                                     ["name", "model_id", "task_id"])
         
         detached_pta_id = self._create_detached_prompt(detached_details, prompt_details, detached_asset_details)
-        deployment_id =  self._create_deployment_pta(detached_pta_id, name, model_id)
+        deployment_id = None
+        if self._container_type == "space":
+            deployment_id =  self._create_deployment_pta(detached_pta_id, name, model_id)
             
         monitors = {
             "generative_ai_quality": {
@@ -240,18 +256,19 @@ class WatsonxExternalPromptMonitoring:
             
         generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(prompt_template_asset_id = detached_pta_id, 
                                                                                   space_id = self._space_id,
+                                                                                  project_id=self._project_id,
                                                                                   deployment_id = deployment_id,
                                                                                   label_column = "reference_output",
                                                                                   context_fields=context_fields,     
                                                                                   question_field = question_field,   
-                                                                                  operational_space_id = "production", 
+                                                                                  operational_space_id = self._deployment_stage, 
                                                                                   problem_type = task_id,
                                                                                   input_data_type = "unstructured_text", 
                                                                                   supporting_monitors = monitors, 
                                                                                   background_mode = False).result
 
-        generative_ai_monitor_details = generative_ai_monitor_details._to_dict()
-            
+        generative_ai_monitor_details = generative_ai_monitor_details._to_dict()   
+               
         return {"detached_prompt_template_asset_id": detached_pta_id,
                 "deployment_id": deployment_id,
                 "subscription_id": generative_ai_monitor_details["subscription_id"]} 
