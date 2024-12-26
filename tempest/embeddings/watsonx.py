@@ -9,7 +9,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
     """IBM watsonx embedding models.
 
     Note:
-            One of these parameters is required: ``project_id`` or ``space_id``.
+            One of these parameters is required: ``project_id`` or ``space_id``. Not both.
 
     See https://cloud.ibm.com/apidocs/watsonx-ai#endpoint-url for the watsonx.ai API endpoints.
 
@@ -50,8 +50,8 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         except ImportError:
             raise ImportError("ibm-watsonx-ai package not found, please install it with `pip install ibm-watsonx-ai`")
 
-        if not self.project_id and not self.space_id:
-            raise ValueError("Must provide one of these parameters [`project_id`, `space_id`]")
+        if (not (self.project_id or self.space_id)) or (self.project_id and self.space_id):
+            raise ValueError("Must provide one of these parameters [`project_id`, `space_id`], not both.")
 
         kwargs_params = {
             "model_id": self.model_name,
