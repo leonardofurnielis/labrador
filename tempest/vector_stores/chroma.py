@@ -1,7 +1,7 @@
 import uuid
 import logging
 
-from typing import List
+from typing import List, Literal
 from tempest.core.document import Document, DocumentWithScore
 from tempest.core.embeddings import BaseEmbedding
 
@@ -12,7 +12,7 @@ class ChromaVectorStore:
     Args:
         embed_model (BaseEmbedding):
         collection_name (str, optional): Name of the ChromaDB collection.
-        distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.
+        distance_strategy (str, optional): Distance strategy for similarity search. Currently supports "cosine", "ip" and "l2". Defaults to ``cosine``.
 
     **Example**
 
@@ -27,7 +27,7 @@ class ChromaVectorStore:
 
     def __init__(self, embed_model: BaseEmbedding,
                  collection_name: str = None,
-                 distance_strategy: str = "cosine") -> None:
+                 distance_strategy: Literal["cosine", "ip", "l2"] = "cosine") -> None:
         try:
             import chromadb
             import chromadb.config
@@ -38,9 +38,6 @@ class ChromaVectorStore:
         self._embed_model = embed_model
         self._client_settings = chromadb.config.Settings()
         self._client = chromadb.Client(self._client_settings)
-
-        if distance_strategy not in ["cosine", "ip", "l2"]:
-            raise ValueError(f"Similarity {distance_strategy} not supported.")
 
         if collection_name is None:
             collection_name = "auto-generated-" + str(uuid.uuid4())[:8]

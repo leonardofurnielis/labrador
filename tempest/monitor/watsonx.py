@@ -2,7 +2,7 @@ import logging
 import uuid
 import json
 
-from typing import List
+from typing import List, Literal
 
 
 def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = []):
@@ -143,7 +143,7 @@ class WatsonxExternalPromptMonitoring:
     def create_prompt_monitor(self,
                               name: str,
                               model_id: str,
-                              task_id: str,
+                              task_id: Literal["retrieval_augmented_generation", "summarization"],
                               detached_model_provider: str,
                               description: str = "",
                               model_parameters: dict = None,
@@ -444,7 +444,7 @@ class WatsonxPromptMonitoring:
     def create_prompt_monitor(self,
                               name: str,
                               model_id: str,
-                              task_id: str,
+                              task_id: Literal["retrieval_augmented_generation", "summarization"],
                               description: str = "",
                               model_parameters: dict = None,
                               prompt_variables: List[str] = None,

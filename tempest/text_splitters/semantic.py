@@ -16,7 +16,7 @@ class SemanticSplitter(BaseModel):
         embed_model (BaseEmbedding):
         buffer_size (int, optional): Size of the buffer for semantic chunking. Default is ``1``.
         breakpoint_threshold_amount (int, optional): Threshold percentage for detecting breakpoints. Default is ``95``.
-        device (Literal["cpu", "cuda"], optional): Device to use for processing. Default is ``cpu``.
+        device (str, optional): Device to use for processing. Currently supports "cpu" and "cuda". Default is ``cpu``.
 
     **Example**
 

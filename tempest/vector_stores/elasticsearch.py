@@ -1,7 +1,7 @@
 import uuid
 import logging
 
-from typing import List
+from typing import List, Literal
 from tempest.core.document import Document, DocumentWithScore
 from tempest.core.embeddings import BaseEmbedding
 
@@ -18,7 +18,7 @@ class ElasticsearchVectorStore:
         embed_model (BaseEmbedding):
         batch_size (int, optional): Batch size for bulk operations. Defaults to ``200``.
         ssl (bool, optional): Whether to use SSL. Defaults to ``False``.
-        distance_strategy (str, optional): Distance strategy for similarity search. Defaults to ``cosine``.
+        distance_strategy (str, optional): Distance strategy for similarity search. Currently supports "cosine", "dot_product" and "l2_norm". Defaults to ``cosine``.
         text_field (str, optional): Name of the field containing text. Defaults to ``text``.
         vector_field (str, optional): Name of the field containing vector embeddings. Defaults to ``embedding``.
     """
@@ -32,7 +32,7 @@ class ElasticsearchVectorStore:
                  embed_model: BaseEmbedding,
                  batch_size: int = 200,
                  ssl: bool = False,
-                 distance_strategy: str = "cosine",
+                 distance_strategy: Literal["cosine", "dot_product", "l2_norm"] = "cosine",
                  text_field: str = "text",
                  vector_field: str = "embedding",
                  ) -> None:
@@ -80,9 +80,6 @@ class ElasticsearchVectorStore:
                     "Cannot create index without specifying dims_length. "
                     "When the index doesn't already exist."
                 )
-
-            if self.distance_strategy not in ["cosine", "dot_product", "l2_norm"]:
-                raise ValueError(f"Similarity {self.distance_strategy} not supported.")
 
             index_mappings = {
                 "properties": {
