@@ -18,8 +18,8 @@ class ChromaVectorStore:
 
     .. code-block:: python
 
-        from tempestai.embeddings import HuggingFaceEmbedding
-        from tempestai.vector_stores import ChromaVectorStore
+        from tempest.embeddings import HuggingFaceEmbedding
+        from tempest.vector_stores import ChromaVectorStore
 
         embedding = HuggingFaceEmbedding()
         db = ChromaVectorStore(embed_model=embedding)

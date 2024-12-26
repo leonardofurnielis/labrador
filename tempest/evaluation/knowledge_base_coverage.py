@@ -19,8 +19,8 @@ class KnowledgeBaseCoverage(BaseModel):
 
     .. code-block:: python
 
-        from tempestai.embeddings import HuggingFaceEmbedding
-        from tempestai.evaluation import KnowledgeBaseCoverage
+        from tempest.embeddings import HuggingFaceEmbedding
+        from tempest.evaluation import KnowledgeBaseCoverage
 
         embedding = HuggingFaceEmbedding()
         coverage = KnowledgeBaseCoverage(embed_model=embedding)

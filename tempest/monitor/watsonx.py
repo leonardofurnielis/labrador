@@ -31,7 +31,7 @@ class WatsonxExternalPromptMonitoring:
 
     .. code-block:: python
 
-        from tempestai.monitor import WatsonxExternalPromptMonitoring
+        from tempest.monitor import WatsonxExternalPromptMonitoring
 
         detached_watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="your_api_key", 
                                                                space_id="your_space_id")
@@ -287,7 +287,7 @@ class WatsonxExternalPromptMonitoring:
 
             detached_watsonx_monitor.payload_logging(payload_records=[{"context1": "value_context1",
                                                     "context2": "value_context1",
-                                                    "input_query": "what's tempestai?",
+                                                    "input_query": "what's tempest?",
                                                     "input_token_count": 25,
                                                     "generated_token_count": 150}], 
                                             subscription_id="5d62977c-a53d-4b6d-bda1-7b79b3b9d1a0")
@@ -336,7 +336,7 @@ class WatsonxPromptMonitoring:
 
     .. code-block:: python
 
-        from tempestai.monitor import WatsonxPromptMonitoring
+        from tempest.monitor import WatsonxPromptMonitoring
 
         watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="your_api_key", 
                                                         space_id="your_space_id")
@@ -565,7 +565,7 @@ class WatsonxPromptMonitoring:
 
             watsonx_monitor.payload_logging(payload_records=[{"context1": "value_context1",
                                                     "context2": "value_context1",
-                                                    "input_query": "what's tempestai?",
+                                                    "input_query": "what's tempest?",
                                                     "input_token_count": 25,
                                                     "generated_token_count": 150}], 
                                             subscription_id="5d62977c-a53d-4b6d-bda1-7b79b3b9d1a0")

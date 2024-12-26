@@ -25,7 +25,7 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
 
     .. code-block:: python
 
-        from tempestai.embeddings import WatsonxEmbedding
+        from tempest.embeddings import WatsonxEmbedding
 
         watsonx_embedding = WatsonxEmbedding(api_key="your_api_key",
                                          url="your_instance_url",

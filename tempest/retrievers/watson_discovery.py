@@ -21,7 +21,7 @@ class WatsonDiscoveryRetriever:
 
     .. code-block:: python
 
-        from tempestai.retrievers import WatsonDiscoveryRetriever
+        from tempest.retrievers import WatsonDiscoveryRetriever
 
         retriever = WatsonDiscoveryRetriever(url="your_url",
                                                 api_key="your_api_key",
@@ -67,7 +67,7 @@ class WatsonDiscoveryRetriever:
 
         .. code-block:: python
 
-            docs = retriever.query("What's tempestai?")
+            docs = retriever.query("What's tempest?")
         """
         from ibm_watson.discovery_v2 import QueryLargePassages
         return_fields = ["extracted_metadata.filename", "extracted_metadata.file_type"]

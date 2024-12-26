@@ -22,7 +22,7 @@ class S3Loader(BaseLoader):
 
     .. code-block:: python
 
-        from tempestai.document_loaders import S3Loader
+        from tempest.document_loaders import S3Loader
 
         loader = S3Loader(bucket="your_bucket",
                      ibm_api_key_id="your_api_key",

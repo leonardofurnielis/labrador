@@ -25,7 +25,7 @@ class WatsonDiscoveryLoader(BaseLoader):
 
     .. code-block:: python
 
-        from tempestai.document_loaders import WatsonDiscoveryLoader
+        from tempest.document_loaders import WatsonDiscoveryLoader
 
         doc_loader = WatsonDiscoveryLoader(url="your_url",
                                           api_key="your_api_key",

@@ -22,8 +22,8 @@ class SemanticSplitter(BaseModel):
 
     .. code-block:: python
 
-        from tempestai.embeddings import HuggingFaceEmbedding
-        from tempestai.text_splitters import SemanticSplitter
+        from tempest.embeddings import HuggingFaceEmbedding
+        from tempest.text_splitters import SemanticSplitter
 
         embedding = HuggingFaceEmbedding()
         splitter = SemanticSplitter(embed_model=embedding)

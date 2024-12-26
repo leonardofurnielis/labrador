@@ -17,7 +17,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
     .. code-block:: python
 
-        from tempestai.embeddings import HuggingFaceEmbedding
+        from tempest.embeddings import HuggingFaceEmbedding
 
         embedding = HuggingFaceEmbedding()
     """

@@ -26,7 +26,7 @@ class SentenceSplitter:
 
     .. code-block:: python
 
-        from tempestai.text_splitters import SentenceSplitter
+        from tempest.text_splitters import SentenceSplitter
 
         splitter = SentenceSplitter()
     """
@@ -66,7 +66,7 @@ class SentenceSplitter:
 
         .. code-block:: python
 
-            chunks = splitter.from_text("tempestai is a data framework to build context-aware AI applications")
+            chunks = splitter.from_text("tempest is a data framework to build context-aware AI applications")
         """
         splits = self._split(text)
 

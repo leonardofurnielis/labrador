@@ -23,7 +23,7 @@ class TokenTextSplitter:
 
     .. code-block:: python
 
-        from tempestai.text_splitters import TokenTextSplitter
+        from tempest.text_splitters import TokenTextSplitter
 
         splitter = TokenTextSplitter()
     """
