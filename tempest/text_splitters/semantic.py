@@ -1,10 +1,10 @@
-from typing import Literal, List
+from typing import List, Literal
+
+from langchain_experimental.text_splitter import SemanticChunker
+from pydantic.v1 import BaseModel
 
 from tempest.core.document import Document
 from tempest.core.embeddings import BaseEmbedding
-from pydantic.v1 import BaseModel
-
-from langchain_experimental.text_splitter import SemanticChunker
 
 
 class SemanticSplitter(BaseModel):

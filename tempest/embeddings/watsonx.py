@@ -1,8 +1,9 @@
-from typing import List, Any, Optional
-from tempest.core.document import Document
-from tempest.core.embeddings import BaseEmbedding, Embedding
+from typing import Any, List, Optional
 
 from pydantic.v1 import BaseModel, PrivateAttr
+
+from tempest.core.document import Document
+from tempest.core.embeddings import BaseEmbedding, Embedding
 
 
 class WatsonxEmbedding(BaseModel, BaseEmbedding):

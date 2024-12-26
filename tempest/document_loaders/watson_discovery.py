@@ -1,5 +1,4 @@
 import logging
-
 from datetime import datetime
 from typing import List, Optional
 
@@ -42,8 +41,8 @@ class WatsonDiscoveryLoader(BaseLoader):
                  pre_additional_data_field: str = None
                  ) -> None:
         try:
-            from ibm_watson import DiscoveryV2
             from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+            from ibm_watson import DiscoveryV2
 
         except ImportError:
             raise ImportError("ibm-watson package not found, please install it with `pip install ibm-watson`")

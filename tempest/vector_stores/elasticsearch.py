@@ -1,7 +1,7 @@
-import uuid
 import logging
-
+import uuid
 from typing import List, Literal
+
 from tempest.core.document import Document, DocumentWithScore
 from tempest.core.embeddings import BaseEmbedding
 

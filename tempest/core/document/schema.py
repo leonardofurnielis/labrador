@@ -1,8 +1,8 @@
 import uuid
-
-from dataclasses import dataclass
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Dict, Optional
+
 from pydantic.v1 import BaseModel, Field, validator
 
 if TYPE_CHECKING:

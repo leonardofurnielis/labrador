@@ -1,13 +1,12 @@
 from typing import List
 
 from tempest.core.document import Document
-
 from tempest.core.text_splitters.utils import (
-    split_by_sep,
+    merge_splits,
     split_by_char,
     split_by_fns,
-    merge_splits,
-    tokenizer
+    split_by_sep,
+    tokenizer,
 )
 
 

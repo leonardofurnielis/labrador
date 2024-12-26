@@ -1,7 +1,6 @@
+import json
 import logging
 import uuid
-import json
-
 from typing import List, Literal
 
 
@@ -45,10 +44,10 @@ class WatsonxExternalPromptMonitoring:
                  ) -> None:
         
         try:
-            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # noqa: F401
-            from ibm_aigov_facts_client import AIGovFactsClient # noqa: F401
-            from ibm_watson_openscale import APIClient as WosAPIClient # noqa: F401
-            from ibm_watsonx_ai import APIClient # noqa: F401
+            from ibm_aigov_facts_client import AIGovFactsClient  # noqa: F401
+            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator  # noqa: F401
+            from ibm_watson_openscale import APIClient as WosAPIClient  # noqa: F401
+            from ibm_watsonx_ai import APIClient  # noqa: F401
 
         except ImportError:
             raise ImportError("""ibm-aigov-facts-client, ibm-watson-openscale or ibm-watsonx-ai not found, 
@@ -71,7 +70,11 @@ class WatsonxExternalPromptMonitoring:
     def _create_detached_prompt(self, detached_details: dict, 
                                 prompt_template_details: dict, 
                                 detached_asset_details: dict) -> str:
-        from ibm_aigov_facts_client import DetachedPromptTemplate, PromptTemplate, AIGovFactsClient
+        from ibm_aigov_facts_client import (
+            AIGovFactsClient,
+            DetachedPromptTemplate,
+            PromptTemplate,
+        )
             
         try:
              aigov_client = AIGovFactsClient(
@@ -294,7 +297,10 @@ class WatsonxExternalPromptMonitoring:
         """
         from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
         from ibm_watson_openscale import APIClient as WosAPIClient
-        from ibm_watson_openscale.supporting_classes.enums import DataSetTypes, TargetTypes
+        from ibm_watson_openscale.supporting_classes.enums import (
+            DataSetTypes,
+            TargetTypes,
+        )
         if not self._wos_client:
             try:
                 authenticator = IAMAuthenticator(apikey=self._api_key)
@@ -349,9 +355,9 @@ class WatsonxPromptMonitoring:
                  wml_url: str = "https://us-south.ml.cloud.ibm.com"
                  ) -> None:
         try:
-            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # noqa: F401
-            from ibm_watson_openscale import APIClient as WosAPIClient # noqa: F401
-            from ibm_watsonx_ai import APIClient # noqa: F401
+            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator  # noqa: F401
+            from ibm_watson_openscale import APIClient as WosAPIClient  # noqa: F401
+            from ibm_watsonx_ai import APIClient  # noqa: F401
 
         except ImportError:
             raise ImportError("""ibm-watson-openscale or ibm-watsonx-ai not found, 
@@ -372,7 +378,7 @@ class WatsonxPromptMonitoring:
 
                     
     def _create_prompt_template(self, prompt_template_details: dict, asset_details: dict) -> str:
-        from ibm_aigov_facts_client import PromptTemplate, AIGovFactsClient
+        from ibm_aigov_facts_client import AIGovFactsClient, PromptTemplate
             
         try:
              aigov_client = AIGovFactsClient(
@@ -572,7 +578,10 @@ class WatsonxPromptMonitoring:
         """
         from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
         from ibm_watson_openscale import APIClient as WosAPIClient
-        from ibm_watson_openscale.supporting_classes.enums import DataSetTypes, TargetTypes
+        from ibm_watson_openscale.supporting_classes.enums import (
+            DataSetTypes,
+            TargetTypes,
+        )
         if not self._wos_client:
             try:
                 authenticator = IAMAuthenticator(apikey=self._api_key)

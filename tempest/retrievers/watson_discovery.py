@@ -1,5 +1,4 @@
 import logging
-
 from typing import List
 
 from tempest.core.document import Document, DocumentWithScore
@@ -36,8 +35,8 @@ class WatsonDiscoveryRetriever:
                  disable_passages: bool = False
                  ) -> None:
         try:
-            from ibm_watson import DiscoveryV2
             from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+            from ibm_watson import DiscoveryV2
 
         except ImportError:
             raise ImportError("ibm-watson package not found, please install it with `pip install ibm-watson`")

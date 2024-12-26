@@ -1,9 +1,9 @@
+from typing import Dict, List, Literal
+
 import numpy as np
-from typing import Literal, List, Dict
+from pydantic.v1 import BaseModel
 
 from tempest.core.embeddings import BaseEmbedding
-
-from pydantic.v1 import BaseModel
 
 
 class KnowledgeBaseCoverage(BaseModel):

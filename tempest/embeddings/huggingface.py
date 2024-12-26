@@ -1,9 +1,9 @@
 from typing import Any, List, Literal
 
+from pydantic.v1 import BaseModel, PrivateAttr
+
 from tempest.core.document import Document
 from tempest.core.embeddings import BaseEmbedding, Embedding
-
-from pydantic.v1 import BaseModel, PrivateAttr
 
 
 class HuggingFaceEmbedding(BaseModel, BaseEmbedding):

@@ -1,18 +1,17 @@
 import os
-
 from pathlib import Path
-from typing import List, Optional, Type, Callable
+from typing import Callable, List, Optional, Type
+
+from langchain_community.document_loaders import (
+    DirectoryLoader as LangChainDirectoryLoader,
+)
 
 from tempest.core.document import Document
 from tempest.core.document_loaders import BaseLoader
 
-from langchain_community.document_loaders import DirectoryLoader as LangChainDirectoryLoader
-
 
 def _loading_default_file_loaders():
-    from tempest.document_loaders import DocxLoader
-    from tempest.document_loaders import HTMLLoader
-    from tempest.document_loaders import PDFLoader
+    from tempest.document_loaders import DocxLoader, HTMLLoader, PDFLoader
 
     default_file_loader_cls: dict[str, Type[BaseLoader]] = {
         ".docx": DocxLoader,

@@ -1,5 +1,5 @@
-from typing import List, Optional
 from abc import ABC, abstractmethod
+from typing import List, Optional
 
 from tempest.core.document import Document
 

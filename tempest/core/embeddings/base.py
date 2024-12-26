@@ -1,7 +1,7 @@
-import numpy as np
-
-from typing import List, Literal
 from abc import ABC, abstractmethod
+from typing import List, Literal
+
+import numpy as np
 
 Embedding = List[float]
 

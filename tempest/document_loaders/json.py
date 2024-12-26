@@ -1,12 +1,11 @@
 import os
-
 from pathlib import Path
 from typing import List, Optional
 
+from langchain_community.document_loaders import JSONLoader as LangChainJSONLoader
+
 from tempest.core.document import Document
 from tempest.core.document_loaders import BaseLoader
-
-from langchain_community.document_loaders import JSONLoader as LangChainJSONLoader
 
 
 class JSONLoader(BaseLoader):
