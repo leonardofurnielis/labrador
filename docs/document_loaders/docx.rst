@@ -8,5 +8,5 @@ In order to use ``DocxLoader`` you need to install the ``docx2txt`` package.
 
     pip install docx2txt
 
-.. automodule:: tempestai.document_loaders.docx
+.. automodule:: tempest.document_loaders.docx
     :members:

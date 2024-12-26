@@ -3,5 +3,5 @@ Knowledge Base Coverage
 ============================================
 
 
-.. automodule:: tempestai.evaluation.knowledge_base_coverage
+.. automodule:: tempest.evaluation.knowledge_base_coverage
     :members:

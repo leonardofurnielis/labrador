@@ -8,5 +8,5 @@ IBM watsonx.governance
 
     pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai
 
-.. automodule:: tempestai.monitor.watsonx
+.. automodule:: tempest.monitor.watsonx
     :members:

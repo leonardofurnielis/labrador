@@ -3,5 +3,5 @@ Hugging Face
 ============================================
 
 
-.. automodule:: tempestai.embeddings.huggingface
+.. automodule:: tempest.embeddings.huggingface
     :members:

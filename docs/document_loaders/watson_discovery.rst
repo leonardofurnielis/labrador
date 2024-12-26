@@ -8,6 +8,6 @@ In order to use ``WatsonDiscoveryLoader`` you need to install the ``ibm-watson``
 
     pip install ibm-watson
 
-.. automodule:: tempestai.document_loaders.watson_discovery
+.. automodule:: tempest.document_loaders.watson_discovery
     :members:
 
