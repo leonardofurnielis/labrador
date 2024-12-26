@@ -19,7 +19,7 @@ classifiers = [
 ]
 documentation = "https://leonardofurnielis.github.io/tempestai"
 repository = "https://github.com/leonardofurnielis/tempestai"
-packages = [{include = "tempestai"}]
+packages = [{include = "tempest"}]
 keywords = ["retrieval", "RAG", "index", "data", "LLM", "AI", "NLP"]
 
 [tool.poetry.dependencies]
