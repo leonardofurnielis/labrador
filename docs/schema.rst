@@ -4,5 +4,5 @@ Schema
 
 Base schema for data structures.
 
-.. automodule:: tempestai.core.document.schema
+.. automodule:: tempest.core.document.schema
     :members:

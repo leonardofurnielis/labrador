@@ -8,5 +8,5 @@ In order to use ``PDFLoader`` you need to install the ``pypdf`` package.
 
     pip install pypdf
 
-.. automodule:: tempestai.document_loaders.pdf
+.. automodule:: tempest.document_loaders.pdf
     :members:

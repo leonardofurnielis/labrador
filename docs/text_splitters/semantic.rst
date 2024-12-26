@@ -3,5 +3,5 @@ Semantic splitter
 ============================================
 
 
-.. automodule:: tempestai.text_splitters.semantic
+.. automodule:: tempest.text_splitters.semantic
     :members:

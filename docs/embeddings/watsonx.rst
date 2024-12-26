@@ -8,6 +8,6 @@ In order to use ``WatsonxEmbedding`` you need to install the ``ibm-watsonx-ai`` 
 
     pip install ibm-watsonx-ai
 
-.. automodule:: tempestai.embeddings.watsonx
+.. automodule:: tempest.embeddings.watsonx
     :members:
 
