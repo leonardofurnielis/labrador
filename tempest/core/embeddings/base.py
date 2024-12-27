@@ -1,7 +1,9 @@
+import numpy as np
+
 from abc import ABC, abstractmethod
 from typing import List, Literal
 
-import numpy as np
+from tempest.core.utils.pairwise import cosine_similarity
 
 Embedding = List[float]
 
@@ -39,6 +41,4 @@ class BaseEmbedding(ABC):
             return np.dot(embedding1, embedding2)
 
         else:
-            product = np.dot(embedding1, embedding2)
-            norm = np.linalg.norm(embedding1) * np.linalg.norm(embedding2)
-            return product / norm
+            return cosine_similarity(embedding1, embedding2)

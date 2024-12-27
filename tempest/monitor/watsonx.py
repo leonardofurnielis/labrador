@@ -324,7 +324,6 @@ class WatsonxExternalPromptMonitoring:
                                                  request_body=payload_data,
                                                  background_mode=False)
                    
- 
      
 class WatsonxPromptMonitoring:
     """**(Beta)** – Provides functionality to interact with IBM watsonx.governance for monitoring IBM watsonx.ai LLM's.
