@@ -1,7 +1,7 @@
-import numpy as np
-
 from abc import ABC, abstractmethod
 from typing import List, Literal
+
+import numpy as np
 
 from tempest.core.utils.pairwise import cosine_similarity
 
