@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
+from pydantic.v1 import BaseModel
+
 from tempest.core.document import Document
 
 
-class BaseLoader(ABC):
+class BaseLoader(ABC, BaseModel):
     """An interface for document loader."""
 
     @classmethod
