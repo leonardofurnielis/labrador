@@ -11,7 +11,7 @@ import sys
 project = 'tempestai'
 copyright = '2024, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-version = '0.4.8'
+version = '0.5.0'
 release = version
 
 # -- General configuration ---------------------------------------------------
