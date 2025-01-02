@@ -1,7 +1,9 @@
-import logging
+from logging import getLogger
 from typing import List
 
 from tempest.core.document import Document, DocumentWithScore
+
+logger = getLogger(__name__)
 
 
 class WatsonDiscoveryRetriever:
@@ -51,7 +53,7 @@ class WatsonDiscoveryRetriever:
 
             self._client.set_service_url(url)
         except Exception as e:
-            logging.error(f"Error connecting to IBM Watson Discovery: {e}")
+            logger.error(f"Error connecting to IBM Watson Discovery: {e}")
             raise
 
     def query(self, query: str, filter: str = None, top_k: int = 4) -> List[DocumentWithScore]:
@@ -106,7 +108,7 @@ class WatsonDiscoveryRetriever:
         elif discovery_results["matching_results"] > 0:
             # If `disable_passages`, use document text (not recommended,
             # make sure that all documents are short to not exceed the model context window)
-            logging.warning("Not recommended to disable passages. Make sure that all documents are short to not "
+            logger.warning("Not recommended to disable passages. Make sure that all documents are short to not "
                             "exceed the model context window.")
             for document in discovery_results["results"]:
                 docs_and_scores.append(DocumentWithScore(

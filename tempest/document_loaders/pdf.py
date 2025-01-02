@@ -6,8 +6,7 @@ from typing import List, Optional
 from tempest.core.document import Document
 from tempest.core.document_loaders import BaseLoader
 
-logger = logging.getLogger("pypdf")
-logger.setLevel(logging.ERROR)
+logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 class PDFLoader(BaseLoader):
     """PDF loader using PyPDF."""

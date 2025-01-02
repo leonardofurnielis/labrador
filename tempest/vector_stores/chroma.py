@@ -1,9 +1,11 @@
-import logging
 import uuid
+from logging import getLogger
 from typing import List, Literal
 
 from tempest.core.document import Document, DocumentWithScore
 from tempest.core.embeddings import BaseEmbedding
+
+logger = getLogger(__name__)
 
 
 class ChromaVectorStore:
@@ -41,7 +43,7 @@ class ChromaVectorStore:
 
         if collection_name is None:
             collection_name = "auto-generated-" + str(uuid.uuid4())[:8]
-            logging.info(f"collection_name: {collection_name}")
+            logger.info(f"collection_name: {collection_name}")
 
         self._collection = self._client.get_or_create_collection(
             name=collection_name,

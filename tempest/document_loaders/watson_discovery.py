@@ -1,9 +1,11 @@
-import logging
 from datetime import datetime
+from logging import getLogger
 from typing import List, Optional
 
 from tempest.core.document import Document
 from tempest.core.document_loaders import BaseLoader
+
+logger = getLogger(__name__)
 
 
 class WatsonDiscoveryLoader(BaseLoader):
@@ -59,7 +61,7 @@ class WatsonDiscoveryLoader(BaseLoader):
 
             self._client.set_service_url(url)
         except Exception as e:
-            logging.error(f"Error connecting to IBM Watson Discovery: {e}")
+            logger.error(f"Error connecting to IBM Watson Discovery: {e}")
             raise
 
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:

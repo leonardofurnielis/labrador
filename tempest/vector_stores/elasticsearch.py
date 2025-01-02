@@ -1,9 +1,11 @@
-import logging
 import uuid
+from logging import getLogger
 from typing import List, Literal
 
 from tempest.core.document import Document, DocumentWithScore
 from tempest.core.embeddings import BaseEmbedding
+
+logger = getLogger(__name__)
 
 
 class ElasticsearchVectorStore:
@@ -66,13 +68,13 @@ class ElasticsearchVectorStore:
         try:
             self._client.info()
         except Exception as e:
-            logging.error(f"Error connecting to Elasticsearch: {e}")
+            logger.error(f"Error connecting to Elasticsearch: {e}")
             raise
 
     def _create_index_if_not_exists(self) -> None:
         """Creates the Elasticsearch index if it doesn't already exist."""
         if self._client.indices.exists(index=self.index_name):
-            logging.info(f"Index {self.index_name} already exists. Skipping creation.")
+            logger.info(f"Index {self.index_name} already exists. Skipping creation.")
 
         else:
             if self.dims_length is None:
