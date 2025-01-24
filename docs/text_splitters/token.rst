@@ -3,5 +3,5 @@ Token text splitter
 ============================================
 
 
-.. automodule:: tempest.text_splitters.token
+.. automodule:: langtxt.text_splitters.token
     :members:

@@ -1,8 +1,8 @@
 ============================================
-Welcome to Tempest documentation!
+Welcome to Langtxt documentation!
 ============================================
 
-Tempest is a data library to build context-aware AI applications.
+Langtxt is a data library to build context-aware AI applications.
 
 .. toctree::
     :hidden:
@@ -28,4 +28,3 @@ Features
 ✅ **Models**: Enable natural language interaction with your data.
 
 ✅ **Monitor and Evaluation**: Enable evaluation and monitoring of LLMs models.
-

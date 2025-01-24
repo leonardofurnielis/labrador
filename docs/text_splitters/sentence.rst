@@ -3,5 +3,5 @@ Sentence splitter
 ============================================
 
 
-.. automodule:: tempest.text_splitters.sentence
+.. automodule:: langtxt.text_splitters.sentence
     :members:

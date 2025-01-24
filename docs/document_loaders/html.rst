@@ -8,5 +8,5 @@ In order to use ``HTMLLoader`` you need to install the ``beautifulsoup4`` packag
 
     pip install beautifulsoup4
 
-.. automodule:: tempest.document_loaders.html
+.. automodule:: langtxt.document_loaders.html
     :members:

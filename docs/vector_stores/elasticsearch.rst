@@ -8,5 +8,5 @@ In order to use ``ElasticsearchVectorStore`` you need to install the ``elasticse
 
     pip install elasticsearch
 
-.. automodule:: tempest.vector_stores.elasticsearch
+.. automodule:: langtxt.vector_stores.elasticsearch
     :members:

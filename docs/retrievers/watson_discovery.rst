@@ -8,5 +8,5 @@ In order to use ``WatsonDiscoveryRetriever`` you need to install the ``ibm-watso
 
     pip install ibm-watson
 
-.. automodule:: tempest.retrievers.watson_discovery
+.. automodule:: langtxt.retrievers.watson_discovery
     :members:
