@@ -19,7 +19,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         from labrador.embeddings import HuggingFaceEmbedding
 
-        embedding_engine = HuggingFaceEmbedding()
+        embedding = HuggingFaceEmbedding()
     """
 
     model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
@@ -43,7 +43,7 @@ class HuggingFaceEmbedding(BaseModel, BaseEmbedding):
 
         .. code-block:: python
 
-            embedded_query = embedding_engine.get_query_embedding("Labrador is a data framework to build context-aware AI applications")
+            embedded_query = embedding.get_query_embedding("Labrador is a data framework to build context-aware AI applications")
         """
         return self.get_texts_embedding([query])[0]
 

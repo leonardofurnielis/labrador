@@ -22,7 +22,7 @@ class KnowledgeBaseCoverage(BaseModel):
         from labrador.embeddings import HuggingFaceEmbedding
         from labrador.evaluation import KnowledgeBaseCoverage
 
-        embedding_engine = HuggingFaceEmbedding()
+        embedding = HuggingFaceEmbedding()
         eval_coverage = KnowledgeBaseCoverage(embed_model=embedding)
     """
 
