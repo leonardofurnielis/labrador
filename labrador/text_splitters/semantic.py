@@ -27,8 +27,8 @@ class SemanticSplitter(BaseModel):
         from labrador.embeddings import HuggingFaceEmbedding
         from labrador.text_splitters import SemanticSplitter
 
-        embedding = HuggingFaceEmbedding()
-        splitter = SemanticSplitter(embed_model=embedding)
+        embedding_engine = HuggingFaceEmbedding()
+        text_splitter = SemanticSplitter(embed_model=embedding)
     """
 
     embed_model: BaseEmbedding

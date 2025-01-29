@@ -24,7 +24,7 @@ class WatsonDiscoveryRetriever:
 
         from labrador.retrievers import WatsonDiscoveryRetriever
 
-        retriever = WatsonDiscoveryRetriever(url="your_url",
+        doc_retriever = WatsonDiscoveryRetriever(url="your_url",
                                                 api_key="your_api_key",
                                                 project_id="your_project_id")
     """
@@ -68,7 +68,7 @@ class WatsonDiscoveryRetriever:
 
         .. code-block:: python
 
-            docs = retriever.query("What's Labrador?")
+            docs = doc_retriever.query("What's Labrador?")
         """
         from ibm_watson.discovery_v2 import QueryLargePassages
         return_fields = ["extracted_metadata.filename", "extracted_metadata.file_type"]

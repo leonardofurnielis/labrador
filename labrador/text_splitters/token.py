@@ -24,7 +24,7 @@ class TokenTextSplitter:
 
         from labrador.text_splitters import TokenTextSplitter
 
-        splitter = TokenTextSplitter()
+        text_splitter = TokenTextSplitter()
     """
 
     def __init__(self,
@@ -59,7 +59,7 @@ class TokenTextSplitter:
 
         .. code-block:: python
 
-            chunks = splitter.from_text("Labrador is a data library to build context-aware AI applications")
+            chunks = text_splitter.from_text("Labrador is a data library to build context-aware AI applications")
         """
         splits = self._split(text)
 

@@ -23,8 +23,8 @@ class ChromaVectorStore:
         from labrador.embeddings import HuggingFaceEmbedding
         from labrador.vector_stores import ChromaVectorStore
 
-        embedding = HuggingFaceEmbedding()
-        db = ChromaVectorStore(embed_model=embedding)
+        embedding_engine = HuggingFaceEmbedding()
+        vector_db = ChromaVectorStore(embed_model=embedding)
     """
 
     def __init__(self, embed_model: BaseEmbedding,

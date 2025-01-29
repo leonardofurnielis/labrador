@@ -27,7 +27,7 @@ class SentenceSplitter:
 
         from labrador.text_splitters import SentenceSplitter
 
-        splitter = SentenceSplitter()
+        text_splitter = SentenceSplitter()
     """
 
     def __init__(self,
@@ -65,7 +65,7 @@ class SentenceSplitter:
 
         .. code-block:: python
 
-            chunks = splitter.from_text("Labrador is a data framework to build context-aware AI applications")
+            chunks = text_splitter.from_text("Labrador is a data framework to build context-aware AI applications")
         """
         splits = self._split(text)
 

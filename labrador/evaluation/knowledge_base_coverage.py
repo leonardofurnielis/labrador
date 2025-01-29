@@ -22,8 +22,8 @@ class KnowledgeBaseCoverage(BaseModel):
         from labrador.embeddings import HuggingFaceEmbedding
         from labrador.evaluation import KnowledgeBaseCoverage
 
-        embedding = HuggingFaceEmbedding()
-        coverage = KnowledgeBaseCoverage(embed_model=embedding)
+        embedding_engine = HuggingFaceEmbedding()
+        eval_coverage = KnowledgeBaseCoverage(embed_model=embedding)
     """
 
     embed_model: BaseEmbedding
@@ -43,7 +43,7 @@ class KnowledgeBaseCoverage(BaseModel):
 
         .. code-block:: python
 
-            context_coverage = coverage.compute_metric(context=[], candidate="<candidate>")
+            context_coverage = eval_coverage.compute_metric(context=[], candidate="<candidate>")
         """
         if not contexts or not candidate:
             raise ValueError("Must provide these parameters [`contexts`, `candidate`]")
