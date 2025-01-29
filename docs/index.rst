@@ -1,8 +1,8 @@
 ============================================
-Welcome to Langtxt documentation!
+Welcome to Labrador documentation!
 ============================================
 
-Langtxt is a data library to load any data with a single line of code, seamlessly connecting it to AI applications.
+Labrador is a data library to load any data with a single line of code, seamlessly connecting it to AI applications.
 
 .. toctree::
     :hidden:

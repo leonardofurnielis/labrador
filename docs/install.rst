@@ -1,10 +1,10 @@
 Installation
 ============================================
 
-The Langtxt Python library is publicly available on PyPI: https://pypi.org/project/langtxt/
+The Labrador Python library is publicly available on PyPI: https://pypi.org/project/labrador-ai/
 
 The package can be installed with pip:
 
 .. code-block:: bash
 
-    pip install langtxt
+    pip install labrador-ai

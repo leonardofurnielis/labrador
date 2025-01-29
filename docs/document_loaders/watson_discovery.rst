@@ -8,6 +8,6 @@ In order to use ``WatsonDiscoveryLoader`` you need to install the ``ibm-watson``
 
     pip install ibm-watson
 
-.. automodule:: langtxt.document_loaders.watson_discovery
+.. automodule:: labrador.document_loaders.watson_discovery
     :members:
 

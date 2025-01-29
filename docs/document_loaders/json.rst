@@ -8,5 +8,5 @@ In order to use ``JSONLoader`` you need to install the ``jq`` package.
 
     pip install jq
 
-.. automodule:: langtxt.document_loaders.json
+.. automodule:: labrador.document_loaders.json
     :members:

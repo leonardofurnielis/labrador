@@ -4,5 +4,5 @@ Schema
 
 Base schema for data structures.
 
-.. automodule:: langtxt.core.document.schema
+.. automodule:: labrador.core.document.schema
     :members:

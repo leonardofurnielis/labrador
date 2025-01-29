@@ -8,5 +8,5 @@ In order to use ``WatsonxExternalPromptMonitoring`` you need to install the ``ib
 
     pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai
 
-.. automodule:: langtxt.monitor.watsonx
+.. automodule:: labrador.monitor.watsonx
     :members:

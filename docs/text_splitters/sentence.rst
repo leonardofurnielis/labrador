@@ -3,5 +3,5 @@ Sentence splitter
 ============================================
 
 
-.. automodule:: langtxt.text_splitters.sentence
+.. automodule:: labrador.text_splitters.sentence
     :members:

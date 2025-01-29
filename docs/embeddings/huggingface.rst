@@ -3,5 +3,5 @@ Hugging Face
 ============================================
 
 
-.. automodule:: langtxt.embeddings.huggingface
+.. automodule:: labrador.embeddings.huggingface
     :members:

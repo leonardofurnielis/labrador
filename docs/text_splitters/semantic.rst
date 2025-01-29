@@ -3,5 +3,5 @@ Semantic splitter
 ============================================
 
 
-.. automodule:: langtxt.text_splitters.semantic
+.. automodule:: labrador.text_splitters.semantic
     :members:

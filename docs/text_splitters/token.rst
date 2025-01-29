@@ -3,5 +3,5 @@ Token text splitter
 ============================================
 
 
-.. automodule:: langtxt.text_splitters.token
+.. automodule:: labrador.text_splitters.token
     :members:
