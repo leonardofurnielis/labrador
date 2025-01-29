@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap');
 
 /* Change the font for the entire body */
 body {
@@ -17,6 +17,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .highlight {
-    font-family: "IBM Plex Sans", serif;
+    font-family: "IBM Plex Mono", serif;
     background: #eeffcc
+}
+
+.highlight > pre {
+    font-family: "IBM Plex Mono", serif;
+}
+
+.highlight > pre > span {
+    font-family: "IBM Plex Mono", serif;
 }
