@@ -7,15 +7,41 @@ logging.getLogger("ibm_watsonx_ai.client").setLevel(logging.ERROR)
 logging.getLogger("ibm_watsonx_ai.wml_resource").setLevel(logging.ERROR)
 
 
-def _filter_dict_by_keys(original_dict: dict, keys: List, required_keys: List = []):
+def _filter_dict(original_dict: dict, optional_keys: List, required_keys: List = []):
+    """Filters a dictionary to keep only the specified keys and check required.
+    
+    Args:
+        original_dict (dict): The original dictionary
+        optional_keys (list): A list of keys to keep
+        required_keys (list, optional): A list of keys that must exist in the dictionary
+    """
     # Ensure all required keys are in the source dictionary
     missing_keys = [key for key in required_keys if key not in original_dict]
     if missing_keys:
         raise KeyError(f"Missing required parameter: {missing_keys}")
     
+    all_keys_to_keep = set(required_keys + optional_keys)
+    
     # Create a new dictionary with only the key-value pairs where the key is in 'keys' and value is not None
-    return {key: original_dict[key] for key in keys if key in original_dict and original_dict[key] is not None}     
+    return {key: original_dict[key] for key in all_keys_to_keep if key in original_dict and original_dict[key] is not None}     
 
+def _convert_payload_format(records: List[dict], feature_fields: List[str]) -> List[dict]:
+        
+        payload_data = []
+        response_fields = ["generated_text", "input_token_count", "generated_token_count"]
+            
+        for record in records: 
+            request = { "parameters": { "template_variables": {}}}
+            results = {}
+                
+            request["parameters"]["template_variables"] = {field: str(record.get(field, "")) for field in feature_fields}
+            
+            results = {field: record.get(field) for field in response_fields if record.get(field)}
+                
+            pl_record = {"request": request, "response": {"results": [results]}}
+            payload_data.append(pl_record)
+           
+        return payload_data
 
 class WatsonxExternalPromptMonitoring:
     """Provides functionality to interact with IBM watsonx.governance for monitoring external LLM's.
@@ -152,25 +178,6 @@ class WatsonxExternalPromptMonitoring:
             
         return wml_client.deployments.get_uid(created_deployment)
         
-    @staticmethod
-    def _parse_payload_data(records: List[dict], feature_fields: List[str]) -> List[dict]:
-        
-        payload_data = []
-        response_fields = ["generated_text", "input_token_count", "generated_token_count"]
-            
-        for record in records: 
-            request = { "parameters": { "template_variables": {}}}
-            results = {}
-                
-            request["parameters"]["template_variables"] = {field: str(record.get(field, "")) for field in feature_fields}
-            
-            results = {field: record.get(field) for field in response_fields if record.get(field)}
-                
-            pl_record = {"request": request, "response": {"results": [results]}}
-            payload_data.append(pl_record)
-           
-        return payload_data
-        
             
     def create_prompt_monitor(self,
                               name: str,
@@ -273,19 +280,17 @@ class WatsonxExternalPromptMonitoring:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
                 raise
             
-        detached_details = _filter_dict_by_keys(prompt_metadata, 
-                                                     ["model_id", "model_provider", "model_name", 
-                                                      "model_url", "prompt_url", "prompt_additional_info"],
-                                                     ["model_id", "model_provider"])
+        detached_details = _filter_dict(prompt_metadata, 
+                                        ["model_name", "model_url", "prompt_url", "prompt_additional_info"],
+                                        ["model_id", "model_provider"])
         detached_details["prompt_id"] = "detached_prompt_" + str(uuid.uuid4())
         
-        prompt_details = _filter_dict_by_keys(prompt_metadata, 
-                                                   ["model_version", "prompt_variables", "prompt_instruction",
-                                                    "input_prefix", "output_prefix", "input", "model_parameters"])
+        prompt_details = _filter_dict(prompt_metadata, 
+                                      ["model_version", "prompt_variables", "prompt_instruction",
+                                       "input_prefix", "output_prefix", "input", "model_parameters"])
         
-        detached_asset_details = _filter_dict_by_keys(prompt_metadata, 
-                                                    ["name", "model_id", "task_id", "description"],
-                                                    ["name", "model_id", "task_id"])
+        detached_asset_details = _filter_dict(prompt_metadata, ["description"],
+                                              ["name", "model_id", "task_id"])
         
         detached_pta_id = self._create_detached_prompt(detached_details, prompt_details, detached_asset_details)
         deployment_id = None
@@ -401,7 +406,7 @@ class WatsonxExternalPromptMonitoring:
                                                               target_target_id=subscription_id, 
                                                               target_target_type=TargetTypes.SUBSCRIPTION).result.data_sets[0].metadata.id
             
-        payload_data = self._parse_payload_data(payload_records, feature_fields)
+        payload_data = _convert_payload_format(payload_records, feature_fields)
         self._wos_client.data_sets.store_records(data_set_id=payload_data_set_id, 
                                                  request_body=payload_data,
                                                  background_mode=False)
@@ -534,25 +539,6 @@ class WatsonxPromptMonitoring:
             
         return wml_client.deployments.get_uid(created_deployment)
         
-    @staticmethod
-    def _parse_payload_data(records: List[dict], feature_fields: List[str]) -> List[dict]:
-        
-        payload_data = []
-        response_fields = ["generated_text", "input_token_count", "generated_token_count"]
-            
-        for record in records: 
-            request = { "parameters": { "template_variables": {}}}
-            results = {}
-                
-            request["parameters"]["template_variables"] = {field: str(record.get(field, "")) for field in feature_fields}
-            
-            results = {field: record.get(field) for field in response_fields if record.get(field)}
-                
-            pl_record = {"request": request, "response": {"results": [results]}}
-            payload_data.append(pl_record)
-           
-        return payload_data
-        
             
     def create_prompt_monitor(self,
                               name: str,
@@ -639,13 +625,12 @@ class WatsonxPromptMonitoring:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
                 raise
         
-        prompt_details = _filter_dict_by_keys(prompt_metadata, 
-                                                   ["model_version", "prompt_variables", "prompt_instruction",
-                                                    "input_prefix", "output_prefix", "input", "model_parameters"])
+        prompt_details = _filter_dict(prompt_metadata, 
+                                      ["model_version", "prompt_variables", "prompt_instruction",
+                                       "input_prefix", "output_prefix", "input", "model_parameters"])
         
-        asset_details = _filter_dict_by_keys(prompt_metadata, 
-                                                    ["name", "model_id", "task_id", "description"],
-                                                    ["name", "model_id", "task_id"])
+        asset_details = _filter_dict(prompt_metadata, ["description"],
+                                     ["name", "model_id", "task_id"])
         
         pta_id = self._create_prompt_template(prompt_details, asset_details)
         deployment_id = None
@@ -761,7 +746,7 @@ class WatsonxPromptMonitoring:
                                                               target_target_id=subscription_id, 
                                                               target_target_type=TargetTypes.SUBSCRIPTION).result.data_sets[0].metadata.id
             
-        payload_data = self._parse_payload_data(payload_records, feature_fields)
+        payload_data = _convert_payload_format(payload_records, feature_fields)
         self._wos_client.data_sets.store_records(data_set_id=payload_data_set_id, 
                                                  request_body=payload_data,
                                                  background_mode=False)
