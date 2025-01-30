@@ -43,6 +43,7 @@ def _convert_payload_format(records: List[dict], feature_fields: List[str]) -> L
            
         return payload_data
 
+
 class WatsonxExternalPromptMonitoring:
     """Provides functionality to interact with IBM watsonx.governance for monitoring external LLM's.
     
@@ -75,7 +76,7 @@ class WatsonxExternalPromptMonitoring:
         
         try:
             import ibm_aigov_facts_client  # noqa: F401
-            import ibm_cloud_sdk_core.authenticators # noqa: F401
+            import ibm_cloud_sdk_core.authenticators  # noqa: F401
             import ibm_watson_openscale  # noqa: F401
             import ibm_watsonx_ai  # noqa: F401
 
@@ -101,7 +102,7 @@ class WatsonxExternalPromptMonitoring:
     def _create_detached_prompt(self, detached_details: dict, 
                                 prompt_template_details: dict, 
                                 detached_asset_details: dict) -> str:
-        from ibm_aigov_facts_client import ( # type: ignore
+        from ibm_aigov_facts_client import (  # type: ignore
             AIGovFactsClient,
             CloudPakforDataConfig,
             DetachedPromptTemplate,
@@ -143,7 +144,7 @@ class WatsonxExternalPromptMonitoring:
     def _create_deployment_pta(self, asset_id: str,
                                name: str,
                                model_id: str) -> str:
-        from ibm_watsonx_ai import APIClient # type: ignore
+        from ibm_watsonx_ai import APIClient  # type: ignore
             
         try:
             if self._cpd_configs:
@@ -254,12 +255,14 @@ class WatsonxExternalPromptMonitoring:
         # update list of vars to dict
         prompt_metadata["prompt_variables"] = { prompt_var: "" for prompt_var in prompt_metadata["prompt_variables"] }
         
-        from ibm_watson_openscale import APIClient as WosAPIClient # type: ignore
+        from ibm_watson_openscale import APIClient as WosAPIClient  # type: ignore
         
         if not self._wos_client:   
             try:
                 if self._cpd_configs:
-                    from ibm_cloud_sdk_core.authenticators import CloudPakForDataAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        CloudPakForDataAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = CloudPakForDataAuthenticator(
                         url=self._cpd_configs["url"],
@@ -271,7 +274,9 @@ class WatsonxExternalPromptMonitoring:
                                                     service_url=self._cpd_configs["url"])
                     
                 else:
-                    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        IAMAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
                     self._wos_client = WosAPIClient(authenticator=authenticator)
@@ -371,12 +376,17 @@ class WatsonxExternalPromptMonitoring:
         """
         from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
         from ibm_watson_openscale import APIClient as WosAPIClient
-        from ibm_watson_openscale.supporting_classes.enums import DataSetTypes, TargetTypes
+        from ibm_watson_openscale.supporting_classes.enums import (
+            DataSetTypes,
+            TargetTypes,
+        )
         
         if not self._wos_client:
             try:
                 if self._cpd_configs:
-                    from ibm_cloud_sdk_core.authenticators import CloudPakForDataAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        CloudPakForDataAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = CloudPakForDataAuthenticator(
                         url=self._cpd_configs["url"],
@@ -388,7 +398,9 @@ class WatsonxExternalPromptMonitoring:
                                                     service_url=self._cpd_configs["url"])
                     
                 else:
-                    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        IAMAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
                     self._wos_client = WosAPIClient(authenticator=authenticator)
@@ -443,7 +455,7 @@ class WatsonxPromptMonitoring:
                  ) -> None:
         try:
             import ibm_aigov_facts_client  # noqa: F401
-            import ibm_cloud_sdk_core.authenticators # noqa: F401
+            import ibm_cloud_sdk_core.authenticators  # noqa: F401
             import ibm_watson_openscale  # noqa: F401
             import ibm_watsonx_ai  # noqa: F401
 
@@ -467,7 +479,11 @@ class WatsonxPromptMonitoring:
 
                     
     def _create_prompt_template(self, prompt_template_details: dict, asset_details: dict) -> str:
-        from ibm_aigov_facts_client import AIGovFactsClient, PromptTemplate, CloudPakforDataConfig
+        from ibm_aigov_facts_client import (
+            AIGovFactsClient,
+            CloudPakforDataConfig,
+            PromptTemplate,
+        )
             
         try:
             if self._cpd_configs: 
@@ -504,7 +520,7 @@ class WatsonxPromptMonitoring:
     def _create_deployment_pta(self, asset_id: str,
                                name: str,
                                model_id: str) -> str:
-        from ibm_watsonx_ai import APIClient # type: ignore
+        from ibm_watsonx_ai import APIClient  # type: ignore
             
         try:
             if self._cpd_configs:
@@ -598,13 +614,15 @@ class WatsonxPromptMonitoring:
         # update list of vars to dict
         prompt_metadata["prompt_variables"] = { prompt_var: "" for prompt_var in prompt_metadata["prompt_variables"] }
         
-        from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # type: ignore
-        from ibm_watson_openscale import APIClient as WosAPIClient # type: ignore
+        from ibm_cloud_sdk_core.authenticators import IAMAuthenticator  # type: ignore
+        from ibm_watson_openscale import APIClient as WosAPIClient  # type: ignore
         
         if not self._wos_client:
             try:
                 if self._cpd_configs:
-                    from ibm_cloud_sdk_core.authenticators import CloudPakForDataAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        CloudPakForDataAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = CloudPakForDataAuthenticator(
                         url=self._cpd_configs["url"],
@@ -616,7 +634,9 @@ class WatsonxPromptMonitoring:
                                                     service_url=self._cpd_configs["url"])
                     
                 else:
-                    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        IAMAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
                     self._wos_client = WosAPIClient(authenticator=authenticator)
@@ -711,12 +731,17 @@ class WatsonxPromptMonitoring:
         """
         from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
         from ibm_watson_openscale import APIClient as WosAPIClient
-        from ibm_watson_openscale.supporting_classes.enums import DataSetTypes, TargetTypes
+        from ibm_watson_openscale.supporting_classes.enums import (
+            DataSetTypes,
+            TargetTypes,
+        )
         
         if not self._wos_client:
             try:
                 if self._cpd_configs:
-                    from ibm_cloud_sdk_core.authenticators import CloudPakForDataAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        CloudPakForDataAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = CloudPakForDataAuthenticator(
                         url=self._cpd_configs["url"],
@@ -728,7 +753,9 @@ class WatsonxPromptMonitoring:
                                                     service_url=self._cpd_configs["url"])
                     
                 else:
-                    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # type: ignore
+                    from ibm_cloud_sdk_core.authenticators import (
+                        IAMAuthenticator,  # type: ignore
+                    )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
                     self._wos_client = WosAPIClient(authenticator=authenticator)
