@@ -62,8 +62,13 @@ class WatsonxExternalPromptMonitoring:
 
         from labrador.monitor import WatsonxExternalPromptMonitoring
 
+        # watsonx.governance (IBM Cloud)
         detached_watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="your_api_key", 
                                                                space_id="your_space_id")
+                                                               
+        # watsonx.governance (cp4d)
+        detached_watsonx_monitor = WatsonxExternalPromptMonitoring(space_id="your_space_id"
+                                                                cpd_configs={"url":"your_cpd_url", "username": "your_username", "password": "your_password"})
     """
     
     def __init__(self,
