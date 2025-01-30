@@ -40,20 +40,21 @@ class WatsonxExternalPromptMonitoring:
     """
     
     def __init__(self,
-                 api_key: str,
+                 api_key: str = None,
                  space_id: str = None,
                  project_id: str = None,
-                 wml_url: str = "https://us-south.ml.cloud.ibm.com"
+                 wml_url: str = "https://us-south.ml.cloud.ibm.com",
+                 cpd_configs: dict = None,
                  ) -> None:
         
         try:
-            from ibm_aigov_facts_client import AIGovFactsClient  # noqa: F401
-            from ibm_cloud_sdk_core.authenticators import IAMAuthenticator  # noqa: F401
-            from ibm_watson_openscale import APIClient as WosAPIClient  # noqa: F401
-            from ibm_watsonx_ai import APIClient  # noqa: F401
+            import ibm_aigov_facts_client  # noqa: F401
+            import ibm_cloud_sdk_core.authenticators # noqa: F401
+            import ibm_watson_openscale  # noqa: F401
+            import ibm_watsonx_ai  # noqa: F401
 
         except ImportError:
-            raise ImportError("""ibm-aigov-facts-client, ibm-watson-openscale or ibm-watsonx-ai not found, 
+            raise ImportError("""ibm-aigov-facts-client, ibm-watson-openscale or ibm-watsonx-ai module not found, 
                                 please install it with `pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai`""")
             
         if (not (project_id or space_id)) or (project_id and space_id):
@@ -67,25 +68,37 @@ class WatsonxExternalPromptMonitoring:
         self._space_id = space_id
         self._project_id = project_id
         self._wml_url = wml_url
+        self._cpd_configs = cpd_configs
         self._wos_client = None
 
                     
     def _create_detached_prompt(self, detached_details: dict, 
                                 prompt_template_details: dict, 
                                 detached_asset_details: dict) -> str:
-        from ibm_aigov_facts_client import (
+        from ibm_aigov_facts_client import ( # type: ignore
             AIGovFactsClient,
+            CloudPakforDataConfig,
             DetachedPromptTemplate,
             PromptTemplate,
         )
             
         try:
-             aigov_client = AIGovFactsClient(
-                 api_key=self._api_key,
-                 container_id=self._container_id,
-                 container_type=self._container_type,
-                 disable_tracing=True
-                 )
+            if self._cpd_configs: 
+                cpd_creds = CloudPakforDataConfig(service_url=self._cpd_configs["url"],
+                                                  username=self._cpd_configs["username"],
+                                                  password=self._cpd_configs["password"])
+                aigov_client = AIGovFactsClient(
+                    container_id=self._container_id,
+                    container_type=self._container_type,
+                    cloud_pak_for_data_configs=cpd_creds,
+                    disable_tracing=True)
+                
+            else:
+                aigov_client = AIGovFactsClient(
+                    api_key=self._api_key,
+                    container_id=self._container_id,
+                    container_type=self._container_type,
+                    disable_tracing=True)
                 
         except Exception as e:
             logging.error(f"Error connecting to IBM watsonx.governance (factsheets): {e}")
@@ -102,14 +115,25 @@ class WatsonxExternalPromptMonitoring:
     def _create_deployment_pta(self, asset_id: str,
                                name: str,
                                model_id: str) -> str:
-        from ibm_watsonx_ai import APIClient
+        from ibm_watsonx_ai import APIClient # type: ignore
             
         try:
-            wml_client = APIClient({
-                "url": self._wml_url,
-                "apikey": self._api_key 
-                })
-            wml_client.set.default_space(self._space_id)
+            if self._cpd_configs:
+                wml_client = APIClient({
+                    "url": self._cpd_configs["url"],
+                    "username": self._cpd_configs["username"],
+                    "password": self._cpd_configs["password"], 
+                    "instance_id": "openshift",
+                    "version": "5.0",
+                    })
+                wml_client.set.default_space(self._space_id)
+                
+            else:
+                wml_client = APIClient({
+                    "url": self._wml_url,
+                    "apikey": self._api_key 
+                    })
+                wml_client.set.default_space(self._space_id)
                 
         except Exception as e:
             logging.error(f"Error connecting to IBM watsonx.ai Runtime: {e}")
@@ -221,13 +245,27 @@ class WatsonxExternalPromptMonitoring:
         # update list of vars to dict
         prompt_metadata["prompt_variables"] = { prompt_var: "" for prompt_var in prompt_metadata["prompt_variables"] }
         
-        from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-        from ibm_watson_openscale import APIClient as WosAPIClient
+        from ibm_watson_openscale import APIClient as WosAPIClient # type: ignore
         
-        if not self._wos_client:    
+        if not self._wos_client:   
             try:
-                authenticator = IAMAuthenticator(apikey=self._api_key)
-                self._wos_client = WosAPIClient(authenticator=authenticator)
+                if self._cpd_configs:
+                    from ibm_cloud_sdk_core.authenticators import CloudPakForDataAuthenticator # type: ignore
+                    
+                    authenticator = CloudPakForDataAuthenticator(
+                        url=self._cpd_configs["url"],
+                        username=self._cpd_configs["username"],
+                        password=self._cpd_configs["password"],
+                        disable_ssl_verification=self._cpd_configs["disable_ssl_verification"])
+                    
+                    self._wos_client = WosAPIClient(authenticator=authenticator, 
+                                                    service_url=self._cpd_configs["url"])
+                    
+                else:
+                    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # type: ignore
+                    
+                    authenticator = IAMAuthenticator(apikey=self._api_key)
+                    self._wos_client = WosAPIClient(authenticator=authenticator)
                     
             except Exception as e:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
@@ -259,19 +297,45 @@ class WatsonxExternalPromptMonitoring:
                     "metrics_configuration":{}
                     }
                 }}
-            
-        generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(prompt_template_asset_id = detached_pta_id, 
-                                                                                  space_id = self._space_id,
-                                                                                  project_id=self._project_id,
-                                                                                  deployment_id = deployment_id,
-                                                                                  label_column = "reference_output",
-                                                                                  context_fields=context_fields,     
-                                                                                  question_field = question_field,   
-                                                                                  operational_space_id = self._deployment_stage, 
-                                                                                  problem_type = task_id,
-                                                                                  input_data_type = "unstructured_text", 
-                                                                                  supporting_monitors = monitors, 
-                                                                                  background_mode = False).result
+        
+        max_attempt_execute_prompt_setup = 0
+        while max_attempt_execute_prompt_setup < 2:
+            try:
+                generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(
+                    prompt_template_asset_id = detached_pta_id, 
+                    space_id = self._space_id,
+                    project_id=self._project_id,
+                    deployment_id = deployment_id,
+                    label_column = "reference_output",
+                    context_fields=context_fields,     
+                    question_field = question_field,   
+                    operational_space_id = self._deployment_stage, 
+                    problem_type = task_id,
+                    input_data_type = "unstructured_text", 
+                    supporting_monitors = monitors, 
+                    background_mode = False).result
+                
+                break
+                
+            except Exception as e:
+                if e.code == 403 and "The user entitlement does not exist" in e.message \
+                and max_attempt_execute_prompt_setup < 1:
+                    max_attempt_execute_prompt_setup = max_attempt_execute_prompt_setup + 1
+                    
+                    data_marts = self._wos_client.data_marts.list().result
+                    if (data_marts.data_marts is None) or (not data_marts.data_marts):
+                        raise ValueError("Error retrieving IBM watsonx.governance (openscale) data mart. \
+                                         Make sure the data mart are configured.")
+                        
+                    data_mart_id = data_marts.data_marts[0].metadata.id
+                    
+                    self._wos_client.wos.add_instance_mapping(
+                        service_instance_id=data_mart_id,
+                        space_id=self._space_id,
+                        project_id=self._project_id)
+                else:
+                    max_attempt_execute_prompt_setup = 2
+                    raise e
 
         generative_ai_monitor_details = generative_ai_monitor_details._to_dict()   
                
@@ -306,8 +370,23 @@ class WatsonxExternalPromptMonitoring:
         )
         if not self._wos_client:
             try:
-                authenticator = IAMAuthenticator(apikey=self._api_key)
-                self._wos_client = WosAPIClient(authenticator=authenticator)
+                if self._cpd_configs:
+                    from ibm_cloud_sdk_core.authenticators import CloudPakForDataAuthenticator # type: ignore
+                    
+                    authenticator = CloudPakForDataAuthenticator(
+                        url=self._cpd_configs["url"],
+                        username=self._cpd_configs["username"],
+                        password=self._cpd_configs["password"],
+                        disable_ssl_verification=self._cpd_configs["disable_ssl_verification"])
+                    
+                    self._wos_client = WosAPIClient(authenticator=authenticator, 
+                                                    service_url=self._cpd_configs["url"])
+                    
+                else:
+                    from ibm_cloud_sdk_core.authenticators import IAMAuthenticator # type: ignore
+                    
+                    authenticator = IAMAuthenticator(apikey=self._api_key)
+                    self._wos_client = WosAPIClient(authenticator=authenticator)
                 
             except Exception as e:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
