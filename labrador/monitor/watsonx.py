@@ -99,6 +99,7 @@ class WatsonxExternalPromptMonitoring:
         space_id (str, optional): watsonx.governance space_id.
         project_id (str, optional): watsonx.governance project_id.
         wml_url (str, optional): watsonx.ai Runtime url. Defaults to ``https://us-south.ml.cloud.ibm.com``
+        cpd_creds (CloudPakforDataCredentials, optional): Cloud Pak for Data environment details.
 
     **Example**
 
@@ -118,7 +119,7 @@ class WatsonxExternalPromptMonitoring:
                                  version="5.0", instance_id="openshift")
         
         detached_watsonx_monitor = WatsonxExternalPromptMonitoring(space_id="your_space_id"
-                                                                cpd_configs=cpd_creds)
+                                                                cpd_creds=cpd_creds)
     """
     
     def __init__(self,
@@ -126,7 +127,7 @@ class WatsonxExternalPromptMonitoring:
                  space_id: str = None,
                  project_id: str = None,
                  wml_url: str = "https://us-south.ml.cloud.ibm.com",
-                 cpd_configs: CloudPakforDataCredentials | dict = None,
+                 cpd_creds: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         
         try:
@@ -152,13 +153,13 @@ class WatsonxExternalPromptMonitoring:
         self._wml_url = wml_url
         self._wos_client = None
         
-        if cpd_configs: 
-            self._wos_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+        if cpd_creds: 
+            self._wos_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", 
                                                                    "disable_ssl_verification"], ["url"])
-            self._fact_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+            self._fact_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", 
                                                                         "bedrock_url"],["url"])
             self._fact_cpd_creds["service_url"] = self._fact_cpd_creds.pop("url")
-            self._wml_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", "instance_id", 
+            self._wml_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", "instance_id", 
                                                                    "version", "bedrock_url"], ["url"])
 
                     
@@ -479,6 +480,7 @@ class WatsonxPromptMonitoring:
         space_id (str, optional): watsonx.governance space_id.
         project_id (str, optional): watsonx.governance project_id.
         wml_url (str, optional): watsonx.ai Runtime url. Defaults to ``https://us-south.ml.cloud.ibm.com``
+        cpd_creds (CloudPakforDataCredentials, optional): Cloud Pak for Data environment details.
 
     **Example**
 
@@ -498,7 +500,7 @@ class WatsonxPromptMonitoring:
                                  version="5.0", instance_id="openshift")
         
         detached_watsonx_monitor = WatsonxExternalPromptMonitoring(space_id="your_space_id"
-                                                                cpd_configs=cpd_creds)                                            
+                                                                cpd_creds=cpd_creds)                                            
     """
     
     def __init__(self,
@@ -506,7 +508,7 @@ class WatsonxPromptMonitoring:
                  space_id: str = None,
                  project_id: str = None,
                  wml_url: str = "https://us-south.ml.cloud.ibm.com",
-                 cpd_configs: CloudPakforDataCredentials | dict = None,
+                 cpd_creds: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         try:
             import ibm_aigov_facts_client  # noqa: F401
@@ -531,13 +533,13 @@ class WatsonxPromptMonitoring:
         self._wml_url = wml_url
         self._wos_client = None
         
-        if cpd_configs: 
-            self._wos_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+        if cpd_creds: 
+            self._wos_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", 
                                                                    "disable_ssl_verification"], ["url"])
-            self._fact_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+            self._fact_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", 
                                                                         "bedrock_url"],["url"])
             self._fact_cpd_creds["service_url"] = self._fact_cpd_creds.pop("url")
-            self._wml_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", "instance_id", 
+            self._wml_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", "instance_id", 
                                                                    "version", "bedrock_url"], ["url"])
 
                     
