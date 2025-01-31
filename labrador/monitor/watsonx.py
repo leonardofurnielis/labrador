@@ -1,7 +1,7 @@
 import json
 import logging
 import uuid
-from typing import List, Literal, Any
+from typing import Any, List, Literal
 
 logging.getLogger("ibm_watsonx_ai.client").setLevel(logging.ERROR)
 logging.getLogger("ibm_watsonx_ai.wml_resource").setLevel(logging.ERROR)
