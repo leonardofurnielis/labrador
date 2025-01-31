@@ -1,7 +1,7 @@
 import json
 import logging
 import uuid
-from typing import List, Literal
+from typing import List, Literal, Any
 
 logging.getLogger("ibm_watsonx_ai.client").setLevel(logging.ERROR)
 logging.getLogger("ibm_watsonx_ai.wml_resource").setLevel(logging.ERROR)
@@ -44,6 +44,50 @@ def _convert_payload_format(records: List[dict], feature_fields: List[str]) -> L
         return payload_data
 
 
+class CloudPakforDataCredentials:
+    """Encapsulate passed credentials for CloudPakforData.
+
+    Args:
+        url (str): Host URL of Cloud Pak for Data environment.
+        api_key (str, optional): Environment api_key if IAM enabled.
+        username (str, optional): Environment username.
+        password (str, optional): Environment password.
+        bedrock_url (str, optional): Bedrock URL. This url is required only when iam-integration is enabled on CP4D 4.0.x cluster.
+        instance_id (str, optional): Instance ID.
+        version (str, optional): CPD Version.
+        disable_ssl_verification (bool, optional): Indicates whether verification of the server's SSL certificate. Defaults to ``True``.
+    """
+    
+    def __init__(self,
+                 url: str,
+                 api_key: str = None,
+                 username: str = None,
+                 password: str = None,
+                 bedrock_url: str = None,
+                 instance_id: Literal["icp","openshift"] = None,
+                 version: str = None,
+                 disable_ssl_verification: bool = True) -> None:
+        
+        self.url = url
+        self.api_key = api_key
+        self.username = username
+        self.api_key = api_key
+        self.password = password
+        self.bedrock_url = bedrock_url
+        self.instance_id = instance_id
+        self.api_key = api_key
+        self.version = version
+        self.disable_ssl_verification = disable_ssl_verification
+        
+    def to_dict(self) -> dict[str, Any]:
+        data = dict([(k, v) for k, v in self.__dict__.items()])
+        
+        if "instance_id" in data and self.instance_id.lower() not in ["icp","openshift"]:
+            data.pop("instance_id")
+        
+        return data
+
+
 class WatsonxExternalPromptMonitoring:
     """Provides functionality to interact with IBM watsonx.governance for monitoring external LLM's.
     
@@ -67,11 +111,14 @@ class WatsonxExternalPromptMonitoring:
                                                                space_id="your_space_id")
                                                                
         # watsonx.governance (cp4d)
+        from labrador.monitor import CloudPakforDataCredentials
+        
+        cpd_creds = CloudPakforDataCredentials(url="your_cpd_url", 
+                                  username="your_username", password="your_password",
+                                 version="5.0", instance_id="openshift")
+        
         detached_watsonx_monitor = WatsonxExternalPromptMonitoring(space_id="your_space_id"
-                                                                cpd_configs={
-                                                                    "url":"your_cpd_url", 
-                                                                    "username": "your_username", 
-                                                                    "password": "your_password"})
+                                                                cpd_configs=cpd_creds)
     """
     
     def __init__(self,
@@ -79,7 +126,7 @@ class WatsonxExternalPromptMonitoring:
                  space_id: str = None,
                  project_id: str = None,
                  wml_url: str = "https://us-south.ml.cloud.ibm.com",
-                 cpd_configs: dict = None,
+                 cpd_configs: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         
         try:
@@ -93,7 +140,7 @@ class WatsonxExternalPromptMonitoring:
                                 please install it with `pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai`""")
             
         if (not (project_id or space_id)) or (project_id and space_id):
-            raise ValueError("Must provide one of these parameters [`project_id`, `space_id`], not both.")
+            raise ValueError("`project_id` and `space_id` parameter cannot be set at the same time.")
 
         self._container_id = space_id if space_id else project_id
         self._container_type = "space" if space_id else "project"
@@ -103,8 +150,16 @@ class WatsonxExternalPromptMonitoring:
         self._space_id = space_id
         self._project_id = project_id
         self._wml_url = wml_url
-        self._cpd_configs = cpd_configs
         self._wos_client = None
+        
+        if cpd_configs: 
+            self._wos_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+                                                                   "disable_ssl_verification"], ["url"])
+            self._fact_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+                                                                        "bedrock_url"],["url"])
+            self._fact_cpd_creds["service_url"] = self._fact_cpd_creds.pop("url")
+            self._wml_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", "instance_id", 
+                                                                   "version", "bedrock_url"], ["url"])
 
                     
     def _create_detached_prompt(self, detached_details: dict, 
@@ -118,11 +173,8 @@ class WatsonxExternalPromptMonitoring:
         )
             
         try:
-            if self._cpd_configs: 
-                cpd_creds = CloudPakforDataConfig(
-                    service_url=self._cpd_configs["url"],
-                    username=self._cpd_configs["username"],
-                    password=self._cpd_configs["password"])
+            if self._fact_cpd_creds: 
+                cpd_creds = CloudPakforDataConfig(**self._fact_cpd_creds)
                 
                 aigov_client = AIGovFactsClient(
                     container_id=self._container_id,
@@ -152,24 +204,18 @@ class WatsonxExternalPromptMonitoring:
     def _create_deployment_pta(self, asset_id: str,
                                name: str,
                                model_id: str) -> str:
-        from ibm_watsonx_ai import APIClient  # type: ignore
+        from ibm_watsonx_ai import APIClient, Credentials  # type: ignore
             
         try:
-            if self._cpd_configs:
-                wml_client = APIClient({
-                    "url": self._cpd_configs["url"],
-                    "username": self._cpd_configs["username"],
-                    "password": self._cpd_configs["password"], 
-                    "instance_id": "openshift",
-                    "version": "5.0",
-                    })
+            if self._wml_cpd_creds:
+                creds = Credentials(**self._wml_cpd_creds)
+                
+                wml_client = APIClient(creds)
                 wml_client.set.default_space(self._space_id)
                 
             else:
-                wml_client = APIClient({
-                    "url": self._wml_url,
-                    "apikey": self._api_key 
-                    })
+                creds = Credentials({"url": self._wml_url, "apikey": self._api_key})
+                wml_client = APIClient(creds)
                 wml_client.set.default_space(self._space_id)
                 
         except Exception as e:
@@ -267,19 +313,14 @@ class WatsonxExternalPromptMonitoring:
         
         if not self._wos_client:   
             try:
-                if self._cpd_configs:
+                if self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
                     
-                    authenticator = CloudPakForDataAuthenticator(
-                        url=self._cpd_configs["url"],
-                        username=self._cpd_configs["username"],
-                        password=self._cpd_configs["password"],
-                        disable_ssl_verification=self._cpd_configs["disable_ssl_verification"])
-                    
+                    authenticator = CloudPakForDataAuthenticator(**self._wos_cpd_creds)
                     self._wos_client = WosAPIClient(authenticator=authenticator, 
-                                                    service_url=self._cpd_configs["url"])
+                                                    service_url=self._wos_cpd_creds["url"])
                     
                 else:
                     from ibm_cloud_sdk_core.authenticators import (
@@ -391,19 +432,14 @@ class WatsonxExternalPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if self._cpd_configs:
+                if self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
                     
-                    authenticator = CloudPakForDataAuthenticator(
-                        url=self._cpd_configs["url"],
-                        username=self._cpd_configs["username"],
-                        password=self._cpd_configs["password"],
-                        disable_ssl_verification=self._cpd_configs["disable_ssl_verification"])
-                    
+                    authenticator = CloudPakForDataAuthenticator(**self._wos_cpd_creds)
                     self._wos_client = WosAPIClient(authenticator=authenticator, 
-                                                    service_url=self._cpd_configs["url"])
+                                                    service_url=self._wos_cpd_creds["url"])
                     
                 else:
                     from ibm_cloud_sdk_core.authenticators import (
@@ -455,11 +491,14 @@ class WatsonxPromptMonitoring:
                                                         space_id="your_space_id")
         
         # watsonx.governance (cp4d)
+        from labrador.monitor import CloudPakforDataCredentials
+        
+        cpd_creds = CloudPakforDataCredentials(url="your_cpd_url", 
+                                  username="your_username", password="your_password",
+                                 version="5.0", instance_id="openshift")
+        
         detached_watsonx_monitor = WatsonxExternalPromptMonitoring(space_id="your_space_id"
-                                                                cpd_configs={
-                                                                    "url":"your_cpd_url", 
-                                                                    "username": "your_username", 
-                                                                    "password": "your_password"})                                            
+                                                                cpd_configs=cpd_creds)                                            
     """
     
     def __init__(self,
@@ -467,7 +506,7 @@ class WatsonxPromptMonitoring:
                  space_id: str = None,
                  project_id: str = None,
                  wml_url: str = "https://us-south.ml.cloud.ibm.com",
-                 cpd_configs: dict = None,
+                 cpd_configs: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         try:
             import ibm_aigov_facts_client  # noqa: F401
@@ -480,7 +519,7 @@ class WatsonxPromptMonitoring:
                                 please install it with `pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai`""")
             
         if (not (project_id or space_id)) or (project_id and space_id):
-            raise ValueError("Must provide one of these parameters [`project_id`, `space_id`], not both.")
+            raise ValueError("`project_id` and `space_id` parameter cannot be set at the same time.")
         
         self._container_id = space_id if space_id else project_id
         self._container_type = "space" if space_id else "project"
@@ -490,8 +529,16 @@ class WatsonxPromptMonitoring:
         self._space_id = space_id
         self._project_id = project_id
         self._wml_url = wml_url
-        self._cpd_configs = cpd_configs
         self._wos_client = None
+        
+        if cpd_configs: 
+            self._wos_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+                                                                   "disable_ssl_verification"], ["url"])
+            self._fact_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", 
+                                                                        "bedrock_url"],["url"])
+            self._fact_cpd_creds["service_url"] = self._fact_cpd_creds.pop("url")
+            self._wml_cpd_creds = _filter_dict(cpd_configs.to_dict(), ["username", "password", "api_key", "instance_id", 
+                                                                   "version", "bedrock_url"], ["url"])
 
                     
     def _create_prompt_template(self, prompt_template_details: dict, asset_details: dict) -> str:
@@ -502,11 +549,8 @@ class WatsonxPromptMonitoring:
         )
             
         try:
-            if self._cpd_configs: 
-                cpd_creds = CloudPakforDataConfig(
-                    service_url=self._cpd_configs["url"],
-                    username=self._cpd_configs["username"],
-                    password=self._cpd_configs["password"])
+            if self._fact_cpd_creds: 
+                cpd_creds = CloudPakforDataConfig(**self._fact_cpd_creds)
                 
                 aigov_client = AIGovFactsClient(
                     container_id=self._container_id,
@@ -536,24 +580,19 @@ class WatsonxPromptMonitoring:
     def _create_deployment_pta(self, asset_id: str,
                                name: str,
                                model_id: str) -> str:
-        from ibm_watsonx_ai import APIClient  # type: ignore
+        from ibm_watsonx_ai import APIClient, Credentials  # type: ignore
             
         try:
-            if self._cpd_configs:
-                wml_client = APIClient({
-                    "url": self._cpd_configs["url"],
-                    "username": self._cpd_configs["username"],
-                    "password": self._cpd_configs["password"], 
-                    "instance_id": "openshift",
-                    "version": "5.0",
-                    })
+            if self._wml_cpd_creds:
+                creds = Credentials(**self._wml_cpd_creds)
+                
+                wml_client = APIClient(creds)
                 wml_client.set.default_space(self._space_id)
 
             else:
-                wml_client = APIClient({
-                    "url": self._wml_url,
-                    "apikey": self._api_key 
-                    })
+                creds = Credentials({"url": self._wml_url, "apikey": self._api_key})
+                
+                wml_client = APIClient(creds)
                 wml_client.set.default_space(self._space_id)
                 
         except Exception as e:
@@ -635,19 +674,15 @@ class WatsonxPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if self._cpd_configs:
+                if self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
                     
-                    authenticator = CloudPakForDataAuthenticator(
-                        url=self._cpd_configs["url"],
-                        username=self._cpd_configs["username"],
-                        password=self._cpd_configs["password"],
-                        disable_ssl_verification=self._cpd_configs["disable_ssl_verification"])
+                    authenticator = CloudPakForDataAuthenticator(**self._wos_cpd_creds)
                     
                     self._wos_client = WosAPIClient(authenticator=authenticator, 
-                                                    service_url=self._cpd_configs["url"])
+                                                    service_url=self._wos_cpd_creds["url"])
                     
                 else:
                     from ibm_cloud_sdk_core.authenticators import (
@@ -754,19 +789,15 @@ class WatsonxPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if self._cpd_configs:
+                if self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
                     
-                    authenticator = CloudPakForDataAuthenticator(
-                        url=self._cpd_configs["url"],
-                        username=self._cpd_configs["username"],
-                        password=self._cpd_configs["password"],
-                        disable_ssl_verification=self._cpd_configs["disable_ssl_verification"])
+                    authenticator = CloudPakForDataAuthenticator(**self._wos_cpd_creds)
                     
                     self._wos_client = WosAPIClient(authenticator=authenticator, 
-                                                    service_url=self._cpd_configs["url"])
+                                                    service_url=self._wos_cpd_creds["url"])
                     
                 else:
                     from ibm_cloud_sdk_core.authenticators import (
