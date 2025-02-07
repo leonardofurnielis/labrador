@@ -109,7 +109,7 @@ class WatsonxExternalPromptMonitoring:
         api_key (str): IBM watsonx.governance API key.
         space_id (str, optional): watsonx.governance space_id.
         project_id (str, optional): watsonx.governance project_id.
-        wml_url (str, optional): watsonx.ai Runtime url. Defaults to ``https://us-south.ml.cloud.ibm.com``
+        region (str, optional): Region where the watsonx.governance is hosted when using IBM Cloud. Defaults to ``us-south``
         cpd_creds (CloudPakforDataCredentials, optional): Cloud Pak for Data environment details.
 
     **Example**
@@ -137,7 +137,7 @@ class WatsonxExternalPromptMonitoring:
                  api_key: str = None,
                  space_id: str = None,
                  project_id: str = None,
-                 region: str = "us-south",
+                 region: Literal["us-south", "eu-de", "au-syd"] = "us-south",
                  cpd_creds: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         
@@ -491,7 +491,7 @@ class WatsonxPromptMonitoring:
         api_key (str): IBM watsonx.governance API key.
         space_id (str, optional): watsonx.governance space_id.
         project_id (str, optional): watsonx.governance project_id.
-        wml_url (str, optional): watsonx.ai Runtime url. Defaults to ``https://us-south.ml.cloud.ibm.com``
+        region (str, optional): Region where the watsonx.governance is hosted when using IBM Cloud. Defaults to ``us-south``
         cpd_creds (CloudPakforDataCredentials, optional): Cloud Pak for Data environment details.
 
     **Example**
@@ -519,7 +519,7 @@ class WatsonxPromptMonitoring:
                  api_key: str =None,
                  space_id: str = None,
                  project_id: str = None,
-                 region: str = "us-south",
+                 region: Literal["us-south", "eu-de", "au-syd"] = "us-south",
                  cpd_creds: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         try:
