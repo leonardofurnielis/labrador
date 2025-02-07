@@ -154,15 +154,15 @@ class WatsonxExternalPromptMonitoring:
         if (not (project_id or space_id)) or (project_id and space_id):
             raise ValueError("`project_id` and `space_id` parameter cannot be set at the same time.")
 
+        self.space_id = space_id
+        self.project_id = project_id
+        self.region = region
+        self._api_key = api_key
+        self._wos_client = None
+        
         self._container_id = space_id if space_id else project_id
         self._container_type = "space" if space_id else "project"
         self._deployment_stage = "production" if space_id else "development"
-
-        self._api_key = api_key
-        self._space_id = space_id
-        self._project_id = project_id
-        self.region = region
-        self._wos_client = None
         
         if cpd_creds: 
             self._wos_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", 
@@ -224,12 +224,12 @@ class WatsonxExternalPromptMonitoring:
                 creds = Credentials(**self._wml_cpd_creds)
                 
                 wml_client = APIClient(creds)
-                wml_client.set.default_space(self._space_id)
+                wml_client.set.default_space(self.space_id)
                 
             else:
                 creds = Credentials({"url": REGIONS_URL[self.region]["wml"], "apikey": self._api_key})
                 wml_client = APIClient(creds)
-                wml_client.set.default_space(self._space_id)
+                wml_client.set.default_space(self.space_id)
                 
         except Exception as e:
             logging.error(f"Error connecting to IBM watsonx.ai Runtime: {e}")
@@ -377,8 +377,8 @@ class WatsonxExternalPromptMonitoring:
             try:
                 generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(
                     prompt_template_asset_id = detached_pta_id, 
-                    space_id = self._space_id,
-                    project_id=self._project_id,
+                    space_id = self.space_id,
+                    project_id=self.project_id,
                     deployment_id = deployment_id,
                     label_column = "reference_output",
                     context_fields=context_fields,     
@@ -405,8 +405,8 @@ class WatsonxExternalPromptMonitoring:
                     
                     self._wos_client.wos.add_instance_mapping(
                         service_instance_id=data_mart_id,
-                        space_id=self._space_id,
-                        project_id=self._project_id)
+                        space_id=self.space_id,
+                        project_id=self.project_id)
                 else:
                     max_attempt_execute_prompt_setup = 2
                     raise e
@@ -534,16 +534,16 @@ class WatsonxPromptMonitoring:
             
         if (not (project_id or space_id)) or (project_id and space_id):
             raise ValueError("`project_id` and `space_id` parameter cannot be set at the same time.")
+
+        self.space_id = space_id
+        self.project_id = project_id
+        self.region = region
+        self._api_key = api_key
+        self._wos_client = None
         
         self._container_id = space_id if space_id else project_id
         self._container_type = "space" if space_id else "project"
         self._deployment_stage = "production" if space_id else "development"
-
-        self._api_key = api_key
-        self._space_id = space_id
-        self._project_id = project_id
-        self.region = region
-        self._wos_client = None
         
         if cpd_creds: 
             self._wos_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", 
@@ -602,13 +602,13 @@ class WatsonxPromptMonitoring:
                 creds = Credentials(**self._wml_cpd_creds)
                 
                 wml_client = APIClient(creds)
-                wml_client.set.default_space(self._space_id)
+                wml_client.set.default_space(self.space_id)
 
             else:
                 creds = Credentials({"url": REGIONS_URL[self.region]["wml"], "apikey": self._api_key})
                 
                 wml_client = APIClient(creds)
-                wml_client.set.default_space(self._space_id)
+                wml_client.set.default_space(self.space_id)
                 
         except Exception as e:
             logging.error(f"Error connecting to IBM watsonx.ai Runtime: {e}")
@@ -736,8 +736,8 @@ class WatsonxPromptMonitoring:
             try:
                 generative_ai_monitor_details = self._wos_client.wos.execute_prompt_setup(
                     prompt_template_asset_id = pta_id, 
-                    space_id = self._space_id,
-                    project_id=self._project_id,
+                    space_id = self.space_id,
+                    project_id=self.project_id,
                     deployment_id = deployment_id,
                     label_column = "reference_output",
                     context_fields=context_fields,     
@@ -764,8 +764,8 @@ class WatsonxPromptMonitoring:
                     
                     self._wos_client.wos.add_instance_mapping(
                         service_instance_id=data_mart_id,
-                        space_id=self._space_id,
-                        project_id=self._project_id)
+                        space_id=self.space_id,
+                        project_id=self.project_id)
                 else:
                     max_attempt_execute_prompt_setup = 2
                     raise e
