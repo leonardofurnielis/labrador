@@ -6,6 +6,17 @@ from typing import Any, List, Literal
 logging.getLogger("ibm_watsonx_ai.client").setLevel(logging.ERROR)
 logging.getLogger("ibm_watsonx_ai.wml_resource").setLevel(logging.ERROR)
 
+REGIONS_URL = {
+    "us-south": {"wml": "https://us-south.ml.cloud.ibm.com", 
+                 "wos": "https://api.aiopenscale.cloud.ibm.com", 
+                 "factsheet": None},
+    "eu-de": {"wml": "https://eu-de.ml.cloud.ibm.com", 
+              "wos": "https://eu-de.api.aiopenscale.cloud.ibm.com", 
+              "factsheet": "frankfurt"},
+    "au-syd": {"wml": "https://au-syd.ml.cloud.ibm.com", 
+               "wos": "https://au-syd.api.aiopenscale.cloud.ibm.com", 
+               "factsheet": "sydney"},
+}
 
 def _filter_dict(original_dict: dict, optional_keys: List, required_keys: List = []):
     """Filters a dictionary to keep only the specified keys and check required.
@@ -126,7 +137,7 @@ class WatsonxExternalPromptMonitoring:
                  api_key: str = None,
                  space_id: str = None,
                  project_id: str = None,
-                 wml_url: str = "https://us-south.ml.cloud.ibm.com",
+                 region: str = "us-south",
                  cpd_creds: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         
@@ -150,7 +161,7 @@ class WatsonxExternalPromptMonitoring:
         self._api_key = api_key
         self._space_id = space_id
         self._project_id = project_id
-        self._wml_url = wml_url
+        self.region = region
         self._wos_client = None
         
         if cpd_creds: 
@@ -188,7 +199,8 @@ class WatsonxExternalPromptMonitoring:
                     api_key=self._api_key,
                     container_id=self._container_id,
                     container_type=self._container_type,
-                    disable_tracing=True)
+                    disable_tracing=True,
+                    region=REGIONS_URL[self.region]["factsheet"])
                 
         except Exception as e:
             logging.error(f"Error connecting to IBM watsonx.governance (factsheets): {e}")
@@ -215,7 +227,7 @@ class WatsonxExternalPromptMonitoring:
                 wml_client.set.default_space(self._space_id)
                 
             else:
-                creds = Credentials({"url": self._wml_url, "apikey": self._api_key})
+                creds = Credentials({"url": REGIONS_URL[self.region]["wml"], "apikey": self._api_key})
                 wml_client = APIClient(creds)
                 wml_client.set.default_space(self._space_id)
                 
@@ -329,7 +341,7 @@ class WatsonxExternalPromptMonitoring:
                     )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
-                    self._wos_client = WosAPIClient(authenticator=authenticator)
+                    self._wos_client = WosAPIClient(authenticator=authenticator, service_url=REGIONS_URL[self.region]["wos"])
                     
             except Exception as e:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
@@ -448,7 +460,7 @@ class WatsonxExternalPromptMonitoring:
                     )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
-                    self._wos_client = WosAPIClient(authenticator=authenticator)
+                    self._wos_client = WosAPIClient(authenticator=authenticator, service_url=REGIONS_URL[self.region]["wos"])
                 
             except Exception as e:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
@@ -507,7 +519,7 @@ class WatsonxPromptMonitoring:
                  api_key: str =None,
                  space_id: str = None,
                  project_id: str = None,
-                 wml_url: str = "https://us-south.ml.cloud.ibm.com",
+                 region: str = "us-south",
                  cpd_creds: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         try:
@@ -530,7 +542,7 @@ class WatsonxPromptMonitoring:
         self._api_key = api_key
         self._space_id = space_id
         self._project_id = project_id
-        self._wml_url = wml_url
+        self.region = region
         self._wos_client = None
         
         if cpd_creds: 
@@ -565,7 +577,8 @@ class WatsonxPromptMonitoring:
                     api_key=self._api_key,
                     container_id=self._container_id,
                     container_type=self._container_type,
-                    disable_tracing=True)
+                    disable_tracing=True,
+                    region=REGIONS_URL[self.region]["factsheet"])
                 
         except Exception as e:
             logging.error(f"Error connecting to IBM watsonx.governance (factsheets): {e}")
@@ -592,7 +605,7 @@ class WatsonxPromptMonitoring:
                 wml_client.set.default_space(self._space_id)
 
             else:
-                creds = Credentials({"url": self._wml_url, "apikey": self._api_key})
+                creds = Credentials({"url": REGIONS_URL[self.region]["wml"], "apikey": self._api_key})
                 
                 wml_client = APIClient(creds)
                 wml_client.set.default_space(self._space_id)
@@ -692,7 +705,7 @@ class WatsonxPromptMonitoring:
                     )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
-                    self._wos_client = WosAPIClient(authenticator=authenticator)
+                    self._wos_client = WosAPIClient(authenticator=authenticator, service_url=REGIONS_URL[self.region]["wos"])
                     
             except Exception as e:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
@@ -807,7 +820,7 @@ class WatsonxPromptMonitoring:
                     )
                     
                     authenticator = IAMAuthenticator(apikey=self._api_key)
-                    self._wos_client = WosAPIClient(authenticator=authenticator)
+                    self._wos_client = WosAPIClient(authenticator=authenticator, service_url=REGIONS_URL[self.region]["wos"])
                 
             except Exception as e:
                 logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
