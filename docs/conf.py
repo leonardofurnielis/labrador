@@ -11,7 +11,7 @@ import sys
 project = 'Labrador'
 copyright = '2024, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-version = '0.6.0'
+version = '0.6.1'
 release = version
 
 # -- General configuration ---------------------------------------------------
