@@ -185,7 +185,7 @@ class WatsonxExternalPromptMonitoring:
         )
             
         try:
-            if hasattr(self, '_fact_cpd_creds') and self._fact_cpd_creds:
+            if hasattr(self, "_fact_cpd_creds") and self._fact_cpd_creds:
                 cpd_creds = CloudPakforDataConfig(**self._fact_cpd_creds)
                 
                 aigov_client = AIGovFactsClient(
@@ -220,7 +220,7 @@ class WatsonxExternalPromptMonitoring:
         from ibm_watsonx_ai import APIClient, Credentials  # type: ignore
             
         try:
-            if hasattr(self, '_wml_cpd_creds') and self._wml_cpd_creds:
+            if hasattr(self, "_wml_cpd_creds") and self._wml_cpd_creds:
                 creds = Credentials(**self._wml_cpd_creds)
                 
                 wml_client = APIClient(creds)
@@ -326,7 +326,7 @@ class WatsonxExternalPromptMonitoring:
         
         if not self._wos_client:   
             try:
-                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
+                if hasattr(self, "_wos_cpd_creds") and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
@@ -445,7 +445,7 @@ class WatsonxExternalPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
+                if hasattr(self, "_wos_cpd_creds") and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
@@ -563,7 +563,7 @@ class WatsonxPromptMonitoring:
         )
             
         try:
-            if hasattr(self, '_fact_cpd_creds') and self._fact_cpd_creds:
+            if hasattr(self, "_fact_cpd_creds") and self._fact_cpd_creds:
                 cpd_creds = CloudPakforDataConfig(**self._fact_cpd_creds)
                 
                 aigov_client = AIGovFactsClient(
@@ -598,7 +598,7 @@ class WatsonxPromptMonitoring:
         from ibm_watsonx_ai import APIClient, Credentials  # type: ignore
             
         try:
-            if hasattr(self, '_wml_cpd_creds') and self._wml_cpd_creds:
+            if hasattr(self, "_wml_cpd_creds") and self._wml_cpd_creds:
                 creds = Credentials(**self._wml_cpd_creds)
                 
                 wml_client = APIClient(creds)
@@ -689,7 +689,7 @@ class WatsonxPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
+                if hasattr(self, "_wos_cpd_creds") and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
@@ -804,7 +804,7 @@ class WatsonxPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
+                if hasattr(self, "_wos_cpd_creds") and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
