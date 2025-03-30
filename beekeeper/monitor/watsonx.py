@@ -227,7 +227,7 @@ class WatsonxExternalPromptMonitoring:
                 wml_client.set.default_space(self.space_id)
                 
             else:
-                creds = Credentials(url= REGIONS_URL[self.region]["wml"], apikey=self._api_key)
+                creds = Credentials(url= REGIONS_URL[self.region]["wml"], api_key=self._api_key)
                 wml_client = APIClient(creds)
                 wml_client.set.default_space(self.space_id)
                 
@@ -605,7 +605,7 @@ class WatsonxPromptMonitoring:
                 wml_client.set.default_space(self.space_id)
 
             else:
-                creds = Credentials(url= REGIONS_URL[self.region]["wml"], apikey=self._api_key)
+                creds = Credentials(url= REGIONS_URL[self.region]["wml"], api_key=self._api_key)
                 
                 wml_client = APIClient(creds)
                 wml_client.set.default_space(self.space_id)
