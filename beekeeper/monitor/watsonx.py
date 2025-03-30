@@ -742,7 +742,7 @@ class WatsonxPromptMonitoring:
                     label_column = "reference_output",
                     context_fields=context_fields,     
                     question_field = question_field,   
-                    operational_space_id = "production", 
+                    operational_space_id = self._deployment_stage,
                     problem_type = task_id,
                     input_data_type = "unstructured_text", 
                     supporting_monitors = monitors, 
