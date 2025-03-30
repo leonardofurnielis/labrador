@@ -326,7 +326,7 @@ class WatsonxExternalPromptMonitoring:
         
         if not self._wos_client:   
             try:
-                if self._wos_cpd_creds:
+                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
@@ -445,7 +445,7 @@ class WatsonxExternalPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if self._wos_cpd_creds:
+                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
@@ -689,7 +689,7 @@ class WatsonxPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if self._wos_cpd_creds:
+                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
@@ -804,7 +804,7 @@ class WatsonxPromptMonitoring:
         
         if not self._wos_client:
             try:
-                if self._wos_cpd_creds:
+                if hasattr(self, '_wos_cpd_creds') and self._wos_cpd_creds:
                     from ibm_cloud_sdk_core.authenticators import (
                         CloudPakForDataAuthenticator,  # type: ignore
                     )
