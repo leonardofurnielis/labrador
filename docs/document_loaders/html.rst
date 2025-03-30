@@ -8,5 +8,5 @@ In order to use ``HTMLLoader`` you need to install the ``beautifulsoup4`` packag
 
     pip install beautifulsoup4
 
-.. automodule:: labrador.document_loaders.html
+.. automodule:: beekeeper.document_loaders.html
     :members:

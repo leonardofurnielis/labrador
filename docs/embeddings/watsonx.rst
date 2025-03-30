@@ -8,6 +8,6 @@ In order to use ``WatsonxEmbedding`` you need to install the ``ibm-watsonx-ai`` 
 
     pip install ibm-watsonx-ai
 
-.. automodule:: labrador.embeddings.watsonx
+.. automodule:: beekeeper.embeddings.watsonx
     :members:
 

@@ -8,5 +8,5 @@ In order to use ``ChromaVectorStore`` you need to install the ``chromadb`` packa
 
     pip install chromadb
 
-.. automodule:: labrador.vector_stores.chroma
+.. automodule:: beekeeper.vector_stores.chroma
     :members:

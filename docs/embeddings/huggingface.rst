@@ -3,5 +3,5 @@ Hugging Face
 ============================================
 
 
-.. automodule:: labrador.embeddings.huggingface
+.. automodule:: beekeeper.embeddings.huggingface
     :members:

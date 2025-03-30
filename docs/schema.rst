@@ -4,5 +4,5 @@ Schema
 
 Base schema for data structures.
 
-.. automodule:: labrador.core.document.schema
+.. automodule:: beekeeper.core.document.schema
     :members:

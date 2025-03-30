@@ -3,5 +3,5 @@ Sentence splitter
 ============================================
 
 
-.. automodule:: labrador.text_splitters.sentence
+.. automodule:: beekeeper.text_splitters.sentence
     :members:

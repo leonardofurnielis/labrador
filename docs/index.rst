@@ -1,8 +1,8 @@
 ============================================
-Welcome to Labrador documentation!
+Welcome to bBeekeeper documentation!
 ============================================
 
-Labrador is a data library to load any data with a single line of code, seamlessly connecting it to AI applications.
+Beekeeper is a data framework to load any data in one line of code and connect with AI applications.
 
 .. toctree::
     :hidden:

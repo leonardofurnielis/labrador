@@ -3,5 +3,5 @@ Semantic splitter
 ============================================
 
 
-.. automodule:: labrador.text_splitters.semantic
+.. automodule:: beekeeper.text_splitters.semantic
     :members:
