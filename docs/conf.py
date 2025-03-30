@@ -11,7 +11,7 @@ import sys
 project = 'Beekeeper'
 copyright = '2024, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-version = '0.6.2'
+version = '0.6.3'
 release = version
 
 # -- General configuration ---------------------------------------------------
