@@ -259,11 +259,11 @@ class WatsonxExternalPromptMonitoring:
                               detached_prompt_url: str = None,
                               detached_prompt_additional_info: dict = None,
                               prompt_variables: List[str] = None,
-                              prompt_template_version: str = None,
-                              prompt_instruction: str = None,
+                            #   prompt_template_version: str = None,
+                            #   prompt_instruction: str = None,
                               input_text: str = None,
-                              input_prefix: str = None,
-                              output_prefix: str = None,
+                            #   input_prefix: str = None,
+                            #   output_prefix: str = None,
                               context_fields: List[str] = None,
                               question_field: str = None) -> dict:
         """Create a Detached/External Prompt Template Asset and setup monitors for a given prompt template asset.
@@ -586,7 +586,7 @@ class WatsonxPromptMonitoring:
 
         created_pta = aigov_client.assets.create_prompt(
             **asset_details, 
-            input_mode="structured",
+            input_mode="freeform",
             prompt_details=PromptTemplate(**prompt_template_details))
             
         return created_pta.to_dict()["asset_id"]
@@ -633,11 +633,11 @@ class WatsonxPromptMonitoring:
                               description: str = "",
                               model_parameters: dict = None,
                               prompt_variables: List[str] = None,
-                              prompt_template_version: str = None,
-                              prompt_instruction: str = None,
+                            #   prompt_template_version: str = None,
+                            #   prompt_instruction: str = None,
                               input_text: str = None,
-                              input_prefix: str = None,
-                              output_prefix: str = None,
+                            #   input_prefix: str = None,
+                            #   output_prefix: str = None,
                               context_fields: List[str] = None,
                               question_field: str = None,
                               ) -> dict:
