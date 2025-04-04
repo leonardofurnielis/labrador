@@ -3,5 +3,5 @@ Sentence splitter
 ============================================
 
 
-.. automodule:: beekeeper.text_splitters.sentence
+.. automodule:: pineflow.text_splitters.sentence
     :members:

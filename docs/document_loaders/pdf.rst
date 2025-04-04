@@ -8,5 +8,5 @@ In order to use ``PDFLoader`` you need to install the ``pypdf`` package.
 
     pip install pypdf
 
-.. automodule:: beekeeper.document_loaders.pdf
+.. automodule:: pineflow.document_loaders.pdf
     :members:

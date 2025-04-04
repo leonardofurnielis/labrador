@@ -3,5 +3,5 @@ Hugging Face
 ============================================
 
 
-.. automodule:: beekeeper.embeddings.huggingface
+.. automodule:: pineflow.embeddings.huggingface
     :members:

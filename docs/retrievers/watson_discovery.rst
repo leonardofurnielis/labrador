@@ -8,5 +8,5 @@ In order to use ``WatsonDiscoveryRetriever`` you need to install the ``ibm-watso
 
     pip install ibm-watson
 
-.. automodule:: beekeeper.retrievers.watson_discovery
+.. automodule:: pineflow.retrievers.watson_discovery
     :members:

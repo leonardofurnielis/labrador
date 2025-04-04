@@ -3,5 +3,5 @@ Semantic splitter
 ============================================
 
 
-.. automodule:: beekeeper.text_splitters.semantic
+.. automodule:: pineflow.text_splitters.semantic
     :members:

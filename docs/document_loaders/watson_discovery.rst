@@ -8,6 +8,6 @@ In order to use ``WatsonDiscoveryLoader`` you need to install the ``ibm-watson``
 
     pip install ibm-watson
 
-.. automodule:: beekeeper.document_loaders.watson_discovery
+.. automodule:: pineflow.document_loaders.watson_discovery
     :members:
 

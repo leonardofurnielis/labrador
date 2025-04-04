@@ -8,5 +8,5 @@ In order to use ``DirectoryLoader`` you need to install the ``docx2txt`` and ``p
 
     pip install docx2txt pypdf
 
-.. automodule:: beekeeper.document_loaders.directory
+.. automodule:: pineflow.document_loaders.directory
     :members:

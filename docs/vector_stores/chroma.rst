@@ -8,5 +8,5 @@ In order to use ``ChromaVectorStore`` you need to install the ``chromadb`` packa
 
     pip install chromadb
 
-.. automodule:: beekeeper.vector_stores.chroma
+.. automodule:: pineflow.vector_stores.chroma
     :members:

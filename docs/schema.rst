@@ -4,5 +4,5 @@ Schema
 
 Base schema for data structures.
 
-.. automodule:: beekeeper.core.document.schema
+.. automodule:: pineflow.core.document.schema
     :members:

@@ -1,8 +1,8 @@
 ============================================
-Welcome to bBeekeeper documentation!
+Welcome to Pineflow documentation!
 ============================================
 
-Beekeeper is a data framework to load any data in one line of code and connect with AI applications.
+Pineflow is a data framework to load any data in one line of code and connect with AI applications.
 
 .. toctree::
     :hidden:

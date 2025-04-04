@@ -8,5 +8,5 @@ In order to use ``IBM watsonx.governance`` you need to install the ``ibm-aigov-f
 
     pip install ibm-aigov-facts-client ibm-watson-openscale ibm-watsonx-ai
 
-.. automodule:: beekeeper.monitor.watsonx
+.. automodule:: pineflow.monitor.watsonx
     :members:

@@ -8,5 +8,5 @@ In order to use ``JSONLoader`` you need to install the ``jq`` package.
 
     pip install jq
 
-.. automodule:: beekeeper.document_loaders.json
+.. automodule:: pineflow.document_loaders.json
     :members:
