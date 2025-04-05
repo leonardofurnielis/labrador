@@ -9,9 +9,9 @@ import os
 import sys
 
 project = 'Pineflow'
-copyright = '2024, Leonardo Furnielis'
+copyright = '2025, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-version = '0.6.1'
+version = '0.6.2'
 release = version
 
 # -- General configuration ---------------------------------------------------
