@@ -116,15 +116,13 @@ class WatsonxExternalPromptMonitoring:
 
     .. code-block:: python
 
-        from pineflow.monitor import WatsonxExternalPromptMonitoring
+        from pineflow.monitors import WatsonxExternalPromptMonitoring, CloudPakforDataCredentials
 
         # watsonx.governance (IBM Cloud)
         detached_watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="your_api_key", 
                                                                space_id="your_space_id")
                                                                
         # watsonx.governance (cp4d)
-        from pineflow.monitor import CloudPakforDataCredentials
-        
         cpd_creds = CloudPakforDataCredentials(url="your_cpd_url", 
                                   username="your_username", password="your_password",
                                  version="5.0", instance_id="openshift")
@@ -488,15 +486,13 @@ class WatsonxPromptMonitoring:
 
     .. code-block:: python
 
-        from pineflow.monitor import WatsonxPromptMonitoring
+        from pineflow.monitors import WatsonxPromptMonitoring, CloudPakforDataCredentials
 
         # watsonx.governance (IBM Cloud)
         watsonx_monitor = WatsonxExternalPromptMonitoring(api_key="your_api_key", 
                                                         space_id="your_space_id")
         
         # watsonx.governance (cp4d)
-        from pineflow.monitor import CloudPakforDataCredentials
-        
         cpd_creds = CloudPakforDataCredentials(url="your_cpd_url", 
                                   username="your_username", password="your_password",
                                  version="5.0", instance_id="openshift")

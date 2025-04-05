@@ -1,4 +1,4 @@
-from pineflow.monitor.watsonx import (
+from pineflow.monitors.watsonx import (
     CloudPakforDataCredentials,
     WatsonxExternalPromptMonitoring,
     WatsonxPromptMonitoring,
