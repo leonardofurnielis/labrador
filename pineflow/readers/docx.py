@@ -3,11 +3,11 @@ from pathlib import Path
 from typing import List, Optional
 
 from pineflow.core.document import Document
-from pineflow.core.document_loaders import BaseLoader
+from pineflow.core.readers import BaseReader
 
 
-class DocxLoader(BaseLoader):
-    """Microsoft Word (Docx) loader."""
+class DocxReader(BaseReader):
+    """Microsoft Word (Docx) reader."""
 
     def load_data(self, input_file: str, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory.

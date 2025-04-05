@@ -3,10 +3,10 @@ from pathlib import Path
 from typing import List, Optional
 
 from pineflow.core.document import Document
-from pineflow.core.document_loaders import BaseLoader
+from pineflow.core.readers import BaseReader
 
 
-class HTMLLoader(BaseLoader):
+class HTMLReader(BaseReader):
     """Load HTML file and extract text from a specific tag.
 
     Args:

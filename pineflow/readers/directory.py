@@ -4,21 +4,21 @@ from pathlib import Path
 from typing import List, Optional, Type
 
 from pineflow.core.document import Document
-from pineflow.core.document_loaders import BaseLoader
+from pineflow.core.readers import BaseReader
 
 
-def _loading_default_supported_loaders():
-    from pineflow.document_loaders import DocxLoader, HTMLLoader, PDFLoader
+def _loading_default_supported_readers():
+    from pineflow.readers import DocxReader, HTMLReader, PDFReader
 
     return {
-    ".docx": DocxLoader,
-    ".html": HTMLLoader,
-    ".pdf": PDFLoader,
+    ".docx": DocxReader,
+    ".html": HTMLReader,
+    ".pdf": PDFReader,
 }
 
 
-class DirectoryLoader(BaseLoader):
-    """Simple directory loader.
+class DirectoryReader(BaseReader):
+    """Simple directory reader.
 
     Args:
         required_exts: (List[str], optional): List of file extensions to only load files with those extensions.
@@ -27,7 +27,7 @@ class DirectoryLoader(BaseLoader):
     
     required_exts: List[str] = [".pdf", ".docx", ".html"]
     recursive: Optional[bool] = False
-    file_loader: Optional[dict[str, Type[BaseLoader]]] = None
+    file_loader: Optional[dict[str, Type[BaseReader]]] = None
 
     def load_data(self, input_dir: str, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory.
@@ -39,7 +39,7 @@ class DirectoryLoader(BaseLoader):
             raise ValueError(f"`{input_dir}` is not a valid directory.")
         
         if self.file_loader is None:
-            self.file_loader = _loading_default_supported_loaders()
+            self.file_loader = _loading_default_supported_readers()
         
         input_dir = Path(input_dir)
         documents = []

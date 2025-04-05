@@ -9,10 +9,10 @@ Pineflow is a data framework to load any data in one line of code and connect wi
     :maxdepth: 2
 
     Installation <install>
-    Document Loaders <document_loaders/index>
     Embeddings <embeddings/index>
     Evaluation <evaluation/index>
     Monitors <monitors/index>
+    Readers <readers/index>
     Retrievers <retrievers/index>
     Text Splitters <text_splitters/index>
     Vector Stores <vector_stores/index>

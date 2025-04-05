@@ -3,13 +3,13 @@ from logging import getLogger
 from typing import List, Optional
 
 from pineflow.core.document import Document
-from pineflow.core.document_loaders import BaseLoader
+from pineflow.core.readers import BaseReader
 
 logger = getLogger(__name__)
 
 
-class WatsonDiscoveryLoader(BaseLoader):
-    """Provides functionality to load documents from IBM Watson Discovery.
+class WatsonDiscoveryReader(BaseReader):
+    """Provides functionality to read documents from IBM Watson Discovery.
 
     See https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-getting-started for more info.
 
@@ -26,9 +26,9 @@ class WatsonDiscoveryLoader(BaseLoader):
 
     .. code-block:: python
 
-        from pineflow.document_loaders import WatsonDiscoveryLoader
+        from pineflow.readers import WatsonDiscoveryReader
 
-        doc_loader = WatsonDiscoveryLoader(url="your_url",
+        discovery_reader = WatsonDiscoveryReader(url="your_url",
                                           api_key="your_api_key",
                                           project_id="your_project_id")
     """
@@ -71,7 +71,7 @@ class WatsonDiscoveryLoader(BaseLoader):
 
         .. code-block:: python
 
-            docs = doc_loader.load_data()
+            docs = discovery_reader.load_data()
         """
         from ibm_watson.discovery_v2 import QueryLargePassages
         last_batch_size = self.batch_size

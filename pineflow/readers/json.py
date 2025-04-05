@@ -4,11 +4,11 @@ from pathlib import Path
 from typing import List, Optional
 
 from pineflow.core.document import Document
-from pineflow.core.document_loaders import BaseLoader
+from pineflow.core.readers import BaseReader
 
 
-class JSONLoader(BaseLoader):
-    """JSON loader.
+class JSONReader(BaseReader):
+    """JSON reader.
 
     Args:
         jq_schema (str, optional): jq schema to use to extract the data from the JSON.

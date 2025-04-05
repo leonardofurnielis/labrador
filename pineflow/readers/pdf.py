@@ -4,12 +4,12 @@ from pathlib import Path
 from typing import List, Optional
 
 from pineflow.core.document import Document
-from pineflow.core.document_loaders import BaseLoader
+from pineflow.core.readers import BaseReader
 
 logging.getLogger("pypdf").setLevel(logging.ERROR)
 
-class PDFLoader(BaseLoader):
-    """PDF loader using PyPDF."""
+class PDFReader(BaseReader):
+    """PDF reader using PyPDF."""
 
     def load_data(self, input_file: str, extra_info: Optional[dict] = None) -> List[Document]:
         """Loads data from the specified directory.

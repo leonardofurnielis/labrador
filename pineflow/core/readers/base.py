@@ -6,12 +6,12 @@ from pydantic.v1 import BaseModel
 from pineflow.core.document import Document
 
 
-class BaseLoader(ABC, BaseModel):
-    """An interface for document loader."""
+class BaseReader(ABC, BaseModel):
+    """An interface for document reader."""
 
     @classmethod
     def class_name(cls) -> str:
-        return "BaseLoader"
+        return "BaseReader"
 
     @abstractmethod
     def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:

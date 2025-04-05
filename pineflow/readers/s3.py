@@ -4,12 +4,12 @@ import tempfile
 from typing import List, Optional
 
 from pineflow.core.document import Document
-from pineflow.core.document_loaders import BaseLoader
-from pineflow.document_loaders import DirectoryLoader
+from pineflow.core.readers import BaseReader
+from pineflow.readers import DirectoryReader
 
 
-class S3Loader(BaseLoader):
-    """S3 bucket loader.
+class S3Reader(BaseReader):
+    """S3 bucket reader.
 
     Args:
         bucket (str): Name of the S3 bucket.
@@ -21,9 +21,9 @@ class S3Loader(BaseLoader):
 
     .. code-block:: python
 
-        from pineflow.document_loaders import S3Loader
+        from pineflow.readers import S3Reader
 
-        loader = S3Loader(bucket="your_bucket",
+        s3_reader = S3Reader(bucket="your_bucket",
                      ibm_api_key_id="your_api_key",
                      ibm_service_instance_id="your_instance_id",
                      s3_endpoint_url="your_api_url")
@@ -69,4 +69,4 @@ class S3Loader(BaseLoader):
 
             s3_source = re.sub(r"^(https?)://", "", self.s3_endpoint_url)
 
-            return DirectoryLoader(input_dir=temp_dir).load_data(extra_info={"source": f"{s3_source}/{self.bucket}"})
+            return DirectoryReader(input_dir=temp_dir).load_data(extra_info={"source": f"{s3_source}/{self.bucket}"})
