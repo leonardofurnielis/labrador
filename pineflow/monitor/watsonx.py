@@ -259,11 +259,7 @@ class WatsonxExternalPromptMonitoring:
                               detached_prompt_url: str = None,
                               detached_prompt_additional_info: dict = None,
                               prompt_variables: List[str] = None,
-                            #   prompt_template_version: str = None,
-                            #   prompt_instruction: str = None,
                               input_text: str = None,
-                            #   input_prefix: str = None,
-                            #   output_prefix: str = None,
                               context_fields: List[str] = None,
                               question_field: str = None) -> dict:
         """Create a Detached/External Prompt Template Asset and setup monitors for a given prompt template asset.
@@ -280,11 +276,7 @@ class WatsonxExternalPromptMonitoring:
             detached_prompt_url (str, optional): URL of the external prompt.
             detached_prompt_additional_info (dict, optional): Additional information related to the external prompt.
             prompt_variables (List[str], optional): Values for prompt variables.
-            prompt_template_version (str, optional): Semantic version of the External Prompt Template Asset.
-            prompt_instruction (str, optional): Instruction for using the prompt.
             input_text (str, optional): The input text for the prompt.
-            input_prefix (str, optional): A prefix to add to the input.
-            output_prefix (str, optional): A prefix to add to the output.
             context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
             question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
 
@@ -311,7 +303,6 @@ class WatsonxExternalPromptMonitoring:
         prompt_metadata.pop("question_field", None)
         
         # update name of keys to aigov_facts api
-        prompt_metadata["model_version"] = prompt_metadata.pop("prompt_template_version", None)
         prompt_metadata["input"] = prompt_metadata.pop("input_text", None)
         prompt_metadata["model_provider"] = prompt_metadata.pop("detached_model_provider", None)
         prompt_metadata["model_name"] = prompt_metadata.pop("detached_model_name", None)
@@ -353,8 +344,7 @@ class WatsonxExternalPromptMonitoring:
         detached_details["prompt_id"] = "detached_prompt_" + str(uuid.uuid4())
         
         prompt_details = _filter_dict(prompt_metadata, 
-                                      ["model_version", "prompt_variables", "prompt_instruction",
-                                       "input_prefix", "output_prefix", "input", "model_parameters"])
+                                      ["prompt_variables", "input", "model_parameters"])
         
         detached_asset_details = _filter_dict(prompt_metadata, ["description"],
                                               ["name", "model_id", "task_id"])
@@ -633,11 +623,7 @@ class WatsonxPromptMonitoring:
                               description: str = "",
                               model_parameters: dict = None,
                               prompt_variables: List[str] = None,
-                            #   prompt_template_version: str = None,
-                            #   prompt_instruction: str = None,
                               input_text: str = None,
-                            #   input_prefix: str = None,
-                            #   output_prefix: str = None,
                               context_fields: List[str] = None,
                               question_field: str = None,
                               ) -> dict:
@@ -650,11 +636,7 @@ class WatsonxPromptMonitoring:
             description (str, optional): Description of the Prompt Template Asset.
             model_parameters (dict, optional): Model parameters and their respective values.
             prompt_variables (List[str], optional): Values for prompt input variables.
-            prompt_template_version (str, optional): Semantic version of the Prompt Template Asset.
-            prompt_instruction (str, optional): Instruction for using the prompt.
             input_text (str, optional): The input text for the prompt.
-            input_prefix (str, optional): A prefix to add to the input.
-            output_prefix (str, optional): A prefix to add to the output.
             context_fields (List[str], optional): A list of fields that will provide context to the prompt. Applicable only for ``retrieval_augmented_generation`` problem type.
             question_field (str, optional): The field containing the question to be answered. Applicable only for ``retrieval_augmented_generation`` problem type.
             
@@ -678,7 +660,6 @@ class WatsonxPromptMonitoring:
         prompt_metadata.pop("question_field", None)
         
         # update name of keys to aigov_facts api
-        prompt_metadata["model_version"] = prompt_metadata.pop("prompt_template_version", None)
         prompt_metadata["input"] = prompt_metadata.pop("input_text", None)
         
         # update list of vars to dict
@@ -712,8 +693,7 @@ class WatsonxPromptMonitoring:
                 raise
         
         prompt_details = _filter_dict(prompt_metadata, 
-                                      ["model_version", "prompt_variables", "prompt_instruction",
-                                       "input_prefix", "output_prefix", "input", "model_parameters"])
+                                      ["prompt_variables", "input", "model_parameters"])
         
         asset_details = _filter_dict(prompt_metadata, ["description"],
                                      ["name", "model_id", "task_id"])
@@ -839,5 +819,4 @@ class WatsonxPromptMonitoring:
         self._wos_client.data_sets.store_records(data_set_id=payload_data_set_id, 
                                                  request_body=payload_data,
                                                  background_mode=False)
-                  
                   
