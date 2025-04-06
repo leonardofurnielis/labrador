@@ -1,5 +1,6 @@
 
 from typing import List, Optional
+
 from pineflow.core.document.schema import Document
 from pineflow.core.readers.base import BaseReader
 
@@ -34,9 +35,7 @@ class IngestionFlow():
         
         documents = self._transform(input_documents)
         
-        documents = documents or []
-        
-        return documents
+        return documents or []
         
         
         
