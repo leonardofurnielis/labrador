@@ -21,7 +21,7 @@ class IngestionFlow():
         from pineflow.embeddings import HuggingFaceEmbedding
 
         
-        ingestion_flow = IngestionFlow(transformations= [
+        ingestion_flow = IngestionFlow(transformers= [
             TokenTextSplitter(), 
             HuggingFaceEmbedding(model_name="intfloat/multilingual-e5-small"),
             ]
