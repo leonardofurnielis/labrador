@@ -6,6 +6,28 @@ from pineflow.core.readers.base import BaseReader
 
 
 class IngestionFlow():
+    """An ingestion flow.
+
+    Args:
+        transformers: Transformers to apply to the data.
+        readers (BaseReader, optional): Reader to use to ingest data.
+
+    **Example**
+
+    .. code-block:: python
+
+        from pineflow.core.flows import IngestionFlow
+        from pineflow.text_splitters import TokenTextSplitter
+        from pineflow.embeddings import HuggingFaceEmbedding
+
+        
+        ingestion_flow = IngestionFlow(transformations= [
+            TokenTextSplitter(), 
+            HuggingFaceEmbedding(model_name="intfloat/multilingual-e5-small"),
+            ]
+        )
+    """
+
     def __init__(self, 
                  transformers,
                  readers: List[BaseReader]=None):
@@ -32,11 +54,20 @@ class IngestionFlow():
         return documents    
     
     def run(self, documents: List[Document]=None):
+        """An ingestion flow.
+
+        Args:
+            documents: Set of documents to be transformed.
+
+        **Example**
+
+        .. code-block:: python
+
+            ingestion_flow.run(documents: List[Document])
+        """
         input_documents = self._read_documents(documents)
         
         documents = self._run_transformers(input_documents, self.transformers)
         
-        return documents or []
-        
-        
+        return documents or []    
         
