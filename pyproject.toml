@@ -24,6 +24,7 @@ keywords = ["AI", "LLM", "QA", "RAG", "data", "monitor", "retrieval", "semantic-
 
 [tool.poetry.dependencies]
 python = "^3.10"
+accelerate = "^1.6.0"
 sentence-transformers = "^2.7.0"
 pydantic = "^2.7.1"
 torch = "2.1.0"
