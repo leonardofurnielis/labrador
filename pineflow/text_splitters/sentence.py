@@ -1,6 +1,7 @@
 from typing import List
 
 from pineflow.core.document import Document
+from pineflow.core.text_splitters.base import BaseTextChunker
 from pineflow.core.text_splitters.utils import (
     merge_splits,
     split_by_char,
@@ -12,7 +13,7 @@ from pineflow.core.text_splitters.utils import (
 )
 
 
-class SentenceSplitter:
+class SentenceSplitter(BaseTextChunker):
     """Designed to split input text into smaller chunks,
     particularly useful for processing large documents or texts, tries to keep sentences and paragraphs together.
 

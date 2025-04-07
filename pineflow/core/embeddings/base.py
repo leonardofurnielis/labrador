@@ -3,6 +3,7 @@ from typing import List, Literal
 
 import numpy as np
 
+from pineflow.core.document.schema import Document
 from pineflow.core.utils.pairwise import cosine_similarity
 
 Embedding = List[float]
@@ -42,3 +43,11 @@ class BaseEmbedding(ABC):
 
         else:
             return cosine_similarity(embedding1, embedding2)
+
+    def __call__(self, documents: List[Document]) -> List[Document]:
+        embeddings = self.get_documents_embedding(documents)
+        
+        for document, embedding in zip(documents, embeddings):
+            document.embedding = embedding
+        
+        return documents
