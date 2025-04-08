@@ -4,7 +4,7 @@ title: "[Bug]: "
 labels: ["bug"]
 body:
   - type: textarea
-    id: bug_description
+    id: description
     attributes:
       label: Bug Description and Expected behavior
       description: |
@@ -44,7 +44,7 @@ body:
       placeholder: |
         Exception + full stack trace
   - type: textarea
-    id: system_info
+    id: system-info
     attributes:
       label: System Info
       description: |
