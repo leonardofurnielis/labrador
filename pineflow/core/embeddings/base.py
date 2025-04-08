@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import List, Literal
+from enum import Enum
+from typing import List
 
 import numpy as np
 
@@ -7,6 +8,26 @@ from pineflow.core.document.schema import Document
 from pineflow.core.utils.pairwise import cosine_similarity
 
 Embedding = List[float]
+
+class SimilarityMode(str, Enum):
+    """Modes for similarity."""
+    
+    COSINE = "cosine"
+    DOT_PRODUCT = "dot_product"
+    EUCLIDEAN = "euclidean"
+
+
+def similarity(embedding1: Embedding, embedding2: Embedding,
+                   mode: SimilarityMode = SimilarityMode.COSINE):
+        """Get embedding similarity."""
+        if mode == SimilarityMode.EUCLIDEAN:
+            return -float(np.linalg.norm(np.array(embedding1) - np.array(embedding2)))
+
+        elif mode == SimilarityMode.DOT_PRODUCT:
+            return np.dot(embedding1, embedding2)
+
+        else:
+            return cosine_similarity(embedding1, embedding2)
 
 
 class BaseEmbedding(ABC):
@@ -28,21 +49,11 @@ class BaseEmbedding(ABC):
     def get_documents_embedding(self, documents: List[str]) -> List[Embedding]:
         """Get documents embeddings."""
 
-    def embed_documents(self, texts: List[str]) -> List[Embedding]:
-        return self.get_texts_embedding(texts=texts)
-
     @staticmethod
     def similarity(embedding1: Embedding, embedding2: Embedding,
-                   mode: Literal["cosine", "dot_product", "euclidean"] = "cosine"):
+                   mode: SimilarityMode = SimilarityMode.COSINE):
         """Get embedding similarity."""
-        if mode == "euclidean":
-            return -float(np.linalg.norm(np.array(embedding1) - np.array(embedding2)))
-
-        elif mode == "dot_product":
-            return np.dot(embedding1, embedding2)
-
-        else:
-            return cosine_similarity(embedding1, embedding2)
+        return similarity(embedding1, embedding2, mode)
 
     def __call__(self, documents: List[Document]) -> List[Document]:
         embeddings = self.get_documents_embedding(documents)

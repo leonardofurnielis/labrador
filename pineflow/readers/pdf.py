@@ -1,7 +1,7 @@
 import logging
 import os
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 from pineflow.core.document import Document
 from pineflow.core.readers import BaseReader
@@ -11,7 +11,7 @@ logging.getLogger("pypdf").setLevel(logging.ERROR)
 class PDFReader(BaseReader):
     """PDF reader using PyPDF."""
 
-    def load_data(self, input_file: str, extra_info: Optional[dict] = None) -> List[Document]:
+    def load_data(self, input_file: str) -> List[Document]:
         """Loads data from the specified directory.
         
         Args:

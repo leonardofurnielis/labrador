@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
 
 from pydantic.v1 import BaseModel
 
@@ -14,7 +14,7 @@ class BaseReader(ABC, BaseModel):
         return "BaseReader"
 
     @abstractmethod
-    def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
+    def load_data(self) -> List[Document]:
         """Loads data."""
 
     def load(self) -> List[Document]:
