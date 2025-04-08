@@ -64,7 +64,7 @@ class WatsonDiscoveryReader(BaseReader):
             logger.error(f"Error connecting to IBM Watson Discovery: {e}")
             raise
 
-    def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
+    def load_data(self) -> List[Document]:
         """Loads documents from the Watson Discovery.
 
         **Example**

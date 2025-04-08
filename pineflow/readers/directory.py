@@ -29,7 +29,7 @@ class DirectoryReader(BaseReader):
     recursive: Optional[bool] = False
     file_loader: Optional[dict[str, Type[BaseReader]]] = None
 
-    def load_data(self, input_dir: str, extra_info: Optional[dict] = None) -> List[Document]:
+    def load_data(self, input_dir: str) -> List[Document]:
         """Loads data from the specified directory.
         
         Args:
@@ -53,7 +53,7 @@ class DirectoryReader(BaseReader):
                 loader_cls = self.file_loader.get(extension)
                 if loader_cls:
                     try:
-                        #TO-DO add `file_loader_kwargs`
+                        #TO-DO add `file_reader_kwargs`
                         doc = loader_cls().load_data(file_dir)
                         documents.extend(doc)
                     except Exception as e:

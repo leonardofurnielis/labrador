@@ -49,7 +49,7 @@ class S3Reader(BaseReader):
         self.ibm_service_instance_id = ibm_service_instance_id
         self.s3_endpoint_url = s3_endpoint_url
 
-    def load_data(self, extra_info: Optional[dict] = None) -> List[Document]:
+    def load_data(self) -> List[Document]:
         """Loads data from the specified S3 bucket."""
         ibm_s3 = self._ibm_boto3.resource(
             "s3",
@@ -69,4 +69,4 @@ class S3Reader(BaseReader):
 
             s3_source = re.sub(r"^(https?)://", "", self.s3_endpoint_url)
 
-            return DirectoryReader(input_dir=temp_dir).load_data(extra_info={"source": f"{s3_source}/{self.bucket}"})
+            return DirectoryReader(input_dir=temp_dir).load_data()
