@@ -4,7 +4,7 @@ title: "[Feature Request]: "
 labels: ["enhancement"]
 body:
   - type: textarea
-    id: feature_description
+    id: description
     attributes:
       label: Feature Description
       description: |
