@@ -15,7 +15,7 @@ Pineflow is a data framework to load any data in one line of code and connect wi
     Monitors <monitors/index>
     Readers <readers/index>
     Retrievers <retrievers/index>
-    Text Splitters <text_splitters/index>
+    Text Chunkers <text_chunkers/index>
     Vector Stores <vector_stores/index>
     Schema <schema>
 

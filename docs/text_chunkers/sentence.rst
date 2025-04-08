@@ -1,7 +1,7 @@
 ============================================
-Token text splitter
+Sentence Chunker
 ============================================
 
 
-.. automodule:: pineflow.text_splitters.token
+.. automodule:: pineflow.text_chunkers.sentence
     :members:
