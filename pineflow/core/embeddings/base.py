@@ -49,9 +49,6 @@ class BaseEmbedding(ABC):
     def get_documents_embedding(self, documents: List[str]) -> List[Embedding]:
         """Get documents embeddings."""
 
-    def embed_documents(self, texts: List[str]) -> List[Embedding]:
-        return self.get_texts_embedding(texts=texts)
-
     @staticmethod
     def similarity(embedding1: Embedding, embedding2: Embedding,
                    mode: SimilarityMode = SimilarityMode.COSINE):
