@@ -3,7 +3,7 @@ from typing import Dict, List, Literal
 import numpy as np
 from pydantic.v1 import BaseModel
 
-from pineflow.core.embeddings import BaseEmbedding
+from pineflow.core.embeddings import BaseEmbedding, SimilarityMode
 
 
 class KnowledgeBaseCoverage(BaseModel):
@@ -27,7 +27,7 @@ class KnowledgeBaseCoverage(BaseModel):
     """
 
     embed_model: BaseEmbedding
-    similarity_mode: Literal["cosine", "dot_product", "euclidean"] = "cosine"
+    similarity_mode: SimilarityMode = SimilarityMode.COSINE
     similarity_threshold: float = 0.8
 
     class Config:
