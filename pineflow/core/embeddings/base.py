@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import List, Literal
+from typing import List
 
 import numpy as np
 
@@ -10,7 +10,7 @@ from pineflow.core.utils.pairwise import cosine_similarity
 Embedding = List[float]
 
 class SimilarityMode(str, Enum):
-    """Modes for similarity"""
+    """Modes for similarity."""
     
     COSINE = "cosine"
     DOT_PRODUCT = "dot_product"

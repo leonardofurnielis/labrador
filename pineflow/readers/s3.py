@@ -1,7 +1,8 @@
 import os
-import re
+
+# import re
 import tempfile
-from typing import List, Optional
+from typing import List
 
 from pineflow.core.document import Document
 from pineflow.core.readers import BaseReader
@@ -67,6 +68,6 @@ class S3Reader(BaseReader):
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 ibm_s3.meta.client.download_file(self.bucket, obj.key, file_path)
 
-            s3_source = re.sub(r"^(https?)://", "", self.s3_endpoint_url)
+            # s3_source = re.sub(r"^(https?)://", "", self.s3_endpoint_url)
 
             return DirectoryReader(input_dir=temp_dir).load_data()

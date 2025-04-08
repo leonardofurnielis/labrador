@@ -1,4 +1,4 @@
-from typing import Dict, List, Literal
+from typing import Dict, List
 
 import numpy as np
 from pydantic.v1 import BaseModel

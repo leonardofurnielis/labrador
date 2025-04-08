@@ -1,7 +1,7 @@
 import logging
 import os
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 from pineflow.core.document import Document
 from pineflow.core.readers import BaseReader
