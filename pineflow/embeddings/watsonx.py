@@ -89,12 +89,17 @@ class WatsonxEmbedding(BaseModel, BaseEmbedding):
         """
         return self._client.embed_documents(texts)
 
-    def get_documents_embedding(self, documents: List[Document]) -> List[Embedding]:
+    def get_documents_embedding(self, documents: List[Document]) -> List[Document]:
         """Compute embeddings for a list of documents.
 
         Args:
             documents (List[Document]): List of `Document` objects to compute embeddings.
         """
         texts = [document.get_content() for document in documents]
+        embeddings = self.get_texts_embedding(texts)
+        
+        for document, embedding in zip(documents, embeddings):
+            document.embedding = embedding
+        
+        return documents
 
-        return self.get_texts_embedding(texts)
