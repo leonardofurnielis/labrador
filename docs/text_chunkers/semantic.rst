@@ -1,7 +1,7 @@
 ============================================
-Semantic splitter
+Semantic Chunker
 ============================================
 
 
-.. automodule:: pineflow.text_splitters.semantic
+.. automodule:: pineflow.text_chunkers.semantic
     :members:
