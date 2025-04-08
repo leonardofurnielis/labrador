@@ -119,7 +119,7 @@ class ElasticsearchVectorStore:
 
         vector_store_data = []
         for doc in documents:
-            _id = doc.doc_id if doc.doc_id else str(uuid.uuid4())
+            _id = doc.id_ if doc.id_ else str(uuid.uuid4())
             _metadata = doc.get_metadata()
             vector_store_data.append({
                 "_index": self.index_name,
@@ -162,7 +162,7 @@ class ElasticsearchVectorStore:
 
         return [DocumentWithScore(
             document=Document(
-                doc_id=hit["_id"],
+                id_=hit["_id"],
                 text=hit["_source"]["text"],
                 metadata=hit["_source"]["metadata"],
             ),

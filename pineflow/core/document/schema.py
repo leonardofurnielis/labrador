@@ -1,18 +1,15 @@
 import uuid
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic.v1 import BaseModel, Field, validator
-
-if TYPE_CHECKING:
-    from langchain_core.documents import Document as LangChainDocument
 
 
 class BaseDocument(ABC, BaseModel):
     """Generic abstract interface for retrievable documents."""
 
-    doc_id: str = Field(
+    id_: str = Field(
         default_factory=lambda: str(uuid.uuid4()),
         description="Unique ID of the document.")
     metadata: Dict[str, Any] = Field(
@@ -54,18 +51,7 @@ class Document(BaseDocument):
         """Get metadata."""
         return self.metadata
 
-    @classmethod
-    def from_langchain_format(cls, doc: "LangChainDocument") -> "Document":
-        """
-        Convert a document from LangChain  format.
 
-        Args:
-            doc (LangChainDocument): Document in LangChain format.
-        """
-        return cls(text=doc.page_content, metadata=doc.metadata)
-
-
-@dataclass
 class DocumentWithScore:
     document: BaseDocument
     score: Optional[float] = None
@@ -83,15 +69,15 @@ class DocumentWithScore:
 
     # #### pass through methods to BaseDocument ####
     @property
-    def doc_id(self) -> str:
-        return self.document.doc_id
+    def id_(self) -> str:
+        return self.document.id_
 
     @property
     def text(self) -> str:
         if isinstance(self.document, Document):
             return self.document.text
         else:
-            raise ValueError("Must be a Document to get text")
+            raise ValueError("Must be a Document to get text.")
 
     def get_content(self) -> str:
         return self.document.get_content()

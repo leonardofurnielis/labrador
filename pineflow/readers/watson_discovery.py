@@ -101,7 +101,7 @@ class WatsonDiscoveryReader(BaseReader):
                 for i, doc in enumerate(results_documents):
                     doc["text"].insert(0, self._get_nested_value(doc, self.pre_additional_data_field))
 
-            documents.extend([Document(doc_id=doc["document_id"],
+            documents.extend([Document(id_=doc["document_id"],
                                        text="\n".join(doc["text"]),
                                        metadata={"collection_id": doc["result_metadata"]["collection_id"]} | doc[
                                            "extracted_metadata"])

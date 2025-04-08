@@ -65,7 +65,7 @@ class ChromaVectorStore:
         for doc in documents:
             embeddings.append(self._embed_model.get_query_embedding(doc.get_content()))
             metadatas.append(doc.get_metadata() if doc.get_metadata() else None)
-            ids.append(doc.doc_id if doc.doc_id else str(uuid.uuid4()))
+            ids.append(doc.id_ if doc.id_ else str(uuid.uuid4()))
             chroma_documents.append(doc.get_content())
 
         self._collection.add(embeddings=embeddings,
@@ -91,7 +91,7 @@ class ChromaVectorStore:
 
         return [
             DocumentWithScore(document=Document(
-                doc_id=result[0],
+                id_=result[0],
                 text=result[1],
                 metadata=result[2]
             ), score=result[3])
