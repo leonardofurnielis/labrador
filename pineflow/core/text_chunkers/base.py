@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from pineflow.core.document.schema import Document
+from pineflow.core.document.schema import Document, TransformerComponent
 
 
-class BaseTextChunker(ABC):
+class BaseTextChunker(TransformerComponent, ABC):
     """An interface for text chunker."""
 
     @classmethod

@@ -1,7 +1,7 @@
 
 from typing import List, Optional
 
-from pineflow.core.document.schema import Document
+from pineflow.core.document.schema import Document, TransformerComponent
 from pineflow.core.readers.base import BaseReader
 
 
@@ -29,7 +29,7 @@ class IngestionFlow():
     """
 
     def __init__(self, 
-                 transformers,
+                 transformers: TransformerComponent,
                  readers: List[BaseReader]=None):
         
         self.transformers = transformers
@@ -47,9 +47,9 @@ class IngestionFlow():
         
         return input_documents    
         
-    def _run_transformers(self, documents: List[Document], transformers):
-        for transformer in transformers:
-            documents = transformer(documents)
+    def _run_transformers(self, documents: List[Document], transformers: TransformerComponent):
+        for transform in transformers:
+            documents = transform(documents)
         
         return documents    
     

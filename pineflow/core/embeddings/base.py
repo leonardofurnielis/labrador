@@ -4,7 +4,7 @@ from typing import List
 
 import numpy as np
 
-from pineflow.core.document.schema import Document
+from pineflow.core.document.schema import Document, TransformerComponent
 from pineflow.core.utils.pairwise import cosine_similarity
 
 Embedding = List[float]
@@ -31,7 +31,7 @@ def similarity(embedding1: Embedding,
             return cosine_similarity(embedding1, embedding2)
 
 
-class BaseEmbedding(ABC):
+class BaseEmbedding(TransformerComponent, ABC):
     """An interface for embedding models."""
 
     @classmethod
