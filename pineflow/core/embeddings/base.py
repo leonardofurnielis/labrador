@@ -17,8 +17,9 @@ class SimilarityMode(str, Enum):
     EUCLIDEAN = "euclidean"
 
 
-def similarity(embedding1: Embedding, embedding2: Embedding,
-                   mode: SimilarityMode = SimilarityMode.COSINE):
+def similarity(embedding1: Embedding, 
+               embedding2: Embedding,
+               mode: SimilarityMode = SimilarityMode.COSINE):
         """Get embedding similarity."""
         if mode == SimilarityMode.EUCLIDEAN:
             return -float(np.linalg.norm(np.array(embedding1) - np.array(embedding2)))
@@ -46,19 +47,15 @@ class BaseEmbedding(ABC):
         """Get text embeddings."""
 
     @abstractmethod
-    def get_documents_embedding(self, documents: List[str]) -> List[Embedding]:
+    def get_documents_embedding(self, documents: List[Document]) -> List[Document]:
         """Get documents embeddings."""
 
     @staticmethod
-    def similarity(embedding1: Embedding, embedding2: Embedding,
+    def similarity(embedding1: Embedding, 
+                   embedding2: Embedding,
                    mode: SimilarityMode = SimilarityMode.COSINE):
         """Get embedding similarity."""
         return similarity(embedding1, embedding2, mode)
 
     def __call__(self, documents: List[Document]) -> List[Document]:
-        embeddings = self.get_documents_embedding(documents)
-        
-        for document, embedding in zip(documents, embeddings):
-            document.embedding = embedding
-        
-        return documents
+        return self.get_documents_embedding(documents)

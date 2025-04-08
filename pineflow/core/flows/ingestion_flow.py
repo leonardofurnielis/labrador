@@ -17,12 +17,12 @@ class IngestionFlow():
     .. code-block:: python
 
         from pineflow.core.flows import IngestionFlow
-        from pineflow.text_splitters import TokenTextSplitter
+        from pineflow.text_chunkers import TokenTextChunker
         from pineflow.embeddings import HuggingFaceEmbedding
 
         
         ingestion_flow = IngestionFlow(transformers= [
-            TokenTextSplitter(), 
+            TokenTextChunker(), 
             HuggingFaceEmbedding(model_name="intfloat/multilingual-e5-small"),
             ]
         )

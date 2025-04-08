@@ -6,11 +6,11 @@ from pydantic.v1 import BaseModel
 
 from pineflow.core.document import Document
 from pineflow.core.embeddings import BaseEmbedding
-from pineflow.core.text_splitters.base import BaseTextChunker
+from pineflow.core.text_chunkers.base import BaseTextChunker
 from pineflow.core.utils.pairwise import cosine_similarity
 
 
-class SemanticSplitter(BaseTextChunker, BaseModel):
+class SemanticChunker(BaseTextChunker, BaseModel):
     """Python class designed to split text into chunks using semantic understanding.
 
     Credit to Greg Kamradt's notebook: `5 Levels Of Text Splitting <https://github.com/FullStackRetrieval-com/RetrievalTutorials/blob/main/tutorials/LevelsOfTextSplitting/5_Levels_Of_Text_Splitting.ipynb>`_.
@@ -26,10 +26,10 @@ class SemanticSplitter(BaseTextChunker, BaseModel):
     .. code-block:: python
 
         from pineflow.embeddings import HuggingFaceEmbedding
-        from pineflow.text_splitters import SemanticSplitter
+        from pineflow.text_chunkers import SemanticChunker
 
         embedding = HuggingFaceEmbedding()
-        text_splitter = SemanticSplitter(embed_model=embedding)
+        text_chunker = SemanticChunker(embed_model=embedding)
     """
 
     embed_model: BaseEmbedding
