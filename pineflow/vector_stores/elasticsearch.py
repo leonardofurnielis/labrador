@@ -4,11 +4,12 @@ from typing import List, Literal
 
 from pineflow.core.document import Document, DocumentWithScore
 from pineflow.core.embeddings import BaseEmbedding
+from pineflow.core.vector_stores.base import BaseVectorStore
 
 logger = getLogger(__name__)
 
 
-class ElasticsearchVectorStore:
+class ElasticsearchVectorStore(BaseVectorStore):
     """Provides functionality to interact with Elasticsearch for storing and querying document embeddings.
 
     Args:
@@ -84,6 +85,15 @@ class ElasticsearchVectorStore:
                 )
 
             index_mappings = {
+                "dynamic_templates": 
+                    [{
+                    "dynamic_metadata": {
+                        "path_match": "metadata.*",
+                        "mapping": {
+                            "type": "keyword"
+                            }
+                        }
+                    }],
                 "properties": {
                     self.text_field: {"type": "text"},
                     self.vector_field: {
@@ -92,14 +102,6 @@ class ElasticsearchVectorStore:
                         "index": True,
                         "similarity": self.distance_strategy,
                     },
-                    "metadata": {
-                        "properties": {
-                            "creation_date": {"type": "keyword"},
-                            "filename": {"type": "keyword"},
-                            "file_type": {"type": "keyword"},
-                            "page": {"type": "keyword"},
-                        }
-                    }
                 }
             }
 
@@ -107,7 +109,7 @@ class ElasticsearchVectorStore:
 
             self._client.indices.create(index=self.index_name, mappings=index_mappings)
 
-    def add_documents(self, documents: List[Document], create_index_if_not_exists: bool = True) -> None:
+    def add_documents(self, documents: List[Document], create_index_if_not_exists: bool = True) -> List[str]:
         """Add documents to the Elasticsearch index.
 
         Args:
@@ -127,14 +129,12 @@ class ElasticsearchVectorStore:
                 self.text_field: doc.get_content(),
                 self.vector_field: self._embed_model.get_query_embedding(doc.get_content()),
                 "metadata": _metadata,
-                "metadata.creation_date": _metadata["creation_date"] if _metadata["creation_date"] else None,
-                "metadata.filename": _metadata["filename"] if _metadata["filename"] else None,
-                "metadata.file_type": _metadata["file_type"] if _metadata["file_type"] else None,
-                "metadata.page": _metadata["page"] if _metadata["page"] else None,
             })
 
         self._es_bulk(self._client, vector_store_data, chunk_size=self.batch_size, refresh=True)
         print(f"Added {len(vector_store_data)} documents to `{self.index_name}`")
+        
+        return [doc.id_ for doc in documents]
 
     def query(self, query: str, top_k: int = 4) -> List[DocumentWithScore]:
         """Performs a similarity search for top-k most similar documents.

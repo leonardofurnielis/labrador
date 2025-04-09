@@ -4,11 +4,12 @@ from typing import List, Literal
 
 from pineflow.core.document import Document, DocumentWithScore
 from pineflow.core.embeddings import BaseEmbedding
+from pineflow.core.vector_stores.base import BaseVectorStore
 
 logger = getLogger(__name__)
 
 
-class ChromaVectorStore:
+class ChromaVectorStore(BaseVectorStore):
     """Chroma is the AI-native open-source vector database. Embeddings are stored within a ChromaDB collection.
 
     Args:

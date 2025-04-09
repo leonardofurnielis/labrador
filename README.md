@@ -1,4 +1,4 @@
-# Pineflow
+![Pineflow logo](./docs/static/img/pineflow-logo.png)
 
 ![PyPI - Version](https://img.shields.io/pypi/v/pineflow)
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)

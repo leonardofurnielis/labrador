@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from pineflow.core.document.schema import Document, TransformerComponent
 from pineflow.core.readers.base import BaseReader
+from pineflow.core.vector_stores.base import BaseVectorStore
 
 
 class IngestionFlow():
@@ -30,10 +31,12 @@ class IngestionFlow():
 
     def __init__(self, 
                  transformers: TransformerComponent,
-                 readers: List[BaseReader]=None):
+                 readers: List[BaseReader] = None,
+                 vector_store: BaseVectorStore = None):
         
         self.transformers = transformers
         self.readers = readers
+        self.vector_store = vector_store
     
     def _read_documents(self, documents: Optional[List[Document]]):
         input_documents = []
@@ -54,7 +57,7 @@ class IngestionFlow():
         return documents    
     
     def run(self, documents: List[Document]=None):
-        """An ingestion flow.
+        """Run an ingestion flow.
 
         Args:
             documents: Set of documents to be transformed.
