@@ -192,13 +192,13 @@ class ElasticsearchVectorStore(BaseVectorStore):
         for id in ids:
             self._client.delete(index=self.index_name, id=id)
 
-    def get_all_hashes(self):
+    def get_all_ref_document_hashes(self):
         results = self._client.search(
             index=self.index_name, 
             scroll="2m",
             size=1000,
             body={
-                "_source": ["metadata.hash", "metadata.ref_doc_hash"],
+                "_source": ["metadata.ref_doc_hash"],
                 "query": { "match_all": {} },
                 }
             )

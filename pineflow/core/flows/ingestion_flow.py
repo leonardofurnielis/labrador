@@ -12,6 +12,7 @@ class IngestionFlow():
     Args:
         transformers: Transformers to apply to the data.
         readers (BaseReader, optional): Reader to use to ingest data.
+        vector_store (BaseVectorStore, optional): Vector store to use to store the data.
 
     **Example**
 
@@ -50,8 +51,8 @@ class IngestionFlow():
         
         return input_documents    
     
-    def _handle_upsert_vector_standalone(self, documents) -> List[Document]:
-        existing_hashes = self.vector_store.get_all_hashes()
+    def _handle_pre_upsert(self, documents) -> List[Document]:
+        existing_hashes = self.vector_store.get_all_ref_document_hashes()
         current_hashes = []
         dedup_documents_to_run = []
         
@@ -83,7 +84,7 @@ class IngestionFlow():
         input_documents = self._read_documents(documents)
         
         if self.vector_store is not None:
-            documents_to_run = self._handle_upsert_vector_standalone(input_documents)
+            documents_to_run = self._handle_pre_upsert(input_documents)
         else:
             documents_to_run = input_documents
         

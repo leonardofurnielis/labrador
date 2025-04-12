@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Literal
 
 from pineflow.core.document.schema import Document
 
@@ -22,4 +22,12 @@ class BaseVectorStore(ABC):
     @abstractmethod
     def delete_documents(self, ids: List[str] = None) -> None:
         """Delete documents from vector store."""
+    
+    @abstractmethod
+    def get_all_document_hashes(self):
+        """Get all hashes from vector store."""
+        
+    @abstractmethod
+    def get_all_ref_document_hashes(self):
+        """Get all ref hashes from vector store."""
         
