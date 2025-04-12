@@ -1,6 +1,6 @@
 import uuid
 from logging import getLogger
-from typing import List, Literal
+from typing import List, Literal, Optional
 
 from pineflow.core.document import Document, DocumentWithScore
 from pineflow.core.embeddings import BaseEmbedding
@@ -109,6 +109,13 @@ class ElasticsearchVectorStore(BaseVectorStore):
 
             self._client.indices.create(index=self.index_name, mappings=index_mappings)
 
+    def _dynamic_metadata_mapping(self, metadata) -> dict:
+        """Dynamic maps metadata object into keyword fields."""
+        metadata_mapping = {}
+        for key, value in metadata.items():
+            metadata_mapping[f"metadata.{key}"] = value
+        return metadata_mapping
+    
     def add_documents(self, documents: List[Document], create_index_if_not_exists: bool = True) -> List[str]:
         """Add documents to the Elasticsearch index.
 
@@ -123,12 +130,15 @@ class ElasticsearchVectorStore(BaseVectorStore):
         for doc in documents:
             _id = doc.id_ if doc.id_ else str(uuid.uuid4())
             _metadata = doc.get_metadata()
+            _metadata["hash"] = doc.hash
+            _metadata_mapping = self._dynamic_metadata_mapping(_metadata)
             vector_store_data.append({
                 "_index": self.index_name,
                 "_id": _id,
                 self.text_field: doc.get_content(),
                 self.vector_field: self._embed_model.get_query_embedding(doc.get_content()),
                 "metadata": _metadata,
+                **_metadata_mapping
             })
 
         self._es_bulk(self._client, vector_store_data, chunk_size=self.batch_size, refresh=True)
@@ -158,7 +168,7 @@ class ElasticsearchVectorStore(BaseVectorStore):
                                       size=top_k,
                                       _source={"excludes": [self.vector_field]})
 
-        hits = results["hits"]["hits"]
+        hits = results.get("hits", {}).get("hits", [])
 
         return [DocumentWithScore(
             document=Document(
@@ -181,3 +191,31 @@ class ElasticsearchVectorStore(BaseVectorStore):
 
         for id in ids:
             self._client.delete(index=self.index_name, id=id)
+
+    def get_all_hashes(self):
+        results = self._client.search(
+            index=self.index_name, 
+            scroll="2m",
+            size=1000,
+            body={
+                "_source": ["metadata.hash", "metadata.ref_doc_hash"],
+                "query": { "match_all": {} },
+                }
+            )
+        
+        scroll_id = results['_scroll_id']
+        hits = results.get("hits", {}).get("hits", [])
+        
+        ids = [hit["_id"] for hit in hits]
+        hashes = [hit["_source"]["metadata.ref_doc_hash"] for hit in hits]
+
+        while len(hits) > 0:
+            scroll_results = self._client.scroll(scroll_id=scroll_id, scroll='2m')
+            scroll_id = scroll_results['_scroll_id']
+            
+            hits = scroll_results.get("hits", {}).get("hits", [])
+            
+            ids.extend([doc['_id'] for doc in hits])
+            hashes.extend([hit["_source"]["metadata.ref_doc_hash"] for hit in hits])
+            
+        return hashes

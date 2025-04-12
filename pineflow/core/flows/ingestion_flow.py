@@ -49,7 +49,19 @@ class IngestionFlow():
                 input_documents.extend(reader.load_data())
         
         return input_documents    
+    
+    def _handle_upsert_vector_standalone(self, documents) -> List[Document]:
+        existing_hashes = self.vector_store.get_all_hashes()
+        current_hashes = []
+        dedup_documents_to_run = []
         
+        for doc in documents:
+            if doc.hash not in existing_hashes and doc.hash not in current_hashes:
+                dedup_documents_to_run.append(doc)
+                current_hashes.append(doc.hash)
+        
+        return dedup_documents_to_run
+                
     def _run_transformers(self, documents: List[Document], transformers: TransformerComponent):
         for transform in transformers:
             documents = transform(documents)
@@ -70,7 +82,16 @@ class IngestionFlow():
         """
         input_documents = self._read_documents(documents)
         
-        documents = self._run_transformers(input_documents, self.transformers)
+        if self.vector_store is not None:
+            documents_to_run = self._handle_upsert_vector_standalone(input_documents)
+        else:
+            documents_to_run = input_documents
         
-        return documents or []    
+        documents = self._run_transformers(documents_to_run, self.transformers)
         
+        documents = documents or []
+        
+        if self.vector_store is not None:
+            self.vector_store.add_documents(documents)
+        
+        return documents
