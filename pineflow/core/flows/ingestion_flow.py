@@ -52,18 +52,21 @@ class IngestionFlow():
         return input_documents    
     
     def _handle_pre_upsert(self, documents) -> List[Document]:
-        existing_hashes = self.vector_store.get_all_ref_document_hashes()
+        ids, existing_hashes, existing_ref_hashes = self.vector_store.get_all_document_hashes()
+        # Fallback to document own hash if `ref_doc_hash`` is missing (for de-duplication)
+        hashes_fallback = [existing_ref_hashes[i] if existing_ref_hashes[i] is not None else existing_hashes[i] 
+                                for i in range(len(existing_ref_hashes))]
         current_hashes = []
         dedup_documents_to_run = []
         
         for doc in documents:
-            if doc.hash not in existing_hashes and doc.hash not in current_hashes:
+            if doc.hash not in hashes_fallback and doc.hash not in current_hashes:
                 dedup_documents_to_run.append(doc)
                 current_hashes.append(doc.hash)
         
         return dedup_documents_to_run
                 
-    def _run_transformers(self, documents: List[Document], transformers: TransformerComponent):
+    def _run_transformers(self, documents: List[Document], transformers: TransformerComponent) -> List[Document]:
         for transform in transformers:
             documents = transform(documents)
         

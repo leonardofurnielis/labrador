@@ -1,6 +1,6 @@
 import uuid
 from logging import getLogger
-from typing import List, Literal, Optional
+from typing import Dict, List, Literal
 
 from pineflow.core.document import Document, DocumentWithScore
 from pineflow.core.embeddings import BaseEmbedding
@@ -192,30 +192,32 @@ class ElasticsearchVectorStore(BaseVectorStore):
         for id in ids:
             self._client.delete(index=self.index_name, id=id)
 
-    def get_all_ref_document_hashes(self):
-        results = self._client.search(
+    def get_all_documents(self, include_fields: List[str] = None) -> List[Dict[str, Dict]]:
+        """Get all documents from vector store."""
+        es_query = { "query": { "match_all": {} } }
+        
+        if include_fields is not None:
+            es_query["_source"] = include_fields
+            
+        data = self._client.search(
             index=self.index_name, 
             scroll="2m",
             size=1000,
-            body={
-                "_source": ["metadata.ref_doc_hash"],
-                "query": { "match_all": {} },
-                }
+            body=es_query,
             )
         
-        scroll_id = results['_scroll_id']
-        hits = results.get("hits", {}).get("hits", [])
+        scroll_id = data["_scroll_id"]
+        hits = data.get("hits", {}).get("hits", [])
         
-        ids = [hit["_id"] for hit in hits]
-        hashes = [hit["_source"]["metadata.ref_doc_hash"] for hit in hits]
+        documents = [{ "_source": { "_id": hit["_id"], **hit["_source"] }} for hit in hits]
+        
 
         while len(hits) > 0:
-            scroll_results = self._client.scroll(scroll_id=scroll_id, scroll='2m')
-            scroll_id = scroll_results['_scroll_id']
+            scroll_data = self._client.scroll(scroll_id=scroll_id, scroll="2m")
+            scroll_id = scroll_data["_scroll_id"]
             
-            hits = scroll_results.get("hits", {}).get("hits", [])
+            hits = scroll_data.get("hits", {}).get("hits", [])
             
-            ids.extend([doc['_id'] for doc in hits])
-            hashes.extend([hit["_source"]["metadata.ref_doc_hash"] for hit in hits])
+            documents.extend([{ "_source": { "_id": hit["_id"], **hit["_source"] }} for hit in hits])
             
-        return hashes
+        return documents
