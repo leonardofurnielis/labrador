@@ -84,7 +84,11 @@ class SentenceChunker(BaseTextChunker):
             texts = self.from_text(document.get_content())
 
             for text in texts:
-                chunks.append(Document(text=text, metadata=document.get_metadata()))
+                chunks.append(Document(
+                    text=text, 
+                    metadata={ **document.get_metadata(), 
+                              "ref_doc_id": document.id_, 
+                              "ref_doc_hash": document.hash }))
 
         return chunks
 

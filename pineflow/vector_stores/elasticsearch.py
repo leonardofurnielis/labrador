@@ -1,14 +1,15 @@
 import uuid
 from logging import getLogger
-from typing import List, Literal
+from typing import Dict, List, Literal
 
 from pineflow.core.document import Document, DocumentWithScore
 from pineflow.core.embeddings import BaseEmbedding
+from pineflow.core.vector_stores.base import BaseVectorStore
 
 logger = getLogger(__name__)
 
 
-class ElasticsearchVectorStore:
+class ElasticsearchVectorStore(BaseVectorStore):
     """Provides functionality to interact with Elasticsearch for storing and querying document embeddings.
 
     Args:
@@ -84,6 +85,15 @@ class ElasticsearchVectorStore:
                 )
 
             index_mappings = {
+                "dynamic_templates": 
+                    [{
+                    "dynamic_metadata": {
+                        "path_match": "metadata.*",
+                        "mapping": {
+                            "type": "keyword"
+                            }
+                        }
+                    }],
                 "properties": {
                     self.text_field: {"type": "text"},
                     self.vector_field: {
@@ -92,14 +102,6 @@ class ElasticsearchVectorStore:
                         "index": True,
                         "similarity": self.distance_strategy,
                     },
-                    "metadata": {
-                        "properties": {
-                            "creation_date": {"type": "keyword"},
-                            "filename": {"type": "keyword"},
-                            "file_type": {"type": "keyword"},
-                            "page": {"type": "keyword"},
-                        }
-                    }
                 }
             }
 
@@ -107,7 +109,14 @@ class ElasticsearchVectorStore:
 
             self._client.indices.create(index=self.index_name, mappings=index_mappings)
 
-    def add_documents(self, documents: List[Document], create_index_if_not_exists: bool = True) -> None:
+    def _dynamic_metadata_mapping(self, metadata) -> dict:
+        """Dynamic maps metadata object into keyword fields."""
+        metadata_mapping = {}
+        for key, value in metadata.items():
+            metadata_mapping[f"metadata.{key}"] = value
+        return metadata_mapping
+    
+    def add_documents(self, documents: List[Document], create_index_if_not_exists: bool = True) -> List[str]:
         """Add documents to the Elasticsearch index.
 
         Args:
@@ -120,21 +129,21 @@ class ElasticsearchVectorStore:
         vector_store_data = []
         for doc in documents:
             _id = doc.id_ if doc.id_ else str(uuid.uuid4())
-            _metadata = doc.get_metadata()
+            _metadata = {**doc.get_metadata(), "hash": doc.hash}
+            _metadata_mapping = self._dynamic_metadata_mapping(_metadata)
             vector_store_data.append({
                 "_index": self.index_name,
                 "_id": _id,
                 self.text_field: doc.get_content(),
                 self.vector_field: self._embed_model.get_query_embedding(doc.get_content()),
                 "metadata": _metadata,
-                "metadata.creation_date": _metadata["creation_date"] if _metadata["creation_date"] else None,
-                "metadata.filename": _metadata["filename"] if _metadata["filename"] else None,
-                "metadata.file_type": _metadata["file_type"] if _metadata["file_type"] else None,
-                "metadata.page": _metadata["page"] if _metadata["page"] else None,
+                **_metadata_mapping
             })
 
         self._es_bulk(self._client, vector_store_data, chunk_size=self.batch_size, refresh=True)
         print(f"Added {len(vector_store_data)} documents to `{self.index_name}`")
+        
+        return [doc.id_ for doc in documents]
 
     def query(self, query: str, top_k: int = 4) -> List[DocumentWithScore]:
         """Performs a similarity search for top-k most similar documents.
@@ -158,7 +167,7 @@ class ElasticsearchVectorStore:
                                       size=top_k,
                                       _source={"excludes": [self.vector_field]})
 
-        hits = results["hits"]["hits"]
+        hits = results.get("hits", {}).get("hits", [])
 
         return [DocumentWithScore(
             document=Document(
@@ -181,3 +190,33 @@ class ElasticsearchVectorStore:
 
         for id in ids:
             self._client.delete(index=self.index_name, id=id)
+
+    def get_all_documents(self, include_fields: List[str] = []) -> List[Dict[str, Dict]]:
+        """Get all documents from vector store."""
+        es_query = { "query": { "match_all": {} } }
+        
+        if len(include_fields):
+            es_query["_source"] = include_fields
+            
+        data = self._client.search(
+            index=self.index_name, 
+            scroll="2m",
+            size=1000,
+            body=es_query,
+            )
+        
+        scroll_id = data["_scroll_id"]
+        hits = data.get("hits", {}).get("hits", [])
+        
+        documents = [{ "_source": { "_id": hit["_id"], **hit["_source"] }} for hit in hits]
+        
+
+        while len(hits) > 0:
+            scroll_data = self._client.scroll(scroll_id=scroll_id, scroll="2m")
+            scroll_id = scroll_data["_scroll_id"]
+            
+            hits = scroll_data.get("hits", {}).get("hits", [])
+            
+            documents.extend([{ "_source": { "_id": hit["_id"], **hit["_source"] }} for hit in hits])
+            
+        return documents

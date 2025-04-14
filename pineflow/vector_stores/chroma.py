@@ -1,14 +1,15 @@
 import uuid
 from logging import getLogger
-from typing import List, Literal
+from typing import Dict, List, Literal
 
 from pineflow.core.document import Document, DocumentWithScore
 from pineflow.core.embeddings import BaseEmbedding
+from pineflow.core.vector_stores.base import BaseVectorStore
 
 logger = getLogger(__name__)
 
 
-class ChromaVectorStore:
+class ChromaVectorStore(BaseVectorStore):
     """Chroma is the AI-native open-source vector database. Embeddings are stored within a ChromaDB collection.
 
     Args:
@@ -63,8 +64,9 @@ class ChromaVectorStore:
         chroma_documents = []
 
         for doc in documents:
+            metadatas.append({**doc.get_metadata(), "hash": doc.hash})
+            
             embeddings.append(self._embed_model.get_query_embedding(doc.get_content()))
-            metadatas.append(doc.get_metadata() if doc.get_metadata() else None)
             ids.append(doc.id_ if doc.id_ else str(uuid.uuid4()))
             chroma_documents.append(doc.get_content())
 
@@ -113,3 +115,29 @@ class ChromaVectorStore:
             raise ValueError("No ids provided to delete.")
 
         self._collection.delete(ids=ids)
+        
+    def get_all_documents(self, include_fields: List[str] = None) -> List[Dict[str, Dict]]:
+        """Get all documents from vector store."""
+        default_fields = ["ids", "documents", "metadatas", "embeddings"]
+        include = include_fields if include_fields else default_fields
+        field_map = {
+            "ids": "_id",
+            "documents": "text",
+            "metadatas": "metadata",
+            "embeddings": "embedding"
+            }
+        
+        data = self._collection.get(include=include)
+        
+        # Extract only requested data in aligned order
+        rows = zip(*[data[key] for key in include])
+        
+        return [
+            {
+                "_source": {
+                    field_map[key]: value
+                    for key, value in zip(include, row)
+                    }
+                }
+            for row in rows
+            ]

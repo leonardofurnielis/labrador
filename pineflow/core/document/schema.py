@@ -1,5 +1,6 @@
 import uuid
 from abc import ABC, abstractmethod
+from hashlib import sha256
 from typing import Any, Dict, List, Optional
 
 from pydantic.v1 import BaseModel, Field, validator
@@ -28,10 +29,19 @@ class BaseDocument(ABC, BaseModel):
     def get_content(self) -> str:
         """Get document content."""
 
-    @abstractmethod
-    def get_metadata(self) -> str:
+    def get_metadata(self) -> dict:
         """Get metadata."""
-
+        return self.metadata
+        
+    def get_embedding(self) -> List[float]:
+        """Get metadata."""
+        return self.embedding
+        
+    @property
+    @abstractmethod
+    def hash(self) -> str:
+        """Get hash."""
+    
 
 class TransformerComponent:
     @abstractmethod
@@ -51,13 +61,15 @@ class Document(BaseDocument):
     def get_content(self) -> str:
         """Get the text content."""
         return self.text
+    
+    @property
+    def hash(self) -> str:
+        """Get hash."""
+        doc_identity = str(self.text) + str(self.metadata)
+        return str(sha256(doc_identity.encode("utf-8", "surrogatepass")).hexdigest())
 
-    def get_metadata(self) -> dict:
-        """Get metadata."""
-        return self.metadata
 
-
-class DocumentWithScore:
+class DocumentWithScore(BaseModel):
     document: BaseDocument
     score: Optional[float] = None
 
