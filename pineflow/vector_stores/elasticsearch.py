@@ -129,8 +129,7 @@ class ElasticsearchVectorStore(BaseVectorStore):
         vector_store_data = []
         for doc in documents:
             _id = doc.id_ if doc.id_ else str(uuid.uuid4())
-            _metadata = doc.get_metadata()
-            _metadata["hash"] = doc.hash
+            _metadata = {**doc.get_metadata(), "hash": doc.hash}
             _metadata_mapping = self._dynamic_metadata_mapping(_metadata)
             vector_store_data.append({
                 "_index": self.index_name,
@@ -192,11 +191,11 @@ class ElasticsearchVectorStore(BaseVectorStore):
         for id in ids:
             self._client.delete(index=self.index_name, id=id)
 
-    def get_all_documents(self, include_fields: List[str] = None) -> List[Dict[str, Dict]]:
+    def get_all_documents(self, include_fields: List[str] = []) -> List[Dict[str, Dict]]:
         """Get all documents from vector store."""
         es_query = { "query": { "match_all": {} } }
         
-        if include_fields is not None:
+        if len(include_fields):
             es_query["_source"] = include_fields
             
         data = self._client.search(

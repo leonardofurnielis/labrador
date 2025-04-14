@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from pineflow.core.document.schema import Document
 
@@ -24,11 +24,10 @@ class BaseVectorStore(ABC):
         """Delete documents from vector store."""
     
     @abstractmethod
-    def get_all_documents(self, include_fields: List[str]=None) -> List[Dict[str, Dict]]:
+    def get_all_documents(self, include_fields: List[str]) -> List[Dict[str, Dict]]:
         """Get all documents from vector store."""
-        
-        
-    def get_all_document_hashes(self):
+             
+    def get_all_document_hashes(self) -> Tuple[List[str], List[str], List[str]]:
         """Get all ref hashes from vector store."""
         hits = self.get_all_documents(include_fields=["metadata"])
         
