@@ -118,9 +118,8 @@ class ChromaVectorStore(BaseVectorStore):
         
     def get_all_documents(self, include_fields: List[str] = None) -> List[Dict[str, Dict]]:
         """Get all documents from vector store."""
-        
         default_fields = ["ids", "documents", "metadatas", "embeddings"]
-        include = default_fields if not include_fields else include_fields
+        include = include_fields if include_fields else default_fields
         field_map = {
             "ids": "_id",
             "documents": "text",
