@@ -11,7 +11,7 @@ import sys
 project = 'Pineflow'
 copyright = '2025, Leonardo Furnielis'
 author = 'Leonardo Furnielis'
-version = '0.6.4'
+version = '0.6.5'
 release = version
 
 # -- General configuration ---------------------------------------------------
