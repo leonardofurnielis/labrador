@@ -20,7 +20,7 @@ class BaseVectorStore(ABC):
         """Query vector store."""
 
     @abstractmethod
-    def delete_documents(self, ids: List[str] = None) -> None:
+    def delete_documents(self, ids: List[str]) -> None:
         """Delete documents from vector store."""
     
     @abstractmethod

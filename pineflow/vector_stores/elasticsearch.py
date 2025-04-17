@@ -179,15 +179,12 @@ class ElasticsearchVectorStore(BaseVectorStore):
             for hit in hits
         ]
 
-    def delete_documents(self, ids: List[str] = None) -> None:
+    def delete_documents(self, ids: List[str]) -> None:
         """Delete documents from the Elasticsearch index.
 
         Args:
             ids (List[str]): List of `Document` IDs to delete.
         """
-        if not ids:
-            raise ValueError("No ids provided to delete.")
-
         for id in ids:
             self._client.delete(index=self.index_name, id=id)
 

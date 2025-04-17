@@ -105,15 +105,12 @@ class ChromaVectorStore(BaseVectorStore):
             )
         ]
 
-    def delete_documents(self, ids: List[str] = None) -> None:
+    def delete_documents(self, ids: List[str]) -> None:
         """Delete documents from the ChromaDB collection.
 
         Args:
             ids (List[str]): List of `Document` IDs to delete. Defaults to ``None``.
         """
-        if not ids:
-            raise ValueError("No ids provided to delete.")
-
         self._collection.delete(ids=ids)
         
     def get_all_documents(self, include_fields: List[str] = None) -> List[Dict[str, Dict]]:
