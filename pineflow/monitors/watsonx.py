@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 import os
@@ -103,7 +104,7 @@ class CloudPakforDataCredentials:
         
         return data
 
-class IntegratedSysCredentials(BaseModel):
+class IntegratedSystemCredentials(BaseModel):
     """Encapsulate passed credentials for Integrated System.
     
     Depending on the `auth_type`, only a subset of the properties are required.
@@ -875,7 +876,7 @@ class WatsonxPromptMonitoring:
                                                  background_mode=False)
 
 class WatsonxMonitorMetric(BaseModel):
-    """watsonx.governance monitor metric definition.
+    """Provides watsonx.governance monitor metric definition.
      
     Args:
         name (str): Name of metric.
@@ -895,6 +896,24 @@ class WatsonxMonitorMetric(BaseModel):
             "applies_to": ApplicabilitySelection(problem_type=self.applies_to) 
             }
 
+class WatsonxMeasurementRequest(BaseModel):
+    """Initialize a WatsonxMeasurementRequest object.
+     
+    Args:
+        metrics (List[dict]):  Metrics grouped for a single measurement.
+        run_id (str, optional): ID of the monitoring run which produced the measurement.
+    """
+    
+    timestamp: datetime.datetime = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    metrics: List[dict]
+    run_id: Optional[str] = None
+    
+    def __init__(self, metrics: List[dict],
+                run_id: Optional[str] = None) -> None:
+        
+        super().__init__(metrics=metrics,
+                run_id=run_id)
+        
 class WatsonxCustomMetric:
     """Provides functionality to setup custom metric to measure your model performance with IBM watsonx.governance.
     
@@ -910,7 +929,10 @@ class WatsonxCustomMetric:
                  cpd_creds: CloudPakforDataCredentials | dict = None,
                  ) -> None:
         try:
-            import ibm_watson_openscale  # noqa: F401
+            from ibm_cloud_sdk_core.authenticators import (
+                IAMAuthenticator,  # type: ignore
+            )
+            from ibm_watson_openscale import APIClient as WosAPIClient  # type: ignore
 
         except ImportError:
             raise ImportError("""ibm-watson-openscale not found, 
@@ -924,8 +946,32 @@ class WatsonxCustomMetric:
             self._wos_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", 
                                                                    "disable_ssl_verification"], ["url"])
             
-    def _add_integrated_system(self, 
-                               credentials: IntegratedSysCredentials,
+        if not self._wos_client:
+            try:
+                if hasattr(self, "_wos_cpd_creds") and self._wos_cpd_creds:
+                    from ibm_cloud_sdk_core.authenticators import (
+                        CloudPakForDataAuthenticator,  # type: ignore
+                    )
+                    
+                    authenticator = CloudPakForDataAuthenticator(**self._wos_cpd_creds)
+                    
+                    self._wos_client = WosAPIClient(authenticator=authenticator, 
+                                                    service_url=self._wos_cpd_creds["url"])
+                    
+                else:
+                    from ibm_cloud_sdk_core.authenticators import (
+                        IAMAuthenticator,  # type: ignore
+                    )
+                    
+                    authenticator = IAMAuthenticator(apikey=self._api_key)
+                    self._wos_client = WosAPIClient(authenticator=authenticator, service_url=REGIONS_URL[self.region]["wos"])
+                    
+            except Exception as e:
+                logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
+                raise
+            
+    def _create_integrated_system(self, 
+                               credentials: IntegratedSystemCredentials,
                                name: str, 
                                endpoint: str) -> str:
         custom_metrics_integrated_system = self._wos_client.integrated_systems.add(
@@ -941,7 +987,7 @@ class WatsonxCustomMetric:
         
         return custom_metrics_integrated_system.metadata.id
     
-    def _add_monitor_definitions(self,
+    def _create_monitor_definitions(self,
                                  name: str,
                                  monitor_metrics: List[WatsonxMonitorMetric],
                                  schedule: bool,
@@ -979,55 +1025,36 @@ class WatsonxCustomMetric:
     def _create_update_monitor_instance(self, custom_monitor_id):
         pass
     
-    def add(self,
+    def _get_patch_request_field(field_path: str, 
+                                 field_value: Any, 
+                                 op_name: str = "replace") -> Dict:
+        return {
+            "op": op_name,
+            "path": field_path,
+            "value": field_value
+        }
+        
+    def create_metric_definition(self,
             name: str,
             monitor_metrics: List[WatsonxMonitorMetric],
             integrated_system_url: str,
-            integrated_system_credentials: IntegratedSysCredentials,
+            integrated_system_credentials: IntegratedSystemCredentials,
             schedule: bool = False):
-        """Add external monitor to IBM watsonx.governance.
+        """Create custom metric definition to IBM watsonx.governance.
         
         Args:
             name (str): Name of external metric group.
             monitor_metrics (List[WatsonxMonitorMetric]): List of metrics that will be measured.
             schedule (bool): Enable or disable the scheduler. Defaults to False.
             integrated_system_url (str): URL of external metric.
-            integrated_system_credentials (IntegratedSysCredentials): Integrated system credentials.
+            integrated_system_credentials (IntegratedSystemCredentials): Integrated system credentials.
 
         """
-        from ibm_cloud_sdk_core.authenticators import IAMAuthenticator  # type: ignore
-        from ibm_watson_openscale import APIClient as WosAPIClient  # type: ignore
-        
-        if not self._wos_client:
-            try:
-                if hasattr(self, "_wos_cpd_creds") and self._wos_cpd_creds:
-                    from ibm_cloud_sdk_core.authenticators import (
-                        CloudPakForDataAuthenticator,  # type: ignore
-                    )
-                    
-                    authenticator = CloudPakForDataAuthenticator(**self._wos_cpd_creds)
-                    
-                    self._wos_client = WosAPIClient(authenticator=authenticator, 
-                                                    service_url=self._wos_cpd_creds["url"])
-                    
-                else:
-                    from ibm_cloud_sdk_core.authenticators import (
-                        IAMAuthenticator,  # type: ignore
-                    )
-                    
-                    authenticator = IAMAuthenticator(apikey=self._api_key)
-                    self._wos_client = WosAPIClient(authenticator=authenticator, service_url=REGIONS_URL[self.region]["wos"])
-                    
-            except Exception as e:
-                logging.error(f"Error connecting to IBM watsonx.governance (openscale): {e}")
-                raise
-        
-        
-        integrated_system_id = self._add_integrated_system(integrated_system_credentials,
+        integrated_system_id = self._create_integrated_system(integrated_system_credentials,
                                                            name,
                                                            integrated_system_url)
         
-        external_monitor_id = self._add_monitor_definitions(name,
+        external_monitor_id = self._create_monitor_definitions(name,
                                                             monitor_metrics,
                                                             schedule)
         
@@ -1043,4 +1070,35 @@ class WatsonxCustomMetric:
             ]
 
         return self._wos_client.integrated_systems.update(integrated_system_id, payload).result
-            
+    
+    def publish_measurements(self,
+            monitor_instance_id: str,
+            monitor_run_id: str,
+            measurements_request: List[WatsonxMeasurementRequest]):
+        """Publish a measurement for a specific monitor instance in watsonx.governance.
+        
+        Args:
+            monitor_instance_id (str): 
+            monitor_run_id (str):
+            measurements_request (List[WatsonxMeasurementRequest]):
+        """
+        from ibm_watson_openscale.base_classes.watson_open_scale_v2 import (
+            MonitorMeasurementRequest,
+            Runs,
+        )
+        
+        for obj in measurements_request: obj.run_id = monitor_run_id # noqa: E701
+        
+        self._wos_client.monitor_instances.add_measurements(
+            monitor_instance_id=monitor_instance_id,
+            monitor_measurement_request=MonitorMeasurementRequest(**measurements_request).dict()).result
+        
+        runs = Runs(watson_open_scale=self._wos_client)
+        patch_payload = []
+        patch_payload.append(self._get_patch_request_field("/status/state", "finished"))
+        patch_payload.append(self._get_patch_request_field("/status/completed_at", datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")))
+        
+        return runs.update(monitor_instance_id=monitor_instance_id, monitoring_run_id=monitor_run_id, json_patch_operation=patch_payload).result
+    
+    def create_monitor_instance(self):
+        pass
