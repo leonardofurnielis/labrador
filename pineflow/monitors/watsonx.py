@@ -103,26 +103,28 @@ class CloudPakforDataCredentials:
         
         return data
 
-class ExternalCredentials(BaseModel):
-    """Encapsulate passed credentials for External Metric Monitor.
+class IntegratedSysCredentials(BaseModel):
+    """Encapsulate passed credentials for Integrated System.
+    
+    Depending on the `auth_type`, only a subset of the properties are required.
 
     Args:
-        auth_type (str): Currently supports "basic" and "bearer".
-        username (str, optional): Environment username.
-        password (str, optional): Environment password.
-        url (str, optional): URL of external metric authenticator.
-        method (str, optional): 
-        headers (str, optional):
-        payload (bool, optional):
+        auth_type (str): Type of authentication. Currently supports "basic" and "bearer".
+        username (str, optional): Username for Basic Auth.
+        password (str, optional): Password for Basic Auth.
+        token_url (str, optional): URL of the authentication endpoint used to request a Bearer token.
+        token_method (str, optional): HTTP method used to request the Bearer token (e.g., "POST", "GET").
+        token_headers (str, optional): Optional headers to include when requesting the token.
+        token_payload (bool, optional): Body/payload to send when requesting the token. Can be a string (e.g., raw JSON).
     """
     
     auth_type: Literal["basic", "bearer"]
-    username: Optional[str]
-    password: Optional[str]
-    url: Optional[str]
-    method: Optional[str]
-    headers: Optional[Dict]
-    payload: Union[str, Dict]
+    username: Optional[str] # basic
+    password: Optional[str] # basic
+    token_url: Optional[str] # bearer
+    token_method: Optional[str] # bearer
+    token_headers: Optional[Dict] # bearer
+    token_payload: Union[str, Dict] # bearer
     
     def __init__(self, auth_type: Literal["basic", "bearer"],
                 username: str = None,
@@ -146,8 +148,7 @@ class ExternalCredentials(BaseModel):
                 headers=headers,
                 payload=payload,
                 method=method)
-    
-   
+      
     def to_dict(self) -> Dict:
         
         integrated_system_creds = { "auth_type": self.auth_type }
@@ -157,10 +158,10 @@ class ExternalCredentials(BaseModel):
             integrated_system_creds["password"] = self.password
         elif self.auth_type == "bearer":
             integrated_system_creds["token_info"] = { 
-                                                     "url": self.url,
-                                                     "headers": self.headers,
-                                                     "payload": self.payload,
-                                                     "method": self.method,
+                                                     "url": self.token_url,
+                                                     "headers": self.token_headers,
+                                                     "payload": self.token_payload,
+                                                     "method": self.token_method,
                                                      }
             
         return integrated_system_creds
@@ -236,7 +237,6 @@ class WatsonxExternalPromptMonitoring:
             self._fact_cpd_creds["service_url"] = self._fact_cpd_creds.pop("url")
             self._wml_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", "instance_id", 
                                                                    "version", "bedrock_url"], ["url"])
-
                     
     def _create_detached_prompt(self, detached_details: dict, 
                                 prompt_template_details: dict, 
@@ -276,8 +276,7 @@ class WatsonxExternalPromptMonitoring:
             detached_information=DetachedPromptTemplate(**detached_details))
             
         return created_detached_pta.to_dict()["asset_id"]
-            
-            
+                  
     def _create_deployment_pta(self, asset_id: str,
                                name: str,
                                model_id: str) -> str:
@@ -309,8 +308,7 @@ class WatsonxExternalPromptMonitoring:
         created_deployment = wml_client.deployments.create(asset_id, meta_props)
             
         return wml_client.deployments.get_uid(created_deployment)
-        
-            
+             
     def create_prompt_monitor(self,
                               name: str,
                               model_id: str,
@@ -470,7 +468,6 @@ class WatsonxExternalPromptMonitoring:
         return {"detached_prompt_template_asset_id": detached_pta_id,
                 "deployment_id": deployment_id,
                 "subscription_id": generative_ai_monitor_details["subscription_id"]} 
-        
                     
     def payload_logging(self, payload_records: List[dict], subscription_id: str) -> None:
         """Store records to payload logging.
@@ -604,8 +601,7 @@ class WatsonxPromptMonitoring:
             self._fact_cpd_creds["service_url"] = self._fact_cpd_creds.pop("url")
             self._wml_cpd_creds = _filter_dict(cpd_creds.to_dict(), ["username", "password", "api_key", "instance_id", 
                                                                    "version", "bedrock_url"], ["url"])
-
-                    
+               
     def _create_prompt_template(self, prompt_template_details: dict, asset_details: dict) -> str:
         from ibm_aigov_facts_client import (
             AIGovFactsClient,
@@ -641,8 +637,7 @@ class WatsonxPromptMonitoring:
             prompt_details=PromptTemplate(**prompt_template_details))
             
         return created_pta.to_dict()["asset_id"]
-            
-            
+                 
     def _create_deployment_pta(self, asset_id: str,
                                name: str,
                                model_id: str) -> str:
@@ -675,8 +670,7 @@ class WatsonxPromptMonitoring:
         created_deployment = wml_client.deployments.create(asset_id, meta_props)
             
         return wml_client.deployments.get_uid(created_deployment)
-        
-            
+               
     def create_prompt_monitor(self,
                               name: str,
                               model_id: str,
@@ -816,8 +810,7 @@ class WatsonxPromptMonitoring:
         return {"prompt_template_asset_id": pta_id,
                 "deployment_id": deployment_id,
                 "subscription_id": generative_ai_monitor_details["subscription_id"]} 
-        
-                    
+                   
     def payload_logging(self, payload_records: List[dict], subscription_id: str) -> None:
         """Store records to payload logging.
 
@@ -881,8 +874,8 @@ class WatsonxPromptMonitoring:
                                                  request_body=payload_data,
                                                  background_mode=False)
 
-class MonitorMetric(BaseModel):
-    """Monitor metric definition.
+class WatsonxMonitorMetric(BaseModel):
+    """watsonx.governance monitor metric definition.
      
     Args:
         name (str): Name of metric.
@@ -902,8 +895,8 @@ class MonitorMetric(BaseModel):
             "applies_to": ApplicabilitySelection(problem_type=self.applies_to) 
             }
 
-class WatsonxExternalMetric:
-    """Provides functionality to setup external metric to measure your model performance with IBM watsonx.governance.
+class WatsonxCustomMetric:
+    """Provides functionality to setup custom metric to measure your model performance with IBM watsonx.governance.
     
     Args:
         api_key (str): IBM watsonx.governance API key.
@@ -932,7 +925,7 @@ class WatsonxExternalMetric:
                                                                    "disable_ssl_verification"], ["url"])
             
     def _add_integrated_system(self, 
-                               credentials: ExternalCredentials,
+                               credentials: IntegratedSysCredentials,
                                name: str, 
                                endpoint: str) -> str:
         custom_metrics_integrated_system = self._wos_client.integrated_systems.add(
@@ -950,7 +943,7 @@ class WatsonxExternalMetric:
     
     def _add_monitor_definitions(self,
                                  name: str,
-                                 monitor_metrics: List[MonitorMetric],
+                                 monitor_metrics: List[WatsonxMonitorMetric],
                                  schedule: bool,
                                  ):
         from ibm_watson_openscale.base_classes.watson_open_scale_v2 import (
@@ -988,18 +981,18 @@ class WatsonxExternalMetric:
     
     def add(self,
             name: str,
-            monitor_metrics: List[MonitorMetric],
+            monitor_metrics: List[WatsonxMonitorMetric],
             integrated_system_url: str,
-            integrated_system_credentials: ExternalCredentials,
+            integrated_system_credentials: IntegratedSysCredentials,
             schedule: bool = False):
         """Add external monitor to IBM watsonx.governance.
         
         Args:
             name (str): Name of external metric group.
-            monitor_metrics (List[MonitorMetric]): List of metrics that will be measured.
+            monitor_metrics (List[WatsonxMonitorMetric]): List of metrics that will be measured.
             schedule (bool): Enable or disable the scheduler. Defaults to False.
             integrated_system_url (str): URL of external metric.
-            integrated_system_credentials (ExternalCredentials): Integrated system credentials.
+            integrated_system_credentials (IntegratedSysCredentials): Integrated system credentials.
 
         """
         from ibm_cloud_sdk_core.authenticators import IAMAuthenticator  # type: ignore
