@@ -9,6 +9,7 @@ __pycache__/
 #IDE
 .DS_Store
 .idea
+.vscode
 
 # Distribution / packaging
 .Python
