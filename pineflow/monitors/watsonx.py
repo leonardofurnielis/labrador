@@ -104,7 +104,7 @@ class CloudPakforDataCredentials:
         
         return data
 
-class IntegratedSysCredentials(BaseModel):
+class IntegratedSystemCredentials(BaseModel):
     """Encapsulate passed credentials for Integrated System.
     
     Depending on the `auth_type`, only a subset of the properties are required.
@@ -971,7 +971,7 @@ class WatsonxCustomMetric:
                 raise
             
     def _create_integrated_system(self, 
-                               credentials: IntegratedSysCredentials,
+                               credentials: IntegratedSystemCredentials,
                                name: str, 
                                endpoint: str) -> str:
         custom_metrics_integrated_system = self._wos_client.integrated_systems.add(
@@ -1038,7 +1038,7 @@ class WatsonxCustomMetric:
             name: str,
             monitor_metrics: List[WatsonxMonitorMetric],
             integrated_system_url: str,
-            integrated_system_credentials: IntegratedSysCredentials,
+            integrated_system_credentials: IntegratedSystemCredentials,
             schedule: bool = False):
         """Create custom metric definition to IBM watsonx.governance.
         
@@ -1047,7 +1047,7 @@ class WatsonxCustomMetric:
             monitor_metrics (List[WatsonxMonitorMetric]): List of metrics that will be measured.
             schedule (bool): Enable or disable the scheduler. Defaults to False.
             integrated_system_url (str): URL of external metric.
-            integrated_system_credentials (IntegratedSysCredentials): Integrated system credentials.
+            integrated_system_credentials (IntegratedSystemCredentials): Integrated system credentials.
 
         """
         integrated_system_id = self._create_integrated_system(integrated_system_credentials,
