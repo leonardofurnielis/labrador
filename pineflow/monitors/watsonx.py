@@ -875,7 +875,7 @@ class WatsonxPromptMonitoring:
                                                  background_mode=False)
 
 class WatsonxMonitorMetric(BaseModel):
-    """watsonx.governance monitor metric definition.
+    """Provides watsonx.governance monitor metric definition.
      
     Args:
         name (str): Name of metric.
