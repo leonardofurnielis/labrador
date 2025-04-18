@@ -115,7 +115,7 @@ class ChromaVectorStore(BaseVectorStore):
         
     def get_all_documents(self, include_fields: List[str] = None) -> List[Dict[str, Dict]]:
         """Get all documents from vector store."""
-        default_fields = ["ids", "documents", "metadatas", "embeddings"]
+        default_fields = ["documents", "metadatas", "embeddings"]
         include = include_fields if include_fields else default_fields
         field_map = {
             "ids": "_id",
@@ -126,7 +126,8 @@ class ChromaVectorStore(BaseVectorStore):
         
         data = self._collection.get(include=include)
         
-        # Extract only requested data in aligned order
+        # Extract only requested data in aligned order + ids
+        include.insert(0, "ids")
         rows = zip(*[data[key] for key in include])
         
         return [
