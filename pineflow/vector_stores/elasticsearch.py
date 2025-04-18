@@ -161,13 +161,22 @@ class ElasticsearchVectorStore(BaseVectorStore):
             "k": top_k,
             "num_candidates": top_k * 10,
         }}
+        
+        from elasticsearch import NotFoundError
+        
+        try:    
+            data = self._client.search(
+                index=self.index_name,
+                **es_query,
+                size=top_k,
+                _source={"excludes": [self.vector_field]})
+        except NotFoundError as e:
+            if e.status_code == 404 and e.error == "index_not_found_exception":
+                return []
+            else:
+                raise e
 
-        results = self._client.search(index=self.index_name,
-                                      **es_query,
-                                      size=top_k,
-                                      _source={"excludes": [self.vector_field]})
-
-        hits = results.get("hits", {}).get("hits", [])
+        hits = data.get("hits", {}).get("hits", [])
 
         return [DocumentWithScore(
             document=Document(
@@ -179,15 +188,12 @@ class ElasticsearchVectorStore(BaseVectorStore):
             for hit in hits
         ]
 
-    def delete_documents(self, ids: List[str] = None) -> None:
+    def delete_documents(self, ids: List[str]) -> None:
         """Delete documents from the Elasticsearch index.
 
         Args:
             ids (List[str]): List of `Document` IDs to delete.
         """
-        if not ids:
-            raise ValueError("No ids provided to delete.")
-
         for id in ids:
             self._client.delete(index=self.index_name, id=id)
 
@@ -198,13 +204,21 @@ class ElasticsearchVectorStore(BaseVectorStore):
         if len(include_fields):
             es_query["_source"] = include_fields
             
-        data = self._client.search(
-            index=self.index_name, 
-            scroll="2m",
-            size=1000,
-            body=es_query,
-            )
+        from elasticsearch import NotFoundError
         
+        try:    
+            data = self._client.search(
+                index=self.index_name, 
+                scroll="2m",
+                size=1000,
+                body=es_query,
+                )
+        except NotFoundError as e:
+            if e.status_code == 404 and e.error == "index_not_found_exception":
+                return []
+            else:
+                raise e
+            
         scroll_id = data["_scroll_id"]
         hits = data.get("hits", {}).get("hits", [])
         
